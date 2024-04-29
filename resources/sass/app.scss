@@ -85,3 +85,39 @@ table.my-table-product {
     }
 
 }
+
+@include media-breakpoint-only(xs) {
+    img.logo {
+        width: 200px;
+    }
+}
+
+@include media-breakpoint-only(sm) {
+    img.logo {
+        width: 200px;
+    }
+}
+
+@include media-breakpoint-only(md) {
+    img.logo {
+        width: 200px;
+    }
+}
+
+@include media-breakpoint-only(lg) {
+    img.logo {
+        width: 200px;
+    }
+}
+
+@include media-breakpoint-only(xl) {
+    img.logo {
+        width: 250px;
+    }
+}
+
+@include media-breakpoint-only(xxl) {
+    img.logo {
+        width: 350px;
+    }
+}

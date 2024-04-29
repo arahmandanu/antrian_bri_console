@@ -18,6 +18,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="video-container rounded">
+                            {{-- video perlu cek settingan tampilan produk!!!! --}}
                             <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline autoplay
                                 muted loop id="myVideo" class="object-fit-none" src="{{ asset('storage/video.mp4') }}"
                                 type="video/mp4">
@@ -53,7 +54,6 @@
                                     border-top:1px solid rgb(255, 255, 255);
                                 border-left:1px solid rgb(255, 255, 255);
                                 border-top-left-radius: 500px;
-                                backgroud-color: #021e67;
                                 margin-top:5px;">
                                         <h2 class="fw-bolder text-center title-info" style="color: #faa901!important;">
                                             TARIF SUKU
@@ -94,7 +94,20 @@
             </div>
 
             <div class="col-5">
-                Column
+                <div class="row">
+                    <div class="col-md-12 for-logo">
+                        <div class="text-center">
+                            <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
+                            <h1 class="text-white">BRI UNIT COLOMADU</h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 ">
+                        <div class="counter">
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
