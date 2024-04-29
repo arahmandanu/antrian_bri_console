@@ -9,6 +9,10 @@
 
 @import 'footer';
 
+html {
+    height: 100%;
+}
+
 .bg-primary-app {
     background-color: #023e85;
 }
@@ -41,8 +45,82 @@ div.table-info {
     background-color: #012362;
 }
 
+div.counter {
+    width: 100%;
+    height: 20vh !important;
+    background-color: #011e40;
+}
+
+div.right-bar {
+
+    margin-right: 5px;
+
+    div.counter-parent {
+        padding: 5px;
+    }
+
+    div.counter-div-left {
+        border-right: #ffcd12 solid 0.5px;
+        background-color: #011e40;
+    }
+
+    div.counter-div-right {
+        background-color: #011e40;
+    }
+
+    div.right-bar-caller {
+        height: 48.5vh !important;
+        font-weight: bolder;
+        font-size: 50px;
+        color: white;
+
+        div.caller-div {
+            background-image: linear-gradient(180deg, rgb(42, 79, 182), #000000);
+        }
+    }
+
+    div.right-bar-title {
+        height: 9vh !important;
+        font-weight: bolder;
+        font-size: 50px;
+
+        div.title-div-left {
+            border-right: #ffcd12 solid 0.5px;
+            background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+
+            span {
+                color: white;
+            }
+        }
+
+        div.title-div-right {
+            background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+
+            span {
+                color: white;
+            }
+        }
+    }
+
+    span.counter-left {
+        font-size: 100px;
+    }
+
+    span.counter-right {
+        font-size: 100px;
+    }
+}
+
+.counter-color {
+    color: #ffcd12;
+    font-weight: bolder;
+}
+
 body {
     overflow: hidden;
+    min-height: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 .title-info {
@@ -119,5 +197,34 @@ table.my-table-product {
 @include media-breakpoint-only(xxl) {
     img.logo {
         width: 350px;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+// @media (min-width: 2000px) and (max-width: 3000px) {
+//     h1 {
+//         font-size: 100px !important;
+//     }
+
+//     h2 {
+//         font-size: 75px !important;
+//     }
+
+//     h3 {
+//         font-size: 75px !important;
+//     }
+// }
+
+@media (min-width: 3000px) and (max-width: 6000px) {
+    h1 {
+        font-size: 200px !important;
+    }
+
+    h2 {
+        font-size: 100px !important;
+    }
+
+    h3 {
+        font-size: 100px !important;
     }
 }

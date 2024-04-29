@@ -12031,6 +12031,10 @@ footer {
     border-top: 1px solid #ffcd12;
   }
 }
+html {
+  height: 100%;
+}
+
 .bg-primary-app {
   background-color: #023e85;
 }
@@ -12064,8 +12068,69 @@ div.table-info {
   background-color: #012362;
 }
 
+div.counter {
+  width: 100%;
+  height: 20vh !important;
+  background-color: #011e40;
+}
+
+div.right-bar {
+  margin-right: 5px;
+}
+div.right-bar div.counter-parent {
+  padding: 5px;
+}
+div.right-bar div.counter-div-left {
+  border-right: #ffcd12 solid 0.5px;
+  background-color: #011e40;
+}
+div.right-bar div.counter-div-right {
+  background-color: #011e40;
+}
+div.right-bar div.right-bar-caller {
+  height: 48.5vh !important;
+  font-weight: bolder;
+  font-size: 50px;
+  color: white;
+}
+div.right-bar div.right-bar-caller div.caller-div {
+  background-image: linear-gradient(180deg, rgb(42, 79, 182), #000000);
+}
+div.right-bar div.right-bar-title {
+  height: 9vh !important;
+  font-weight: bolder;
+  font-size: 50px;
+}
+div.right-bar div.right-bar-title div.title-div-left {
+  border-right: #ffcd12 solid 0.5px;
+  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+}
+div.right-bar div.right-bar-title div.title-div-left span {
+  color: white;
+}
+div.right-bar div.right-bar-title div.title-div-right {
+  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+}
+div.right-bar div.right-bar-title div.title-div-right span {
+  color: white;
+}
+div.right-bar span.counter-left {
+  font-size: 100px;
+}
+div.right-bar span.counter-right {
+  font-size: 100px;
+}
+
+.counter-color {
+  color: #ffcd12;
+  font-weight: bolder;
+}
+
 body {
   overflow: hidden;
+  min-height: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 .title-info {
@@ -12121,6 +12186,17 @@ table.my-table-product tbody tr:nth-child(even) td:nth-child(2) {
 @media (min-width: 1400px) {
   img.logo {
     width: 350px;
+  }
+}
+@media (min-width: 3000px) and (max-width: 6000px) {
+  h1, .h1 {
+    font-size: 200px !important;
+  }
+  h2, .h2 {
+    font-size: 100px !important;
+  }
+  h3, .h3 {
+    font-size: 100px !important;
   }
 }
 

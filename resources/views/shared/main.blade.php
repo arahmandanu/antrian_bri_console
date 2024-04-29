@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="title-info rounded border-top border-opacity-10">
-                            <h1 class="fw-bolder text-white "> INFO PRODUK </h1>
+                            <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
                         </div>
                     </div>
                 </div>
@@ -94,19 +94,52 @@
             </div>
 
             <div class="col-5">
-                <div class="row">
-                    <div class="col-md-12 for-logo">
+                <div class="row right-bar">
+                    <div class="col-md-12">
                         <div class="text-center">
                             <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
                             <h1 class="text-white">BRI UNIT COLOMADU</h1>
                         </div>
                     </div>
 
-                    <div class="col-md-12 ">
-                        <div class="counter">
-
+                    <div class="col-md-12">
+                        <div class="row counter-parent">
+                            <div class="col-5 text-center counter-div-left">
+                                <span class="counter-left counter-color">1</span>
+                            </div>
+                            <div class="col-7 text-center counter-div-right">
+                                <span class="counter-right counter-color">A05</span>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <div class="row counter-parent right-bar-title">
+                            <div class="col-5 text-center title-div-left">
+                                <span class="">LOKET</span>
+                            </div>
+                            <div class="col-7 text-center title-div-right">
+                                <span class="">NO TIKET</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row counter-parent right-bar-caller">
+                            <div class="col-12 caller-div position-relative">
+                                <div class="col-12 position-absolute top-0 start-0" style="padding: 10px">
+                                    <p class="display-5">Antrian Nomor</p>
+                                    <span class="display-1 counter-color">A001</span>
+                                </div>
+
+                                <div class="col-12 position-absolute bottom-0 start-0" style="padding: 10px">
+                                    <p class="display-5">Silahkan Menuju Ke</p>
+                                    <span class="display-1 counter-color">02</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -116,10 +149,6 @@
     @include('shared.footer')
 
     <script>
-        unmuteButton.addEventListener('click', function() {
-            video.muted = false;
-        });
-
         $(document).ready(function() {
             console.log($("#myVideo").prop("volume", 10));
         });
