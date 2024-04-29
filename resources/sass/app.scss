@@ -7,10 +7,81 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+@import 'footer';
 
+.bg-primary-app {
+    background-color: #023e85;
+}
 
+div.video-container {
+    width: 100%;
+    height: 40vh !important;
+    margin: 3px;
+    background-color: black;
+    margin-left: 0.5%;
+}
 
-div.tes {
-    font-size: 50px;
-    color: aqua;
+video#myVideo {
+    padding: 0.3%;
+    object-fit: fill !important;
+    height: 100%;
+    width: 100%;
+}
+
+div.title-info {
+    margin: 3px;
+    width: 100%;
+    background-color: #012362;
+    margin-left: 0.5%;
+}
+
+div.table-info {
+    width: 100%;
+    height: 40vh !important;
+    background-color: #012362;
+}
+
+body {
+    overflow: hidden;
+}
+
+.title-info {
+    padding: 2px;
+}
+
+table.my-table-product {
+    tbody {
+        tr:nth-child(odd) {
+            td {
+                color: white;
+                background: #034798 !important;
+            }
+
+            td:first-child {
+                text-align: left
+            }
+
+            td:nth-child(2) {
+                text-align: right
+            }
+
+        }
+
+        tr:nth-child(even) {
+            td {
+                color: white;
+                background: #013472 !important;
+            }
+
+            td:first-child {
+                text-align: left
+            }
+
+            td:nth-child(2) {
+                text-align: right
+            }
+
+        }
+    }
+
 }

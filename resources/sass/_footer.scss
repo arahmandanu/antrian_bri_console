@@ -1,0 +1,82 @@
+footer {
+    bottom: 0;
+    left: 0;
+}
+
+@include media-breakpoint-only(xs) {
+    .walking-text {
+        font-size: 1rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}
+
+@include media-breakpoint-only(sm) {
+    .walking-text {
+        font-size: 1.5rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}
+
+@include media-breakpoint-only(md) {
+    .walking-text {
+        font-size: 2rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}
+
+@include media-breakpoint-only(lg) {
+    .walking-text {
+        font-size: 2.5rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}
+
+@include media-breakpoint-only(xl) {
+    .walking-text {
+        font-size: 3rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}
+
+@include media-breakpoint-only(xxl) {
+    .walking-text {
+        font-size: 4rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+
+    .for-footer {
+        border-top: 1px solid #ffcd12;
+    }
+}

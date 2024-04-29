@@ -11,10 +11,106 @@
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
-<body class="antialiased">
-    <div class="tes">ADRIAN</div>
-    <div class="dua">sania</div>
+<body class="d-flex flex-column min-vh-100">
+    <div class="bg-primary-app">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="video-container rounded">
+                            <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline autoplay
+                                muted loop id="myVideo" class="object-fit-none" src="{{ asset('storage/video.mp4') }}"
+                                type="video/mp4">
 
+                                unsupported video!
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="title-info rounded border-top border-opacity-10">
+                            <h1 class="fw-bolder text-white "> INFO PRODUK </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-info rounded border-top border-opacity-10">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        <h2 class="fw-bolder text-white title-info" style="margin-left: 4%; "> BRITAMA
+                                            (RP) </h2>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div
+                                        style="
+                                    border-top:1px solid rgb(255, 255, 255);
+                                border-left:1px solid rgb(255, 255, 255);
+                                border-top-left-radius: 500px;
+                                backgroud-color: #021e67;
+                                margin-top:5px;">
+                                        <h2 class="fw-bolder text-center title-info" style="color: #faa901!important;">
+                                            TARIF SUKU
+                                            BUNGA (% PA) </h2>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 text-center">
+                                    <div class="table-info">
+                                        <table class="table my-table-product">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <h3>tes</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3>tes</h3>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <h3>tes</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3>tes</h3>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-5">
+                Column
+            </div>
+        </div>
+    </div>
+
+
+    @include('shared.footer')
+
+    <script>
+        unmuteButton.addEventListener('click', function() {
+            video.muted = false;
+        });
+
+        $(document).ready(function() {
+            console.log($("#myVideo").prop("volume", 10));
+        });
+    </script>
 </body>
 
 </html>

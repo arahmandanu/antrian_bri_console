@@ -11966,11 +11966,130 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-div.tes {
-  font-size: 50px;
-  color: aqua;
+footer {
+  bottom: 0;
+  left: 0;
 }
-div.dua {
-    font-size: 30px;
-    color: red;
+
+@media (max-width: 575.98px) {
+  .walking-text {
+    font-size: 1rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
 }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .walking-text {
+    font-size: 1.5rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .walking-text {
+    font-size: 2rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .walking-text {
+    font-size: 2.5rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .walking-text {
+    font-size: 3rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
+}
+@media (min-width: 1400px) {
+  .walking-text {
+    font-size: 4rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .for-footer {
+    border-top: 1px solid #ffcd12;
+  }
+}
+.bg-primary-app {
+  background-color: #023e85;
+}
+
+div.video-container {
+  width: 100%;
+  height: 40vh !important;
+  margin: 3px;
+  background-color: black;
+  margin-left: 0.5%;
+}
+
+video#myVideo {
+  padding: 0.3%;
+  -o-object-fit: fill !important;
+     object-fit: fill !important;
+  height: 100%;
+  width: 100%;
+}
+
+div.title-info {
+  margin: 3px;
+  width: 100%;
+  background-color: #012362;
+  margin-left: 0.5%;
+}
+
+div.table-info {
+  width: 100%;
+  height: 40vh !important;
+  background-color: #012362;
+}
+
+body {
+  overflow: hidden;
+}
+
+.title-info {
+  padding: 2px;
+}
+
+table.my-table-product tbody tr:nth-child(odd) td {
+  color: white;
+  background: #034798 !important;
+}
+table.my-table-product tbody tr:nth-child(odd) td:first-child {
+  text-align: left;
+}
+table.my-table-product tbody tr:nth-child(odd) td:nth-child(2) {
+  text-align: right;
+}
+table.my-table-product tbody tr:nth-child(even) td {
+  color: white;
+  background: #013472 !important;
+}
+table.my-table-product tbody tr:nth-child(even) td:first-child {
+  text-align: left;
+}
+table.my-table-product tbody tr:nth-child(even) td:nth-child(2) {
+  text-align: right;
+}
+
