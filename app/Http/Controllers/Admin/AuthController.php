@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('admin.shared.main');
+        return view('admin.auth.index');
     }
 
     /**
