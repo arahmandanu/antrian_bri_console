@@ -8,6 +8,8 @@
 @import 'bootstrap/scss/bootstrap';
 
 @import 'footer';
+@import 'font_size';
+@import 'body';
 
 html {
     height: 100%;
@@ -27,7 +29,6 @@ div.video-container {
 
 video#myVideo {
     padding: 0.3%;
-    object-fit: fill !important;
     height: 100%;
     width: 100%;
 }
@@ -41,7 +42,6 @@ div.title-info {
 
 div.table-info {
     width: 100%;
-    height: 40vh !important;
     background-color: #012362;
 }
 
@@ -69,7 +69,6 @@ div.right-bar {
     }
 
     div.right-bar-caller {
-        height: 48.5vh !important;
         font-weight: bolder;
         font-size: 50px;
         color: white;
@@ -80,7 +79,6 @@ div.right-bar {
     }
 
     div.right-bar-title {
-        height: 9vh !important;
         font-weight: bolder;
         font-size: 50px;
 
@@ -102,12 +100,22 @@ div.right-bar {
         }
     }
 
-    span.counter-left {
-        font-size: 100px;
-    }
+    div.right-bar-counter {
+        div.parent-right-bar-counter-left {
+            background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 
-    span.counter-right {
-        font-size: 100px;
+            span {
+                color: white;
+            }
+        }
+
+        div.parent-right-bar-counter-right {
+            background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+
+            span {
+                color: white;
+            }
+        }
     }
 }
 
@@ -116,15 +124,13 @@ div.right-bar {
     font-weight: bolder;
 }
 
-body {
-    overflow: hidden;
-    min-height: 100%;
-    height: 100%;
-    position: absolute;
-}
-
 .title-info {
     padding: 2px;
+}
+
+div.parent-table-product {
+    max-height: 33vh !important;
+    overflow-y: hidden;
 }
 
 table.my-table-product {
@@ -214,17 +220,3 @@ table.my-table-product {
 //         font-size: 75px !important;
 //     }
 // }
-
-@media (min-width: 3000px) and (max-width: 6000px) {
-    h1 {
-        font-size: 200px !important;
-    }
-
-    h2 {
-        font-size: 100px !important;
-    }
-
-    h3 {
-        font-size: 100px !important;
-    }
-}

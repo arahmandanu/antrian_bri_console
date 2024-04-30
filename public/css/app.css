@@ -11966,11 +11966,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-footer {
-  bottom: 0;
-  left: 0;
-}
-
 @media (max-width: 575.98px) {
   .walking-text {
     font-size: 1rem;
@@ -12031,6 +12026,108 @@ footer {
     border-top: 1px solid #ffcd12;
   }
 }
+@media (min-width: 3000px) and (max-width: 6000px) {
+  h1, .h1 {
+    font-size: 40px !important;
+  }
+  h2, .h2 {
+    font-size: 40px !important;
+  }
+  h3, .h3 {
+    font-size: 40px !important;
+  }
+}
+@media (max-width: 575.98px) {
+  img.logo {
+    width: 200px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  img.logo {
+    width: 200px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  img.logo {
+    width: 200px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  img.logo {
+    width: 200px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  img.logo {
+    width: 250px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+@media (min-width: 1400px) {
+  img.logo {
+    width: 350px;
+  }
+  .counter-number {
+    font-size: 10vh !important;
+  }
+  h1, .h1 {
+    font-size: 3vh !important;
+  }
+  h2, .h2 {
+    font-size: 3vh !important;
+  }
+}
+body {
+  min-height: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+}
+
 html {
   height: 100%;
 }
@@ -12049,8 +12146,6 @@ div.video-container {
 
 video#myVideo {
   padding: 0.3%;
-  -o-object-fit: fill !important;
-     object-fit: fill !important;
   height: 100%;
   width: 100%;
 }
@@ -12064,7 +12159,6 @@ div.title-info {
 
 div.table-info {
   width: 100%;
-  height: 40vh !important;
   background-color: #012362;
 }
 
@@ -12088,7 +12182,6 @@ div.right-bar div.counter-div-right {
   background-color: #011e40;
 }
 div.right-bar div.right-bar-caller {
-  height: 48.5vh !important;
   font-weight: bolder;
   font-size: 50px;
   color: white;
@@ -12097,7 +12190,6 @@ div.right-bar div.right-bar-caller div.caller-div {
   background-image: linear-gradient(180deg, rgb(42, 79, 182), #000000);
 }
 div.right-bar div.right-bar-title {
-  height: 9vh !important;
   font-weight: bolder;
   font-size: 50px;
 }
@@ -12114,11 +12206,17 @@ div.right-bar div.right-bar-title div.title-div-right {
 div.right-bar div.right-bar-title div.title-div-right span {
   color: white;
 }
-div.right-bar span.counter-left {
-  font-size: 100px;
+div.right-bar div.right-bar-counter div.parent-right-bar-counter-left {
+  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 }
-div.right-bar span.counter-right {
-  font-size: 100px;
+div.right-bar div.right-bar-counter div.parent-right-bar-counter-left span {
+  color: white;
+}
+div.right-bar div.right-bar-counter div.parent-right-bar-counter-right {
+  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+}
+div.right-bar div.right-bar-counter div.parent-right-bar-counter-right span {
+  color: white;
 }
 
 .counter-color {
@@ -12126,15 +12224,13 @@ div.right-bar span.counter-right {
   font-weight: bolder;
 }
 
-body {
-  overflow: hidden;
-  min-height: 100%;
-  height: 100%;
-  position: absolute;
-}
-
 .title-info {
   padding: 2px;
+}
+
+div.parent-table-product {
+  max-height: 33vh !important;
+  overflow-y: hidden;
 }
 
 table.my-table-product tbody tr:nth-child(odd) td {
@@ -12186,17 +12282,6 @@ table.my-table-product tbody tr:nth-child(even) td:nth-child(2) {
 @media (min-width: 1400px) {
   img.logo {
     width: 350px;
-  }
-}
-@media (min-width: 3000px) and (max-width: 6000px) {
-  h1, .h1 {
-    font-size: 200px !important;
-  }
-  h2, .h2 {
-    font-size: 100px !important;
-  }
-  h3, .h3 {
-    font-size: 100px !important;
   }
 }
 
