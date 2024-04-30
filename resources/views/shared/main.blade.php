@@ -98,10 +98,10 @@
 
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
-                            <div class="col-5 text-center counter-div-left">
+                            <div class="col-5 text-center counter-div-left rounded">
                                 <span class="counter-left counter-color counter-number">1</span>
                             </div>
-                            <div class="col-7 text-center counter-div-right">
+                            <div class="col-7 text-center counter-div-right rounded">
                                 <span class="counter-right counter-color counter-number">A05</span>
                             </div>
                         </div>
@@ -109,44 +109,63 @@
 
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent right-bar-title">
-                            <div class="col-5 text-center title-div-left">
+                            <div class="col-5 text-center title-div-left rounded">
                                 <span>LOKET</span>
                             </div>
-                            <div class="col-7 text-center title-div-right">
+                            <div class="col-7 text-center title-div-right rounded">
                                 <span>NO TIKET</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12 container-fluid">
-                        <div class="row counter-parent right-bar-counter">
-                            <div class="col-5 text-center right-bar-counter-left">
-                                <div class="parent-right-bar-counter-left">
-                                    <h1 class="text-white counter-number">02</h1>
+                    <div id="content-righ-bar">
+                        {{-- INCOMING ANTRIAN --}}
+                        <div class="col-md-12 container-fluid">
+                            <div class="row counter-parent right-bar-counter rounded">
+                                <div class="col-5 text-center right-bar-counter-left">
+                                    <div class="parent-right-bar-counter-left rounded">
+                                        <h1 class="text-white counter-number">02</h1>
+                                    </div>
+                                </div>
+
+                                <div class="col-7 text-center rounded">
+                                    <div class="parent-right-bar-counter-right rounded">
+                                        <h1 class="text-white right-bar-counter-left counter-number">A001</h1>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-7 text-center">
-                                <div class="parent-right-bar-counter-right">
-                                    <h1 class="text-white right-bar-counter-left counter-number">A001</h1>
+
+                            <div class="row counter-parent right-bar-counter rounded">
+                                <div class="col-5 text-center right-bar-counter-left">
+                                    <div class="parent-right-bar-counter-left rounded">
+                                        <h1 class="text-white counter-number">03</h1>
+                                    </div>
+                                </div>
+
+                                <div class="col-7 text-center">
+                                    <div class="parent-right-bar-counter-right rounded">
+                                        <h1 class="text-white right-bar-counter-left counter-number">A003</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row counter-parent right-bar-counter">
-                            <div class="col-5 text-center right-bar-counter-left">
-                                <div class="parent-right-bar-counter-left rounded">
-                                    <h1 class="text-white counter-number">03</h1>
+                        <div class="col-md-12 container-fluid">
+                            <div class="row counter-parent rounded">
+                                <div class="col-5 text-center ">
+                                    <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo-call">
                                 </div>
-                            </div>
-                            <div class="col-7 text-center">
-                                <div class="parent-right-bar-counter-right rounded">
-                                    <h1 class="text-white right-bar-counter-left counter-number">A003</h1>
+                                <div class="col-7 text-end align-middle">
+                                    <h1 class="timer">20:19:33</h1>
+                                    <hr class="timer border border-success border-3 opacity-100">
+                                    <h1 class="timer">Minggu, 28 April 2024</h1>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {{-- INI KETIKA ADA ANTRIAN MASUK
-                    <div class="col-md-12 container-fluid">
+                        {{-- END OF INCOMING ANTRIAN --}}
+
+                        {{-- INI KETIKA ADA ANTRIAN MASUK --}}
+                        {{-- <div class="col-md-12 container-fluid">
                         <div class="row counter-parent right-bar-caller">
                             <div class="col-12 caller-div position-relative">
                                 <div class="col-12" style="padding: 10px">
@@ -160,9 +179,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+                        {{-- END ANTRIAN MASUK --}}
                     </div>
-                    END ANTRIAN MASUK --}}
-
                 </div>
             </div>
         </div>

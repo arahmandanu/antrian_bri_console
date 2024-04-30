@@ -42,6 +42,7 @@ div.title-info {
 
 div.table-info {
     width: 100%;
+    min-height: 15vh;
     background-color: #012362;
 }
 
@@ -174,10 +175,18 @@ table.my-table-product {
     img.logo {
         width: 200px;
     }
+
+    img.logo-call {
+        width: 200px;
+    }
 }
 
 @include media-breakpoint-only(sm) {
     img.logo {
+        width: 200px;
+    }
+
+    img.logo-call {
         width: 200px;
     }
 }
@@ -186,10 +195,18 @@ table.my-table-product {
     img.logo {
         width: 200px;
     }
+
+    img.logo-call {
+        width: 200px;
+    }
 }
 
 @include media-breakpoint-only(lg) {
     img.logo {
+        width: 200px;
+    }
+
+    img.logo-call {
         width: 200px;
     }
 }
@@ -198,11 +215,19 @@ table.my-table-product {
     img.logo {
         width: 250px;
     }
+
+    img.logo-call {
+        width: 200px;
+    }
 }
 
 @include media-breakpoint-only(xxl) {
     img.logo {
         width: 350px;
+    }
+
+    img.logo-call {
+        width: 250px;
     }
 }
 
