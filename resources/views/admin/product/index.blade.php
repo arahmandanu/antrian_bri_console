@@ -54,7 +54,8 @@
                                                 <th style="text-align: center">
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
-                                                        <button type="button" class="btn btn-danger">
+                                                        <button type="button" class="btn btn-danger"
+                                                            onclick="deleteProduct({{ $listProduct->id }})">
                                                             <i class="bx bx-trash"></i> Hapus</button>
                                                         <a type="button" class="btn btn-primary"
                                                             href="{{ route('ConsoleShowProduct', $listProduct->id) }}">
@@ -74,4 +75,45 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function deleteProduct(id) {
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Aksi ini akan menghapus product turunan suku bunga!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, lanjutkan penghapusan!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "delete",
+                        url: "delete/" + id,
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data, textStatus, xhr) {
+                            if (xhr.status == 201) {
+                                Swal.fire({
+                                    title: "Terhapus!",
+                                    text: "Berhasil hapus data.",
+                                    icon: "success"
+                                });
+                                setTimeout(location.reload(), 10000);
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Gagal menghapus data",
+                                    text: "Silahkan hubungi admin anda!",
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

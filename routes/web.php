@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListProduct');
         Route::get('/create', [ProductController::class, 'create'])->name('ConsoleCreateProduct');
         Route::post('/store', [ProductController::class, 'store'])->name('ConsoleStoreProduct');
+        Route::delete('/delete/{master_product}', [ProductController::class, 'destroy'])->name('ConsoleDeleteProduct');
         Route::get('/show/{master_product}', [ProductController::class, 'show'])->name('ConsoleShowProduct');
         Route::get('/update/{master_product}', [ProductController::class, 'update'])->name('ConsoleUpdateProduct');
 

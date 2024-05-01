@@ -13,4 +13,11 @@ class ProductDetail extends Model
     {
         return $this->hasOne(MasterProduct::class);
     }
+
+    protected $fillable = [
+        'master_product_id',
+        'value',
+        'suku_bunga',
+        'display_number'
+    ];
 }

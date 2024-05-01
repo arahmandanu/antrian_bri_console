@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('master_product_id');
-            $table->foreign('master_product_id')->references('id')->on('master_products');
+            $table->foreign('master_product_id')->references('id')->on('master_products')->onDelete('cascade');
 
             $table->string('value')->nullable(false);
             $table->string('suku_bunga')->nullable(false);

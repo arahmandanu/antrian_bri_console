@@ -109,8 +109,18 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(MasterProduct $masterProduct)
     {
-        //
+        if ($masterProduct->delete()) {
+            $status = 'Success delete data!';
+            $code = 201;
+        } else {
+            $status = 'Gagal delete data';
+            $code = 422;
+        }
+
+        return response()->json([
+            'status' => $status
+        ], $code);
     }
 }
