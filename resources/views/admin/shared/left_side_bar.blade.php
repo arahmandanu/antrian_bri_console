@@ -22,13 +22,14 @@
                 data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('ConsoleShowListProduct') }}"
-                        class="{{ request()->is('admin/product/list') ? 'active' : '' }}">
+                        class="{{ request()->is('admin/product/list*') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>List Product</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="components-alerts.html">
+                    <a href="{{ route('ConsoleShowListSukuBunga') }}"
+                        class="{{ request()->is('admin/product/tarif_suku_bunga/list*') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Tarif Suku Bunga</span>
                     </a>
                 </li>

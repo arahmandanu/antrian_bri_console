@@ -18,6 +18,6 @@ class ProductDetail extends Model
         'master_product_id',
         'value',
         'suku_bunga',
-        'display_number'
+        'display_number',
     ];
 }

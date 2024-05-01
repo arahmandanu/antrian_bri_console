@@ -120,7 +120,7 @@ class ProductController extends Controller
         }
 
         return response()->json([
-            'status' => $status
+            'status' => $status,
         ], $code);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/update/{master_product}', [ProductController::class, 'update'])->name('ConsoleUpdateProduct');
 
         Route::prefix('tarif_suku_bunga')->group(function () {
-            Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListSukuBunga');
+            Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleShowListSukuBunga');
         });
     });
 });

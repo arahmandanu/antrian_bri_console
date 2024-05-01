@@ -7,7 +7,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('ShowDashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active">List Product</li>
+                <li class="breadcrumb-item active">Product</li>
+                <li class="breadcrumb-item active">Suku Bunga</li>
             </ol>
         </nav>
     </div>
@@ -40,30 +41,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($listProducts as $listProduct)
-                                            <tr>
-                                                <td>{{ $listProduct->display_number }}</td>
-                                                <td>{{ $listProduct->name }}</td>
-                                                <td style="text-align: center">
-                                                    @if ($listProduct->show == '1')
-                                                        <span class='badge bg-success'>yes</span>
-                                                    @else
-                                                        <span class='badge bg-danger'>no</span>
-                                                    @endif
-                                                </td>
-                                                <th style="text-align: center">
-                                                    <div class="btn-group" role="group"
-                                                        aria-label="Basic mixed styles example">
-                                                        <button type="button" class="btn btn-danger"
-                                                            onclick="deleteProduct({{ $listProduct->id }})">
-                                                            <i class="bx bx-trash"></i> Hapus</button>
-                                                        <a type="button" class="btn btn-primary"
-                                                            href="{{ route('ConsoleShowProduct', $listProduct->id) }}">
-                                                            <i class="bx bxs-pencil"></i> Edit</a>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
