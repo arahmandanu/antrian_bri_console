@@ -17,7 +17,8 @@ class ProductController extends Controller
     public function index()
     {
         $listProducts = MasterProduct::orderBy('display_number', 'asc')->get();
-        return view('admin.product.index', ["listProducts" => $listProducts]);
+
+        return view('admin.product.index', ['listProducts' => $listProducts]);
     }
 
     /**
@@ -37,7 +38,6 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,7 +45,7 @@ class ProductController extends Controller
         Validator::make($request->all(), [
             'name' => 'required',
             'display_number' => 'required|unique:master_products,display_number',
-            'show' => 'required'
+            'show' => 'required',
         ])->validate();
 
         if (MasterProduct::create($request->only(['name', 'display_number', 'show']))) {
@@ -71,7 +71,7 @@ class ProductController extends Controller
 
         return view('admin.product.show', [
             'displayNumbers' => array_diff($defaultNumber, $all),
-            'masterProduct' => $masterProduct
+            'masterProduct' => $masterProduct,
         ]);
     }
 
@@ -89,13 +89,18 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, MasterProduct $masterProduct)
     {
-        //
+        if ($masterProduct->update($request->only(['name', 'display_number', 'show']))) {
+            flash('Sukses merubah product!')->success();
+        } else {
+            flash('Gagal merubah product!')->error();
+        }
+
+        return redirect()->back();
     }
 
     /**

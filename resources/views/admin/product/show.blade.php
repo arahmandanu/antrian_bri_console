@@ -23,7 +23,8 @@
 
                                 @include('admin.shared.error_validation')
 
-                                <form class="row g-3" method="POST" action="{{ route('ConsoleStoreProduct') }}">
+                                <form class="row g-3" method="PUT"
+                                    action="{{ route('ConsoleUpdateProduct', $masterProduct->id) }}">
                                     @csrf
                                     <div class="col-12">
                                         <label for="inputNanme4" class="form-label">Nama Product</label>

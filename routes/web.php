@@ -31,8 +31,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     Route::prefix('product')->group(function () {
         Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListProduct');
         Route::get('/create', [ProductController::class, 'create'])->name('ConsoleCreateProduct');
-        Route::get('/show/{master_product}', [ProductController::class, 'show'])->name('ConsoleShowProduct');
         Route::post('/store', [ProductController::class, 'store'])->name('ConsoleStoreProduct');
+        Route::get('/show/{master_product}', [ProductController::class, 'show'])->name('ConsoleShowProduct');
+        Route::get('/update/{master_product}', [ProductController::class, 'update'])->name('ConsoleUpdateProduct');
 
         Route::prefix('tarif_suku_bunga')->group(function () {
             Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListSukuBunga');

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enum\UserRole;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSuperAdminSeeder extends Seeder
@@ -20,7 +19,7 @@ class UserSuperAdminSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'superadmin@mail.com',
             'password' => bcrypt('123456789'),
-            'role' => UserRole::SUPERADMIN
+            'role' => UserRole::SUPERADMIN,
         ]);
     }
 }

@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class MasterProduct extends Model
 {
     use HasFactory;
+
+    public function productDetails()
+    {
+        return $this->hasMany(ProductDetail::class);
+    }
 
     protected $fillable = [
         'name',
@@ -17,6 +21,6 @@ class MasterProduct extends Model
     ];
 
     protected $casts = [
-        'show' => 'boolean'
+        'show' => 'boolean',
     ];
 }

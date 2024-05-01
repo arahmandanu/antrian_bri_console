@@ -26,8 +26,9 @@ class AuthController extends Controller
             'password' => 'required',
         ])->validate();
 
-        if (!Auth::attempt($request->only(['password', 'email']))) {
+        if (! Auth::attempt($request->only(['password', 'email']))) {
             flash('Email atau Password salah!')->error();
+
             return redirect()->back();
         }
 
@@ -44,8 +45,10 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect()->route('ShowAdminLoginPage');
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -59,7 +62,6 @@ class AuthController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -92,7 +94,6 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
