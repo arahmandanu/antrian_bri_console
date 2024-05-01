@@ -36,6 +36,7 @@
 
     @include('admin.shared.left_side_bar')
     <main id="main" class="main">
+        @include('flash::message')
         @yield('content')
     </main>
     <!-- End #main -->

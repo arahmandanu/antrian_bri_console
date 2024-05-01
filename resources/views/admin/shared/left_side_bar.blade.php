@@ -3,7 +3,8 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link {{ request()->is('admin/dashboard') ? '' : 'collapsed' }}"
+                href="{{ route('ShowDashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -11,14 +12,18 @@
 
         {{-- MASTER PRODUCT --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link {{ request()->is('admin/product*') ? '' : 'collapsed' }}" data-bs-target="#product-nav"
+                data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Master Product</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+            <ul id="product-nav" class="nav-content collapse {{ request()->is('admin/product*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html">
-                        <i class="bi bi-circle"></i><span>Nama Product</span>
+                    <a href="{{ route('ConsoleShowListProduct') }}"
+                        class="{{ request()->is('admin/product/list') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>List Product</span>
                     </a>
                 </li>
 

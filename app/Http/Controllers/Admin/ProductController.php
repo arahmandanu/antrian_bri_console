@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $listProducts = MasterProduct::orderBy('display_number', 'asc')->get();
+        return view('admin.product.index', ["listProducts" => $listProducts]);
     }
 
     /**
@@ -24,7 +27,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // DEFAULT NUMBER DISPLAY
+        $defaultNumber = range(1, 100);
+        $all = MasterProduct::all()->pluck('display_number')->toArray();
+
+        return view('admin.product.create', ['displayNumbers' => array_diff($defaultNumber, $all)]);
     }
 
     /**
@@ -35,7 +42,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'display_number' => 'required|unique:master_products,display_number',
+            'show' => 'required'
+        ])->validate();
+
+        if (MasterProduct::create($request->only(['name', 'display_number', 'show']))) {
+            flash('Sukses menambahkan product!')->success();
+        } else {
+            flash('Gagal menambahkan product!')->error();
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -44,9 +63,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(MasterProduct $masterProduct)
     {
-        //
+        // DEFAULT NUMBER DISPLAY
+        $defaultNumber = range(1, 100);
+        $all = MasterProduct::where('id', '!=', $masterProduct->id)->get()->pluck('display_number')->toArray();
+
+        return view('admin.product.show', [
+            'displayNumbers' => array_diff($defaultNumber, $all),
+            'masterProduct' => $masterProduct
+        ]);
     }
 
     /**
