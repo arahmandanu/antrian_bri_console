@@ -166,20 +166,20 @@
 
                         {{-- INI KETIKA ADA ANTRIAN MASUK --}}
                         {{-- <div class="col-md-12 container-fluid">
-                        <div class="row counter-parent right-bar-caller">
-                            <div class="col-12 caller-div position-relative">
-                                <div class="col-12" style="padding: 10px">
-                                    <p class="display-5">Antrian Nomor</p>
-                                    <span class="display-1 counter-color">A001</span>
-                                </div>
+                            <div class="row counter-parent right-bar-caller">
+                                <div class="col-12 caller-div position-relative">
+                                    <div class="col-12" style="padding: 10px">
+                                        <p class="display-5">Antrian Nomor</p>
+                                        <span class="display-1 counter-color">A001</span>
+                                    </div>
 
-                                <div class="col-12" style="padding: 10px">
-                                    <p class="display-5">Silahkan Menuju Ke</p>
-                                    <span class="display-1 counter-color">02</span>
+                                    <div class="col-12" style="padding: 10px">
+                                        <p class="display-5">Silahkan Menuju Ke</p>
+                                        <span class="display-1 counter-color">02</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div> --}}
+                        </div> --}}
                         {{-- END ANTRIAN MASUK --}}
                     </div>
                 </div>

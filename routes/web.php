@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])->named('ShowConsoleIndex');
+Route::get('/', [MainController::class, 'index'])->name('ShowConsoleIndex');
 
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [AuthController::class, 'index'])->named('ShowAdminLoginPage');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
+
+    Route::group(['middleware' => ['islogin?']], function () {
+        Route::get('/login', [AuthController::class, 'index'])->withoutMiddleware('auth:web')->name('ShowAdminLoginPage');
+        Route::post('/verify', [AuthController::class, 'verify'])->withoutMiddleware('auth:web')->name('VerifyLoginAccount');
+    });
+
+    Route::get('/log-out', [AuthController::class, 'logout'])->name('LogoutPage');
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('ShowDashboard');
+    Route::prefix('product')->group(function () {
+        Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListProduct');
+
+        Route::prefix('tarif_suku_bunga')->group(function () {
+            Route::get('/list', [ProductController::class, 'index'])->name('ConsoleShowListSukuBunga');
+        });
+    });
 });

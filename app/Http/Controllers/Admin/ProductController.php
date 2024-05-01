@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
-class AuthController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,36 +14,9 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('admin.auth.index');
+        //
     }
 
-    public function verify(Request $request)
-    {
-        Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ])->validate();
-
-        if (!Auth::attempt($request->only(['password', 'email']))) {
-            flash('Email atau Password salah!')->error();
-            return redirect()->back();
-        }
-
-        return redirect()->route('ShowDashboard');
-    }
-
-    public function dashboard()
-    {
-        return view('admin.dashboard.index');
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('ShowAdminLoginPage');
-    }
     /**
      * Show the form for creating a new resource.
      *
