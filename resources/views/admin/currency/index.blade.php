@@ -64,7 +64,7 @@
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
                                                         <button type="button" class="btn btn-danger"
-                                                            onclick="deleteProductDetail()">
+                                                            onclick="deleteCurrency({{ $currency->id }})">
                                                             <i class="bx bx-trash"></i> Hapus</button>
                                                         <a type="button" class="btn btn-primary"
                                                             href="{{ route('ConsoleEditCurrency', $currency->id) }}">
@@ -101,10 +101,10 @@
             });
         });
 
-        function deleteProductDetail(id) {
+        function deleteCurrency(id) {
             Swal.fire({
                 title: "Apakah anda yakin?",
-                text: "Aksi ini akan menghapus suku bunga!",
+                text: "Aksi ini akan menghapus Currency!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -114,7 +114,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "delete",
-                        url: "{{ route('ConsoleDeleteListSukuBunga', '') }}" + '/' + id,
+                        url: "{{ route('ConsoleDestroyCurrency', '') }}" + '/' + id,
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },

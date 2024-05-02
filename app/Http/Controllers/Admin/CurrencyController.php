@@ -125,8 +125,22 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Currency $currency)
     {
-        //
+        $file_path = $currency->flag_url;
+        if ($currency->delete()) {
+            if (file_exists(public_path($file_path))) {
+                unlink(public_path($file_path));
+            }
+            $status = 'Success delete data!';
+            $code = 201;
+        } else {
+            $status = 'Gagal delete data';
+            $code = 422;
+        }
+
+        return response()->json([
+            'status' => $status,
+        ], $code);
     }
 }
