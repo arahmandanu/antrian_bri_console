@@ -58,7 +58,7 @@
                                             <th width="10%">Urutan</th>
                                             <th width="35%" style="word-wrap: break-word">Value</th>
                                             <th width="35%">Suku Bunga</th>
-                                            <th width="20%">Action</th>
+                                            <th width="20%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>

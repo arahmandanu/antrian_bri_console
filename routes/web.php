@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\MainController;
@@ -44,5 +45,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::delete('/delete/{product_detail}', [SukuBungaController::class, 'destroy'])->name('ConsoleDeleteListSukuBunga');
             Route::get('/get_display_number', [SukuBungaController::class, 'getDisplayNumber'])->name('ConsoleGetDisplayNumberSukuBunga');
         });
+    });
+
+    Route::prefix('currency')->group(function () {
+        Route::get('/list', [CurrencyController::class, 'index'])->name('ConsoleIndexCurrency');
+        Route::get('/create', [CurrencyController::class, 'create'])->name('ConsoleCreateCurrency');
+        Route::post('/store', [CurrencyController::class, 'store'])->name('ConsoleStoreCurrency');
     });
 });

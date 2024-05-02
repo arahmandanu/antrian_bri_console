@@ -23,9 +23,10 @@ class SukuBungaController extends Controller
         }
 
         $masterProducts = MasterProduct::orderBy('display_number', 'asc')->get();
+
         return view('admin.product.suku_bunga.index', [
             'masterProducts' => $masterProducts,
-            'search' => $search
+            'search' => $search,
         ]);
     }
 
@@ -37,22 +38,24 @@ class SukuBungaController extends Controller
     public function create()
     {
         $masterProducts = MasterProduct::all();
+
         return view('admin.product.suku_bunga.create', [
-            'masterProducts' => $masterProducts
+            'masterProducts' => $masterProducts,
         ]);
     }
 
     // only json
     public function getDisplayNumber(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $product = MasterProduct::findOrFail($request->input('product_id'));
         $usedNumber = $product->productDetails()->pluck('display_number')->toArray();
         $defaultNumber = range(1, 100);
 
-        $canUsed = array();
+        $canUsed = [];
         $canUsed = array_merge($canUsed, array_diff($defaultNumber, $usedNumber));
+
         return response()->json([
             'display_number' => $canUsed,
         ], 200);

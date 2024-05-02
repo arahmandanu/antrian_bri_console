@@ -41,12 +41,16 @@
 
         {{-- MASTER PRODUCT --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#currency-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link {{ request()->is('admin/currency*') ? '' : 'collapsed' }}" data-bs-target="#currency-nav"
+                data-bs-toggle="collapse" href="#">
                 <i class="bx bx-money"></i><span>Master Currency</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="currency-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+            <ul id="currency-nav" class="nav-content collapse {{ request()->is('admin/currency*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html">
+                    <a href="{{ route('ConsoleIndexCurrency') }}"
+                        class="{{ request()->is('admin/currency/list*') || request()->is('admin/currency/create') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Setting</span>
                     </a>
                 </li>

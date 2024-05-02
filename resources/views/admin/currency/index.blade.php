@@ -7,7 +7,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('ShowDashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active">List Product</li>
+                <li class="breadcrumb-item active">Currency</li>
             </ol>
         </nav>
     </div>
@@ -22,51 +22,49 @@
                         <div class="card">
 
                             <div class="card-body">
-                                <h5 class="card-title">Daftar <span>/Product</span></h5>
+                                <h5 class="card-title">Daftar <span>Currency</span></h5>
                                 <a type="button" class="btn btn-success btn-lg"
-                                    href="{{ route('ConsoleCreateProduct') }}"><i class="bx bxs-save"></i> Tambah
-                                    Product</a>
+                                    href="{{ route('ConsoleCreateCurrency') }}">
+                                    <i class="bx bx-list-plus"></i> Tambah Currency</a>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th width="10%" style="word-wrap: break-word">Tampilan</th>
-                                            <th width="60%">
-                                                <b>N</b>ama
-                                            </th>
-                                            <th width="15%">Ditampilkan?</th>
-                                            <th width="15%">Aksi</th>
+                                            <th width='5%'>Bendera</th>
+                                            <th width='15%'>Kurs</th>
+                                            <th width='15%'>Jual</th>
+                                            <th width='15%'>Beli</th>
+                                            <th width='15%'>Jual</th>
+                                            <th width='15%'>Beli</th>
+                                            <th width='20%'>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($listProducts as $listProduct)
+                                        @forelse ($listCurrecy as $currency)
                                             <tr>
-                                                <td>{{ $listProduct->display_number }}</td>
-                                                <td>{{ Str::upper($listProduct->name) }}</td>
-                                                <td style="text-align: center">
-                                                    @if ($listProduct->show == '1')
-                                                        <span class='badge bg-success'>yes</span>
-                                                    @else
-                                                        <span class='badge bg-danger'>no</span>
-                                                    @endif
+                                                <td>
+                                                    <img style='height:3vh;width:6vh' src="{{ asset($currency->flag_url) }}"
+                                                        class="rounded-circle" />
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td>{{ Str::upper($currency->name) }}</td>
+                                                <td>{{ $currency->jual_a }}</td>
+                                                <td>{{ $currency->beli_a }}</td>
+                                                <td>{{ $currency->jual_b }}</td>
+                                                <td>{{ $currency->beli_b }}</td>
+                                                <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
                                                         <button type="button" class="btn btn-danger"
-                                                            onclick="deleteProduct({{ $listProduct->id }})">
+                                                            onclick="deleteProductDetail()">
                                                             <i class="bx bx-trash"></i> Hapus</button>
-                                                        <a type="button" class="btn btn-primary"
-                                                            href="{{ route('ConsoleShowProduct', $listProduct->id) }}">
+                                                        <a type="button" class="btn btn-primary" href="#">
                                                             <i class="bx bxs-pencil"></i> Edit</a>
-                                                        <a type="button" class="btn btn-success"
-                                                            href="{{ route('ConsoleIndexListSukuBunga', '') }}?id={{ $listProduct->id }}"><i
-                                                                class="bx bx-search-alt"></i> Suku Bunga</a>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -84,12 +82,20 @@
             $('#myTable').DataTable({
                 searching: true
             });
+
+            $("#product_id").change(function() {
+                if (!this.value) {
+                    window.location.href = "{{ route('ConsoleIndexListSukuBunga') }}"
+                };
+
+                window.location.href = "{{ route('ConsoleIndexListSukuBunga') }}" + '?id=' + this.value;
+            });
         });
 
-        function deleteProduct(id) {
+        function deleteProductDetail(id) {
             Swal.fire({
                 title: "Apakah anda yakin?",
-                text: "Aksi ini akan menghapus product turunan suku bunga!",
+                text: "Aksi ini akan menghapus suku bunga!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -99,7 +105,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "delete",
-                        url: "delete/" + id,
+                        url: "{{ route('ConsoleDeleteListSukuBunga', '') }}" + '/' + id,
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },
