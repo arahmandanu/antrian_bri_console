@@ -43,7 +43,7 @@
                                         @foreach ($listProducts as $listProduct)
                                             <tr>
                                                 <td>{{ $listProduct->display_number }}</td>
-                                                <td>{{ $listProduct->name }}</td>
+                                                <td>{{ Str::upper($listProduct->name) }}</td>
                                                 <td style="text-align: center">
                                                     @if ($listProduct->show == '1')
                                                         <span class='badge bg-success'>yes</span>

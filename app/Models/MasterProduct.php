@@ -11,7 +11,7 @@ class MasterProduct extends Model
 
     public function productDetails()
     {
-        return $this->hasMany(ProductDetail::class);
+        return $this->hasMany(ProductDetail::class)->orderBy('display_number', 'asc');
     }
 
     protected $fillable = [

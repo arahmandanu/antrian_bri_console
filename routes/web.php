@@ -40,6 +40,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::prefix('tarif_suku_bunga')->group(function () {
             Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleIndexListSukuBunga');
             Route::get('/create', [SukuBungaController::class, 'create'])->name('ConsoleCreateListSukuBunga');
+            Route::post('/store', [SukuBungaController::class, 'store'])->name('ConsoleStoreListSukuBunga');
+            Route::delete('/delete/{product_detail}', [SukuBungaController::class, 'destroy'])->name('ConsoleDeleteListSukuBunga');
+            Route::get('/get_display_number', [SukuBungaController::class, 'getDisplayNumber'])->name('ConsoleGetDisplayNumberSukuBunga');
         });
     });
 });
