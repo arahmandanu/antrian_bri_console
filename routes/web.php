@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleIndexListSukuBunga');
             Route::get('/create', [SukuBungaController::class, 'create'])->name('ConsoleCreateListSukuBunga');
             Route::post('/store', [SukuBungaController::class, 'store'])->name('ConsoleStoreListSukuBunga');
+            Route::get('/edit/{product_detail}', [SukuBungaController::class, 'edit'])->name('ConsoleEditListSukuBunga');
+            Route::put('/update/{product_detail}', [SukuBungaController::class, 'update'])->name('ConsoleUpdateListSukuBunga');
             Route::delete('/delete/{product_detail}', [SukuBungaController::class, 'destroy'])->name('ConsoleDeleteListSukuBunga');
             Route::get('/get_display_number', [SukuBungaController::class, 'getDisplayNumber'])->name('ConsoleGetDisplayNumberSukuBunga');
         });

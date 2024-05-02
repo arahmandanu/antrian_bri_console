@@ -13,7 +13,7 @@ class ProductDetail extends Model
 
     public function masterProduct()
     {
-        return $this->hasOne(MasterProduct::class);
+        return $this->belongsTo(MasterProduct::class, 'master_product_id');
     }
 
     protected $fillable = [

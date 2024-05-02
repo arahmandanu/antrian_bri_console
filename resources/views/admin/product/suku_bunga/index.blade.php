@@ -74,7 +74,8 @@
                                                             <button type="button" class="btn btn-danger"
                                                                 onclick="deleteProductDetail({{ $item->id }})">
                                                                 <i class="bx bx-trash"></i> Hapus</button>
-                                                            <a type="button" class="btn btn-primary" href="#">
+                                                            <a type="button" class="btn btn-primary"
+                                                                href="{{ route('ConsoleEditListSukuBunga', $item->id) }}">
                                                                 <i class="bx bxs-pencil"></i> Edit</a>
                                                         </div>
                                                     </td>

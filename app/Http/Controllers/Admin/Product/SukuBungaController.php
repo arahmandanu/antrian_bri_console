@@ -47,7 +47,7 @@ class SukuBungaController extends Controller
     // only json
     public function getDisplayNumber(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $product = MasterProduct::findOrFail($request->input('product_id'));
         $usedNumber = $product->productDetails()->pluck('display_number')->toArray();
@@ -101,9 +101,24 @@ class SukuBungaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProductDetail $product_detail)
     {
-        //
+        $usedNumber = ProductDetail::where('master_product_id', '=', $product_detail->id)
+            ->whereNot(function ($query) use ($product_detail) {
+                $query->where('display_number', $product_detail->display_number);
+            })
+            ->get()
+            ->pluck('id')
+            ->toArray();
+        $defaultNumber = range(1, 100);
+
+        $canUsed = [];
+        $canUsed = array_merge($canUsed, array_diff($defaultNumber, $usedNumber));
+
+        return view('admin.product.suku_bunga.edit', [
+            'productDetail' => $product_detail,
+            'displayNumber' => $canUsed
+        ]);
     }
 
     /**
@@ -112,9 +127,21 @@ class SukuBungaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProductDetail $product_detail)
     {
-        //
+        $validated = Validator::make($request->all(), [
+            'value' => 'required|string',
+            'suku_bunga' => 'required|string',
+            'display_number' => 'required|integer',
+        ])->validate();
+
+        if ($product_detail->update($validated)) {
+            flash('Success mengubah product suku bunga!')->success();
+        } else {
+            flash('Gagal mengubah product suku bunga!')->error();
+        }
+
+        return redirect()->back();
     }
 
     /**
