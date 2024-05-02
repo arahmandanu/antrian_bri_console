@@ -37,7 +37,8 @@
                                             <th width='15%'>Beli</th>
                                             <th width='15%'>Jual</th>
                                             <th width='15%'>Beli</th>
-                                            <th width='20%'>Aksi</th>
+                                            <th width='10%'>Show</th>
+                                            <th width='10%'>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,12 +54,20 @@
                                                 <td>{{ $currency->jual_b }}</td>
                                                 <td>{{ $currency->beli_b }}</td>
                                                 <td>
+                                                    @if ($currency->show == '1')
+                                                        <span class='badge bg-success'>yes</span>
+                                                    @else
+                                                        <span class='badge bg-danger'>no</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
                                                         <button type="button" class="btn btn-danger"
                                                             onclick="deleteProductDetail()">
                                                             <i class="bx bx-trash"></i> Hapus</button>
-                                                        <a type="button" class="btn btn-primary" href="#">
+                                                        <a type="button" class="btn btn-primary"
+                                                            href="{{ route('ConsoleEditCurrency', $currency->id) }}">
                                                             <i class="bx bxs-pencil"></i> Edit</a>
                                                     </div>
                                                 </td>

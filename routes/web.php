@@ -53,5 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/list', [CurrencyController::class, 'index'])->name('ConsoleIndexCurrency');
         Route::get('/create', [CurrencyController::class, 'create'])->name('ConsoleCreateCurrency');
         Route::post('/store', [CurrencyController::class, 'store'])->name('ConsoleStoreCurrency');
+        Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
+        Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
     });
 });

@@ -6,7 +6,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('ShowDashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active">Currnecy</li>
+                <li class="breadcrumb-item active">Currency</li>
             </ol>
         </nav>
     </div>

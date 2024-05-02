@@ -17,7 +17,7 @@ class CurrencyController extends Controller
     public function index()
     {
         return view('admin.currency.index', [
-            'listCurrecy' => Currency::where('show', '=', true)->get(),
+            'listCurrecy' => Currency::all(),
         ]);
     }
 
@@ -38,18 +38,18 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         Validator::make($request->all(), [
             'flag' => 'required|file|mimes:jpg,jpeg,png,gif|max:1024',
             'name' => 'required',
             'jual_a' => 'required',
             'beli_a' => 'required',
             'jual_b' => 'required',
-            'jual_b' => 'required',
+            'beli_b' => 'required',
+            'show' => 'required'
         ])->validate();
 
         $images = $request->flag;
-        $imageName = time().'.'.$images->extension();
+        $imageName = time() . '.' . $images->extension();
 
         try {
             $url_path = $images->move(Currency::FLAG_PATH, $imageName);
@@ -63,9 +63,9 @@ class CurrencyController extends Controller
         $row['flag_url'] = $url_path;
 
         if (Currency::create($row)) {
-            flash('Sukses menambahkan Suku bunga!')->success();
+            flash('Sukses menambahkan currency!')->success();
         } else {
-            flash('Gagal menambahkan Suku bunga!')->error();
+            flash('Gagal menambahkan currency!')->error();
         }
 
         return redirect()->route('ConsoleIndexCurrency');
@@ -88,9 +88,9 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Currency $currency)
     {
-        //
+        return view('admin.currency.edit', ['currency' => $currency]);
     }
 
     /**
@@ -99,9 +99,24 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Currency $currency)
     {
-        //
+        $request = Validator::make($request->all(), [
+            'name' => 'required',
+            'jual_a' => 'required',
+            'beli_a' => 'required',
+            'jual_b' => 'required',
+            'beli_b' => 'required',
+            'show' => 'required'
+        ])->validate();
+
+        if ($currency->update($request)) {
+            flash('Sukses mengubah currency!')->success();
+        } else {
+            flash('Gagal mengubah currency!')->error();
+        }
+
+        return redirect()->back();
     }
 
     /**
