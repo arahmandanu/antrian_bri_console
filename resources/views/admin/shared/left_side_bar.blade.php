@@ -28,7 +28,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('ConsoleShowListSukuBunga') }}"
+                    <a href="{{ route('ConsoleIndexListSukuBunga') }}"
                         class="{{ request()->is('admin/product/tarif_suku_bunga/list*') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Tarif Suku Bunga</span>
                     </a>

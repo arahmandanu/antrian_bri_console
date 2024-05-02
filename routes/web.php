@@ -38,7 +38,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/update/{master_product}', [ProductController::class, 'update'])->name('ConsoleUpdateProduct');
 
         Route::prefix('tarif_suku_bunga')->group(function () {
-            Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleShowListSukuBunga');
+            Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleIndexListSukuBunga');
+            Route::get('/create', [SukuBungaController::class, 'create'])->name('ConsoleCreateListSukuBunga');
         });
     });
 });

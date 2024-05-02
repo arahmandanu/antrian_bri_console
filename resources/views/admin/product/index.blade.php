@@ -51,7 +51,7 @@
                                                         <span class='badge bg-danger'>no</span>
                                                     @endif
                                                 </td>
-                                                <th style="text-align: center">
+                                                <td style="text-align: center">
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
                                                         <button type="button" class="btn btn-danger"
@@ -61,7 +61,7 @@
                                                             href="{{ route('ConsoleShowProduct', $listProduct->id) }}">
                                                             <i class="bx bxs-pencil"></i> Edit</a>
                                                     </div>
-                                                </th>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

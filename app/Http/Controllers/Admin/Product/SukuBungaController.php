@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterProduct;
 use Illuminate\Http\Request;
 
 class SukuBungaController extends Controller
@@ -12,9 +13,18 @@ class SukuBungaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.product.suku_bunga.index');
+        $search = null;
+        if ($request->input('id')) {
+            $search = MasterProduct::findOrFail($request->input('id'));
+        }
+
+        $masterProducts = MasterProduct::all();
+        return view('admin.product.suku_bunga.index', [
+            'masterProducts' => $masterProducts,
+            'search' => $search
+        ]);
     }
 
     /**
@@ -24,7 +34,10 @@ class SukuBungaController extends Controller
      */
     public function create()
     {
-        //
+        $masterProducts = MasterProduct::all();
+        return view('admin.product.suku_bunga.create', [
+            'masterProducts' => $masterProducts
+        ]);
     }
 
     /**
