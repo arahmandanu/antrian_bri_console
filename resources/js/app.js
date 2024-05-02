@@ -10,3 +10,4 @@ import DataTable from 'datatables.net-dt';
 window.DataTable = DataTable;
 
 require('./tabl_auto_scroll_down');
+require('./main');
