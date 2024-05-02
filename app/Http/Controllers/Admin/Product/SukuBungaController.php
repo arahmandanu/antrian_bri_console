@@ -47,7 +47,7 @@ class SukuBungaController extends Controller
     // only json
     public function getDisplayNumber(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $product = MasterProduct::findOrFail($request->input('product_id'));
         $usedNumber = $product->productDetails()->pluck('display_number')->toArray();
@@ -117,7 +117,7 @@ class SukuBungaController extends Controller
 
         return view('admin.product.suku_bunga.edit', [
             'productDetail' => $product_detail,
-            'displayNumber' => $canUsed
+            'displayNumber' => $canUsed,
         ]);
     }
 
