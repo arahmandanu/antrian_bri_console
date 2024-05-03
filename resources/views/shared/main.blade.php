@@ -43,7 +43,106 @@
                         <div class="col-md-12">
                             <div id="carouselExampleControlsProduct" class="carousel slide carousel-fade">
                                 <div class="carousel-inner" id="container-parent-corousel">
-                                    <div class="carousel-item" id="corousel-parent" data_id="1">
+                                    @forelse ($products as $item)
+                                        <div class="carousel-item" id="corousel-parent"
+                                            data_id="{{ $loop->iteration }}">
+                                            <div class="title-info rounded border-top border-opacity-10">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div>
+                                                            <h1 class="fw-bolder text-center text-white title-info">
+                                                                {{ Str::upper($item->name) }}
+                                                            </h1>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            style="
+                                                    border-top:1px solid rgb(255, 255, 255);
+                                                border-left:1px solid rgb(255, 255, 255);
+                                                border-top-left-radius: 500px;
+                                                margin-top:5px;">
+                                                            <h1 class="fw-bolder text-center title-info"
+                                                                style="color: #faa901!important;">
+                                                                TARIF SUKU
+                                                                BUNGA (% PA) </h1>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-12 text-center">
+                                                        <div class="table-info parent-table-product table-auto-scroll">
+                                                            <table class="table my-table-product">
+                                                                <tbody>
+                                                                    @forelse ($item->productDetails as $productDetail)
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h2>{{ Str::upper($productDetail->value) }}
+                                                                                </h2>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h2>{{ Str::upper($productDetail->suku_bunga) }}
+                                                                                </h2>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @empty
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h2>-</h2>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h2>-</h2>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforelse
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="carousel-item" id="corousel-parent" data_id="1">
+                                            <div class="title-info rounded border-top border-opacity-10">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div>
+                                                            <h1 class="fw-bolder text-center text-white title-info"> -
+                                                            </h1>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div
+                                                            style="
+                                                    border-top:1px solid rgb(255, 255, 255);
+                                                border-left:1px solid rgb(255, 255, 255);
+                                                border-top-left-radius: 500px;
+                                                margin-top:5px;">
+                                                            <h1 class="fw-bolder text-center title-info"
+                                                                style="color: #faa901!important;">
+                                                                TARIF SUKU
+                                                                BUNGA (% PA) </h1>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-12 text-center">
+                                                        <div class="table-info parent-table-product table-auto-scroll">
+                                                            <table class="table my-table-product">
+                                                                <tbody>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforelse
+                                    {{-- <div class="carousel-item" id="corousel-parent" data_id="1">
                                         <div class="title-info rounded border-top border-opacity-10">
                                             <div class="row">
                                                 <div class="col-6">
@@ -183,7 +282,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 {{-- <button class="carousel-control-prev" type="button"
                                     data-bs-target="#carouselExampleControlsProduct" data-bs-slide="prev">
@@ -352,7 +451,6 @@
 
     <script>
         $(document).ready(function() {
-            // console.log([].shift());
             product_corousel(true);
         });
 

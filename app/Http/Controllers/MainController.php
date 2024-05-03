@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterProduct;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -13,7 +14,9 @@ class MainController extends Controller
      */
     public function index()
     {
-        return view('shared.main');
+        return view('shared.main', [
+            'products' => MasterProduct::Show()->get()
+        ]);
     }
 
     /**
