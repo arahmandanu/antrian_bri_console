@@ -508,28 +508,6 @@
                 });
             }
         }
-
-        $('div#corousel-parent').on('penambahan', function() {
-            var id = this.getAttribute("data_id")
-            var obj = $("div#corousel-parent[data_id=" + id + "] .table-auto-scroll");
-
-            if (check.length) {
-                // table auto scroll
-                var $el = $(".table-auto-scroll");
-                anims();
-                $el.hover(stop, tesdong);
-                // END table auto scroll
-            }
-        });
-
-        function anims() {
-            var $el = $(".table-auto-scroll");
-            var st = $el.scrollTop();
-            var sb = $el.prop("scrollHeight") - $el.innerHeight();
-            $el.animate({
-                scrollTop: st < sb / 2 ? sb : 0
-            }, 15000, anims);
-        }
     </script>
 </body>
 
