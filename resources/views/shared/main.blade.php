@@ -48,27 +48,27 @@
                                             data_id="{{ $loop->iteration }}">
                                             <div class="title-info rounded border-top border-opacity-10">
                                                 <div class="row">
+
                                                     <div class="col-6">
                                                         <div>
                                                             <h1 class="fw-bolder text-center text-white title-info">
                                                                 {{ Str::upper($item->name) }}
                                                             </h1>
                                                         </div>
-
                                                     </div>
+
                                                     <div class="col-6">
                                                         <div
                                                             style="
                                                     border-top:1px solid rgb(255, 255, 255);
-                                                border-left:1px solid rgb(255, 255, 255);
-                                                border-top-left-radius: 500px;
-                                                margin-top:5px;">
+                                                    border-left:1px solid rgb(255, 255, 255);
+                                                   border-top-left-radius: 500px;
+                                                   margin-top:5px;">
                                                             <h1 class="fw-bolder text-center title-info"
                                                                 style="color: #faa901!important;">
                                                                 TARIF SUKU
                                                                 BUNGA (% PA) </h1>
                                                         </div>
-
                                                     </div>
 
                                                     <div class="col-12 text-center">
@@ -454,16 +454,24 @@
             product_corousel(true);
         });
 
-        function run_next_corousel(ids) {
+        function run_next_corousel(ids, current_id) {
+            var current_scroll_table = $("div#corousel-parent[data_id=" + current_id + "] .table-auto-scroll");
+            var st = current_scroll_table.scrollTop();
+            var sb = current_scroll_table.prop("scrollHeight") - current_scroll_table.innerHeight();
+            current_scroll_table.animate({
+                scrollTop: st < sb / 2 ? sb : 0
+            }, 15000);
+
             if (ids[0] === undefined) {
                 return product_corousel(false);
             }
 
             setTimeout(() => {
                 $('#carouselExampleControlsProduct').carousel('next');
+
                 setTimeout(() => {
-                    ids.shift();
-                    run_next_corousel(ids);
+                    var current_id = ids.shift();
+                    run_next_corousel(ids, current_id);
                 }, 5000);
             }, 5000);
         }
@@ -481,11 +489,23 @@
 
                 var all = $('div#corousel-parent');
                 var new_map = $.map(all, function(elementOrValue, indexOrKey) {
-                    if (elementOrValue.getAttribute('data_id') != current_id) return elementOrValue.getAttribute(
-                        'data_id');
+                    if (elementOrValue.getAttribute('data_id') != current_id) return elementOrValue
+                        .getAttribute(
+                            'data_id');
                 });
 
-                run_next_corousel(new_map);
+                var $el = firstCorousel.children().children().children().children('.table-auto-scroll');
+                var st = $el.scrollTop();
+                var sb = $el.prop("scrollHeight") - $el.innerHeight();
+
+                $el.animate({
+                    scrollTop: st < sb / 2 ? sb : 0
+                }, {
+                    duration: 10000,
+                    complete: function() {
+                        run_next_corousel(new_map, current_id)
+                    }
+                });
             }
         }
 
@@ -496,24 +516,19 @@
             if (check.length) {
                 // table auto scroll
                 var $el = $(".table-auto-scroll");
-                anim();
+                anims();
                 $el.hover(stop, tesdong);
                 // END table auto scroll
             }
         });
 
-        function stop(id) {
-            var $el = $(".table-auto-scroll");
-            $el.stop();
-        }
-
-        function anim(id) {
+        function anims() {
             var $el = $(".table-auto-scroll");
             var st = $el.scrollTop();
             var sb = $el.prop("scrollHeight") - $el.innerHeight();
             $el.animate({
                 scrollTop: st < sb / 2 ? sb : 0
-            }, 15000, anim);
+            }, 15000, anims);
         }
     </script>
 </body>
