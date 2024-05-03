@@ -30,61 +30,221 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="title-info rounded border-top border-opacity-10">
-                            <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="title-info rounded border-top border-opacity-10">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div>
-                                        <h1 class="fw-bolder text-center text-white title-info"> BRITAMA
-                                            (RP) </h1>
-                                    </div>
-
-                                </div>
-                                <div class="col-6">
-                                    <div
-                                        style="
-                                    border-top:1px solid rgb(255, 255, 255);
-                                border-left:1px solid rgb(255, 255, 255);
-                                border-top-left-radius: 500px;
-                                margin-top:5px;">
-                                        <h1 class="fw-bolder text-center title-info" style="color: #faa901!important;">
-                                            TARIF SUKU
-                                            BUNGA (% PA) </h1>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-12 text-center">
-                                    <div class="table-info parent-table-product table-auto-scroll">
-                                        <table class="table my-table-product">
-                                            <tbody>
-                                                @for ($i = 0; $i < 20; $i++)
-                                                    <tr>
-                                                        <td>
-                                                            <h2>tes {{ $i }}</h2>
-                                                        </td>
-                                                        <td>
-                                                            <h2>{{ $i }} %%</h2>
-                                                        </td>
-                                                    </tr>
-                                                @endfor
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                <div id='content_left_bar'>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="title-info rounded border-top border-opacity-10">
+                                <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="carouselExampleControlsProduct" class="carousel slide carousel-fade">
+                                <div class="carousel-inner" id="container-parent-corousel">
+                                    <div class="carousel-item" id="corousel-parent" data_id="1">
+                                        <div class="title-info rounded border-top border-opacity-10">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div>
+                                                        <h1 class="fw-bolder text-center text-white title-info"> BRITAMA
+                                                            (RP) </h1>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div
+                                                        style="
+                                                    border-top:1px solid rgb(255, 255, 255);
+                                                border-left:1px solid rgb(255, 255, 255);
+                                                border-top-left-radius: 500px;
+                                                margin-top:5px;">
+                                                        <h1 class="fw-bolder text-center title-info"
+                                                            style="color: #faa901!important;">
+                                                            TARIF SUKU
+                                                            BUNGA (% PA) </h1>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-12 text-center">
+                                                    <div class="table-info parent-table-product table-auto-scroll">
+                                                        <table class="table my-table-product">
+                                                            <tbody>
+                                                                @for ($i = 0; $i < 20; $i++)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h2>iya dong</h2>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h2>23 %%</h2>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endfor
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item" id="corousel-parent" data_id="2">
+                                        <div class="title-info rounded border-top border-opacity-10">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div>
+                                                        <h1 class="fw-bolder text-center text-white title-info">
+                                                            SIMPEDES
+                                                            (RP) </h1>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div
+                                                        style="
+                                                    border-top:1px solid rgb(255, 255, 255);
+                                                border-left:1px solid rgb(255, 255, 255);
+                                                border-top-left-radius: 500px;
+                                                margin-top:5px;">
+                                                        <h1 class="fw-bolder text-center title-info"
+                                                            style="color: #faa901!important;">
+                                                            TARIF SUKU
+                                                            BUNGA (% PA) </h1>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-12 text-center">
+                                                    <div class="table-info parent-table-product table-auto-scroll">
+                                                        <table class="table my-table-product">
+                                                            <tbody>
+                                                                @for ($i = 0; $i < 2; $i++)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h2>gak sih</h2>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h2>{{ $i }} %%</h2>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endfor
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item" id="corousel-parent" data_id="3">
+                                        <div class="title-info rounded border-top border-opacity-10">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div>
+                                                        <h1 class="fw-bolder text-center text-white title-info"> BJB
+                                                            (RP) </h1>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div
+                                                        style="
+                                                    border-top:1px solid rgb(255, 255, 255);
+                                                border-left:1px solid rgb(255, 255, 255);
+                                                border-top-left-radius: 500px;
+                                                margin-top:5px;">
+                                                        <h1 class="fw-bolder text-center title-info"
+                                                            style="color: #faa901!important;">
+                                                            TARIF SUKU
+                                                            BUNGA (% PA) </h1>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-12 text-center">
+                                                    <div class="table-info parent-table-product table-auto-scroll">
+                                                        <table class="table my-table-product">
+                                                            <tbody>
+                                                                @for ($i = 0; $i < 5; $i++)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h2>ya gitu lah {{ $i }}</h2>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h2>{{ $i }} %%</h2>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endfor
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleControlsProduct" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleControlsProduct" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button> --}}
+                            </div>
+
+                            {{-- <div class="title-info rounded border-top border-opacity-10">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div>
+                                            <h1 class="fw-bolder text-center text-white title-info"> BRITAMA
+                                                (RP) </h1>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div
+                                            style="
+                                        border-top:1px solid rgb(255, 255, 255);
+                                    border-left:1px solid rgb(255, 255, 255);
+                                    border-top-left-radius: 500px;
+                                    margin-top:5px;">
+                                            <h1 class="fw-bolder text-center title-info"
+                                                style="color: #faa901!important;">
+                                                TARIF SUKU
+                                                BUNGA (% PA) </h1>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-12 text-center">
+                                        <div class="table-info parent-table-product table-auto-scroll">
+                                            <table class="table my-table-product">
+                                                <tbody>
+                                                    @for ($i = 0; $i < 20; $i++)
+                                                        <tr>
+                                                            <td>
+                                                                <h2>tes {{ $i }}</h2>
+                                                            </td>
+                                                            <td>
+                                                                <h2>{{ $i }} %%</h2>
+                                                            </td>
+                                                        </tr>
+                                                    @endfor
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             <div class="col-5 container-fluid">
@@ -192,8 +352,71 @@
 
     <script>
         $(document).ready(function() {
-
+            // console.log([].shift());
+            product_corousel(true);
         });
+
+        function run_next_corousel(ids) {
+            if (ids[0] === undefined) {
+                return product_corousel(false);
+            }
+
+            setTimeout(() => {
+                $('#carouselExampleControlsProduct').carousel('next');
+                setTimeout(() => {
+                    ids.shift();
+                    run_next_corousel(ids);
+                }, 5000);
+            }, 5000);
+        }
+
+        function product_corousel(with_enabled) {
+            const containerProduct = $("div#carouselExampleControlsProduct");
+            if (containerProduct.length) {
+                var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child')
+                if (with_enabled == true) {
+                    firstCorousel.addClass('active');
+                }
+
+                var current_id = firstCorousel.attr('data_id');
+                var listCorousel = $('div#corousel-parent');
+
+                var all = $('div#corousel-parent');
+                var new_map = $.map(all, function(elementOrValue, indexOrKey) {
+                    if (elementOrValue.getAttribute('data_id') != current_id) return elementOrValue.getAttribute(
+                        'data_id');
+                });
+
+                run_next_corousel(new_map);
+            }
+        }
+
+        $('div#corousel-parent').on('penambahan', function() {
+            var id = this.getAttribute("data_id")
+            var obj = $("div#corousel-parent[data_id=" + id + "] .table-auto-scroll");
+
+            if (check.length) {
+                // table auto scroll
+                var $el = $(".table-auto-scroll");
+                anim();
+                $el.hover(stop, tesdong);
+                // END table auto scroll
+            }
+        });
+
+        function stop(id) {
+            var $el = $(".table-auto-scroll");
+            $el.stop();
+        }
+
+        function anim(id) {
+            var $el = $(".table-auto-scroll");
+            var st = $el.scrollTop();
+            var sb = $el.prop("scrollHeight") - $el.innerHeight();
+            $el.animate({
+                scrollTop: st < sb / 2 ? sb : 0
+            }, 15000, anim);
+        }
     </script>
 </body>
 
