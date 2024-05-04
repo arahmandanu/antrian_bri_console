@@ -390,7 +390,6 @@
 
             // return value array with number as a index
             const val = [dayWeek[dayName], dayNum, months[month], year];
-            console.log(val, document.getElementById('display-date'));
             document.getElementById('display-date').innerHTML = (val[0] + ", " + val[1] + " " + val[2] + " " + val[3]);
         }
 
