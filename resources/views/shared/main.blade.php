@@ -18,7 +18,8 @@
             <div class="col-md-7 container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="video-container rounded">
+                        <div
+                            class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                             {{-- video perlu cek settingan tampilan produk!!!! --}}
                             <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline autoplay
                                 muted loop id="myVideo" class="object-fit-none" src="{{ asset('video/video.mp4') }}"
@@ -67,8 +68,8 @@
                                                                     <div class="col-6">
                                                                         <div
                                                                             style="
-                                                                border-top:1px solid rgb(255, 255, 255);
-                                                                border-left:1px solid rgb(255, 255, 255);
+                                                                border-top:1px solid rgba(255, 255, 255, 0.438);
+                                                                border-left:1px solid rgba(255, 255, 255, 0.267);
                                                                border-top-left-radius: 500px;
                                                                margin-top:5px;">
                                                                             <h1 class="fw-bolder text-center title-info"
@@ -355,7 +356,11 @@
         });
 
         function currency_table_auto_scroll() {
-            var classList = document.getElementById('content_currency').className.split(/\s+/);
+            console.log('currency init');
+            var classList = document.getElementById('content_currency');
+            if (classList === null) return;
+
+            classList = classList.className.split(/\s+/);
 
             function scroolUp() {
                 var $el = $('div.table-currency');
@@ -366,7 +371,19 @@
                 }, {
                     duration: 15000,
                     complete: function() {
-                        console.log('slesai keatas currency');
+                        var productContainer = document.getElementById('content_product');
+                        if (productContainer) {
+                            var currencyContainer = document.getElementById('content_currency');
+                            productContainer.classList.remove("invisible");
+                            currencyContainer.classList.add("invisible");
+                            setTimeout(() => {
+                                product_corousel(false);
+                            }, 2000);
+                        } else {
+                            setTimeout(() => {
+                                currency_table_auto_scroll()
+                            }, 2000);
+                        }
                     }
                 });
             }
@@ -392,6 +409,7 @@
             displayTime.innerText = time.toLocaleTimeString("en-US", {
                 hour12: false
             });
+            // jangan di ubah timeout detikannya
             setTimeout(showTime, 1000);
         }
 
@@ -438,7 +456,19 @@
         function run_next_corousel(ids, current_id) {
             function delayNext(ids, current_id) {
                 if (ids[0] === undefined) {
-                    return product_corousel(false);
+                    var currencyContainer = document.getElementById('content_currency');
+                    if (currencyContainer) {
+                        var productContainer = document.getElementById('content_product');
+                        currencyContainer.classList.remove("invisible");
+                        productContainer.classList.add("invisible");
+                        setTimeout(() => {
+                            return currency_table_auto_scroll();
+                        }, 2000);
+                    } else {
+                        setTimeout(() => {
+                            return product_corousel(false);
+                        }, 2000);
+                    }
                 }
 
                 setTimeout(() => {
@@ -447,8 +477,8 @@
                     setTimeout(() => {
                         var current_id = ids.shift();
                         run_next_corousel(ids, current_id);
-                    }, 1000);
-                }, 1000);
+                    }, 2000);
+                }, 2000);
             }
 
             var current_scroll_table = $("div#corousel-parent[data_id=" + current_id + "] .table-auto-scroll");
@@ -467,7 +497,7 @@
         function product_corousel(with_enabled) {
             const containerProduct = $("div#carouselExampleControlsProduct");
             if (containerProduct.length) {
-                console.log(containerProduct.length, containerProduct);
+                console.log('product corousel init');
                 var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child')
                 if (with_enabled == true) {
                     firstCorousel.addClass('active');
@@ -484,13 +514,13 @@
                 });
 
                 var $el = firstCorousel.children().children().children().children('.table-auto-scroll');
+
                 var st = $el.scrollTop();
                 var sb = $el.prop("scrollHeight") - $el.innerHeight();
-
                 $el.animate({
                     scrollTop: st < sb / 2 ? sb : 0
                 }, {
-                    duration: 10000,
+                    duration: 15000,
                     complete: function() {
                         run_next_corousel(new_map, current_id)
                     }
