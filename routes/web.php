@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/list', [CurrencyController::class, 'index'])->name('ConsoleIndexCurrency');
         Route::get('/create', [CurrencyController::class, 'create'])->name('ConsoleCreateCurrency');
         Route::post('/store', [CurrencyController::class, 'store'])->name('ConsoleStoreCurrency');
+        Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
+        Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
+        Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');
+    });
+
+    Route::prefix('properties')->group(function () {
+        Route::get('/index', [PropertiesController::class, 'index'])->name('ConsoleIndexProperties');
+        Route::post('/store', [PropertiesController::class, 'store'])->name('ConsoleStoreProperties');
+
+        Route::get('/create', [CurrencyController::class, 'create'])->name('ConsoleCreateCurrency');
         Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
         Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
         Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');

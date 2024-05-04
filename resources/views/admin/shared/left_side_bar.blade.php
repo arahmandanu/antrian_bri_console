@@ -39,7 +39,7 @@
         {{-- END OF MASTER PRODUCT --}}
 
 
-        {{-- MASTER PRODUCT --}}
+        {{-- MASTER CURRENCY --}}
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/currency*') ? '' : 'collapsed' }}" data-bs-target="#currency-nav"
                 data-bs-toggle="collapse" href="#">
@@ -51,29 +51,32 @@
                 <li>
                     <a href="{{ route('ConsoleIndexCurrency') }}"
                         class="{{ request()->is('admin/currency/list*') || request()->is('admin/currency/create') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Setting</span>
+                        <i class="bi bi-circle"></i><span>Kurs</span>
                     </a>
                 </li>
 
             </ul>
         </li>
-        {{-- END OF MASTER PRODUCT --}}
+        {{-- END OF MASTER CURRENCY --}}
 
-        {{-- MASTER PRODUCT --}}
+        {{-- MASTER PROPERTIES --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#properties-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link {{ request()->is('admin/properties*') ? '' : 'collapsed' }}"
+                data-bs-target="#properties-nav" data-bs-toggle="collapse" href="#">
                 <i class="bx bxs-box"></i><span>My Properties</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="properties-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="properties-nav" class="nav-content collapse {{ request()->is('admin/properties*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="components-alerts.html">
-                        <i class="bi bi-circle"></i><span>Setting</span>
+                    <a href="{{ route('ConsoleIndexProperties') }}"
+                        class="{{ request()->is('admin/properties*') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Settings</span>
                     </a>
                 </li>
 
             </ul>
         </li>
-        {{-- END OF MASTER PRODUCT --}}
+        {{-- END OF MASTER PROPERTIES --}}
     </ul>
     </ul>
 </aside>
