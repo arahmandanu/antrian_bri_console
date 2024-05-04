@@ -137,7 +137,6 @@
                                                                                 TARIF SUKU
                                                                                 BUNGA (% PA) </h1>
                                                                         </div>
-
                                                                     </div>
 
                                                                     <div class="col-12 text-center">
@@ -172,7 +171,7 @@
                                         </div>
 
                                         <div class="col-md-12 text-center">
-                                            <div class="title-info rounded border-top border-opacity-10">
+                                            <div class="table-currency rounded border-top border-opacity-10">
                                                 <table id="table table-currency" class="table table-currency">
                                                     <thead>
                                                         <tr>
@@ -352,7 +351,39 @@
             product_corousel(true);
             showTime();
             updateDate();
+            currency_table_auto_scroll();
         });
+
+        function currency_table_auto_scroll() {
+            var classList = document.getElementById('content_currency').className.split(/\s+/);
+
+            function scroolUp() {
+                var $el = $('div.table-currency');
+                var st = $el.scrollTop();
+                var sb = $el.prop("scrollHeight") - $el.innerHeight();
+                $el.animate({
+                    scrollTop: st < sb / 2 ? sb : 0
+                }, {
+                    duration: 15000,
+                    complete: function() {
+                        console.log('slesai keatas currency');
+                    }
+                });
+            }
+            if (!classList.includes('invisible')) {
+                var $el = $('div.table-currency');
+                var st = $el.scrollTop();
+                var sb = $el.prop("scrollHeight") - $el.innerHeight();
+                $el.animate({
+                    scrollTop: st < sb / 2 ? sb : 0
+                }, {
+                    duration: 15000,
+                    complete: function() {
+                        scroolUp()
+                    }
+                });
+            }
+        }
 
         // Time
         function showTime() {
@@ -405,7 +436,7 @@
         }
 
         function run_next_corousel(ids, current_id) {
-            function nestedFunction(ids, current_id) {
+            function delayNext(ids, current_id) {
                 if (ids[0] === undefined) {
                     return product_corousel(false);
                 }
@@ -428,7 +459,7 @@
             }, {
                 duration: 15000,
                 complete: function() {
-                    nestedFunction(ids, current_id)
+                    delayNext(ids, current_id)
                 }
             });
         }
@@ -436,6 +467,7 @@
         function product_corousel(with_enabled) {
             const containerProduct = $("div#carouselExampleControlsProduct");
             if (containerProduct.length) {
+                console.log(containerProduct.length, containerProduct);
                 var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child')
                 if (with_enabled == true) {
                     firstCorousel.addClass('active');

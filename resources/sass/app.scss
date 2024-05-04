@@ -46,6 +46,16 @@ div.table-info {
     background-color: #012362;
 }
 
+div.table-currency {
+    margin-left: 0.5%;
+    margin: 3px;
+    width: 100%;
+    min-height: 15vh;
+    background-color: #012362;
+    max-height: 33vh !important;
+    overflow-y: hidden;
+}
+
 div.counter {
     width: 100%;
     height: 20vh !important;
@@ -136,6 +146,9 @@ div.parent-table-product {
 
 table.table-currency {
     thead {
+        position: sticky;
+        top: 0;
+
         tr {
             th {
                 background-color: #012362 !important;
