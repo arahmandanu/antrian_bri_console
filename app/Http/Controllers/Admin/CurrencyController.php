@@ -45,11 +45,11 @@ class CurrencyController extends Controller
             'beli_a' => 'required',
             'jual_b' => 'required',
             'beli_b' => 'required',
-            'show' => 'required'
+            'show' => 'required',
         ])->validate();
 
         $images = $request->flag;
-        $imageName = time() . '.' . $images->extension();
+        $imageName = time().'.'.$images->extension();
 
         try {
             $url_path = $images->move(Currency::FLAG_PATH, $imageName);
@@ -107,7 +107,7 @@ class CurrencyController extends Controller
             'beli_a' => 'required',
             'jual_b' => 'required',
             'beli_b' => 'required',
-            'show' => 'required'
+            'show' => 'required',
         ])->validate();
 
         if ($currency->update($request)) {

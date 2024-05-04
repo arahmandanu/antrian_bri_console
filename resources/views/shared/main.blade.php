@@ -32,7 +32,7 @@
 
                 <div id='content_left_bar'>
                     <div class="row position-relative">
-                        <div id="content_product" class="col position-absolute top-0 start-0 invisible">
+                        <div id="content_product" class="col position-absolute top-0 start-0 ">
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="title-info rounded border-top border-opacity-10">
@@ -151,56 +151,11 @@
                                             @endforelse
                                         </div>
                                     </div>
-
-                                    {{-- <div class="title-info rounded border-top border-opacity-10">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div>
-                                                        <h1 class="fw-bolder text-center text-white title-info"> BRITAMA
-                                                            (RP) </h1>
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-6">
-                                                    <div
-                                                        style="
-                                                    border-top:1px solid rgb(255, 255, 255);
-                                                border-left:1px solid rgb(255, 255, 255);
-                                                border-top-left-radius: 500px;
-                                                margin-top:5px;">
-                                                        <h1 class="fw-bolder text-center title-info"
-                                                            style="color: #faa901!important;">
-                                                            TARIF SUKU
-                                                            BUNGA (% PA) </h1>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-12 text-center">
-                                                    <div class="table-info parent-table-product table-auto-scroll">
-                                                        <table class="table my-table-product">
-                                                            <tbody>
-                                                                @for ($i = 0; $i < 20; $i++)
-                                                                    <tr>
-                                                                        <td>
-                                                                            <h2>tes {{ $i }}</h2>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h2>{{ $i }} %%</h2>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endfor
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                 </div>
                             </div>
                         </div>
 
-                        <div id="content_currency" class="col position-absolute top-0 start-0">
+                        <div id="content_currency" class="col position-absolute top-0 start-0 invisible">
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="title-info rounded border-top border-opacity-10">
@@ -347,9 +302,9 @@
                                         class="logo-call">
                                 </div>
                                 <div class="col-7 text-end align-middle">
-                                    <h1 class="timer">20:19:33</h1>
+                                    <h1 class="timer display-time">20:19:33</h1>
                                     <hr class="timer border border-success border-3 opacity-100">
-                                    <h1 class="timer">Minggu, 28 April 2024</h1>
+                                    <h1 class="timer" id="display-date">Minggu, 28 April 2024</h1>
                                 </div>
                             </div>
                         </div>
@@ -384,7 +339,60 @@
     <script>
         $(document).ready(function() {
             product_corousel(true);
+            showTime();
+            updateDate();
         });
+
+        // Time
+        function showTime() {
+            const displayTime = document.querySelector(".display-time");
+            let time = new Date();
+            displayTime.innerText = time.toLocaleTimeString("en-US", {
+                hour12: false
+            });
+            setTimeout(showTime, 1000);
+        }
+
+        // Date
+        function updateDate() {
+            let today = new Date();
+
+            let dayName = today.getDay(),
+                dayNum = today.getDate(),
+                month = today.getMonth(),
+                year = today.getFullYear();
+
+            const months = [
+                "Januari",
+                "Februari",
+                "Maret",
+                "April",
+                "Mei",
+                "Juni",
+                "Juli",
+                "Agustus",
+                "September",
+                "Oktober",
+                "November",
+                "Desember"
+            ];
+            const dayWeek = [
+                "Senin",
+                "Selasa",
+                "Rabu",
+                "Kamis",
+                "Jum'at",
+                "Sabtu",
+                "Minggu",
+            ];
+            // value -> ID of the html element
+            const IDCollection = ["day", "daynum", "month", "year"];
+
+            // return value array with number as a index
+            const val = [dayWeek[dayName], dayNum, months[month], year];
+            console.log(val, document.getElementById('display-date'));
+            document.getElementById('display-date').innerHTML = (val[0] + ", " + val[1] + " " + val[2] + " " + val[3]);
+        }
 
         function run_next_corousel(ids, current_id) {
             function nestedFunction(ids, current_id) {

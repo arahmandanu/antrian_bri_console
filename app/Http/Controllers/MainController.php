@@ -17,7 +17,7 @@ class MainController extends Controller
     {
         return view('shared.main', [
             'products' => MasterProduct::Show()->get(),
-            'currencies' => Currency::show()->get()
+            'currencies' => Currency::show()->get(),
         ]);
     }
 
