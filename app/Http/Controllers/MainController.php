@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Currency;
 use App\Models\MasterProduct;
+use App\Models\Properties;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -15,10 +16,30 @@ class MainController extends Controller
      */
     public function index()
     {
-        return view('shared.main', [
-            'products' => MasterProduct::Show()->get(),
-            'currencies' => Currency::show()->get(),
-        ]);
+        $data = [];
+        $properties = Properties::first();
+        if ($properties) {
+            if ($properties->show_product) {
+                $data['products'] = MasterProduct::Show()->get();
+            } else {
+                $data['products'] = [];
+            }
+
+            if ($properties->show_currency) {
+                $data['currencies'] = Currency::show()->get();
+            } else {
+                $data['currencies'] = [];
+            }
+        } else {
+            $data['products'] = MasterProduct::Show()->get();
+            $data['currencies'] = Currency::show()->get();
+        }
+
+        $data['show_product'] = $properties->show_product ?? true;
+        $data['show_currency'] = $properties->show_currency ?? true;
+        $data['show_both'] = $data['show_product'] && $data['show_currency'];
+        $data['footer_text'] = $properties->footer_text ?? null;
+        return view('shared.main', $data);
     }
 
     /**

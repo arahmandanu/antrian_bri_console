@@ -2,7 +2,7 @@
     <!-- bottom floating text -->
     <marquee direction="left" scrollamount="2">
         <p class="text-white walking-text">
-            Terima Kasih Atas Kunjungan Anda
+            {{ $footer_text ?? ' Terima Kasih Atas Kunjungan Anda' }}
         </p>
     </marquee>
     <!-- bottom floating text -->
