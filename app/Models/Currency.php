@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class Currency extends Model
     protected $table = 'currency';
 
     use HasFactory;
+
+    public function scopeShow(Builder $query): void
+    {
+        $query->where('show', true);
+    }
 
     protected $fillable = [
         'flag_url',

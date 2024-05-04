@@ -12291,6 +12291,24 @@ div.parent-table-product {
   overflow-y: hidden;
 }
 
+table.table-currency thead tr th {
+  background-color: #012362 !important;
+  text-align: center;
+  align-content: center;
+}
+table.table-currency tbody tr td {
+  text-align: center;
+  align-content: center;
+}
+table.table-currency tbody tr:nth-child(odd) td {
+  color: white !important;
+  background: #034798 !important;
+}
+table.table-currency tbody tr:nth-child(even) td {
+  color: white !important;
+  background: #013472 !important;
+}
+
 table.my-table-product tbody tr:nth-child(odd) td {
   color: white;
   background: #034798 !important;
