@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
+    public const FLAG_PATH = ['mov', 'mp4', 'flv', 'mpg', 'mpeg', 'mpv'];
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +18,15 @@ class MainController extends Controller
      */
     public function index()
     {
+        $listFile = scandir(public_path('/video'));
+        $videos = [];
+        foreach ($listFile as $key => $value) {
+            $title = explode('.', $value);
+            if (in_array(end($title), $this::FLAG_PATH)) {
+                array_push($videos, $value);
+            }
+        }
+
         $data = [];
         $properties = Properties::first();
         if ($properties) {
@@ -39,7 +50,26 @@ class MainController extends Controller
         $data['show_currency'] = $properties->show_currency ?? true;
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
         $data['footer_text'] = $properties->footer_text ?? null;
+        $data['videos'] = $videos;
         return view('shared.main', $data);
+    }
+
+    public function videosList(Request $request)
+    {
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+
+        $listFile = scandir(public_path('/video'));
+        $videos = [];
+        foreach ($listFile as $key => $value) {
+            $title = explode('.', $value);
+            if (in_array(end($title), $this::FLAG_PATH)) {
+                array_push($videos, $value);
+            }
+        }
+
+        return response()->json([
+            'videos' => $videos,
+        ], 200);
     }
 
     /**

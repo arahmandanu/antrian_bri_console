@@ -19,20 +19,22 @@ html {
     background-color: #023e85;
 }
 
-div.video-container-minimize {
-    width: 100%;
-    height: 40vh !important;
-    margin: 3px;
-    background-color: black;
-    margin-left: 0.5%;
-}
+div#parent-container-video {
+    div.video-container-minimize {
+        width: 100%;
+        height: 40vh !important;
+        margin: 3px;
+        background-color: black;
+        margin-left: 0.5%;
+    }
 
-div.video-container-full {
-    width: 100%;
-    height: 80vh !important;
-    margin: 3px;
-    background-color: black;
-    margin-left: 0.5%;
+    div.video-container-full {
+        width: 100%;
+        height: 80vh !important;
+        margin: 3px;
+        background-color: black;
+        margin-left: 0.5%;
+    }
 }
 
 video#myVideo {

@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <div class="row">
                     <!-- Reports -->
-                    <div class="col-12">
+                    <div class="col-12">text-white counter-number
                         <div class="card">
 
                             <div class="card-body">
@@ -94,16 +94,16 @@
                                                     <div class="col-sm-10">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                name="show_currency" id="show_currency1" value="1"
-                                                                @if (isset($settings) && $settings->show_currency == '1') @checked(true) @endif>
+                                                                   name="show_currency" id="show_currency1" value="1"
+                                                            @if (isset($settings) && $settings->show_currency == '1') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency1">
                                                                 ya
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                name="show_currency" id="show_currency2" value="0"
-                                                                @if (isset($settings) && $settings->show_currency == '0') @checked(true) @endif>
+                                                                   name="show_currency" id="show_currency2" value="0"
+                                                            @if (isset($settings) && $settings->show_currency == '0') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency2">
                                                                 tidak
                                                             </label>

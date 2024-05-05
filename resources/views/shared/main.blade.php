@@ -17,7 +17,7 @@
         <div class="row ">
             <div class="col-md-7 container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" id="parent-container-video">
                         <div
                             class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                             {{-- video perlu cek settingan tampilan produk!!!! --}}
@@ -349,11 +349,36 @@
 
     <script>
         $(document).ready(function() {
+            init_iklan_video();
             product_corousel(true);
             showTime();
             updateDate();
             currency_table_auto_scroll();
         });
+
+        function init_iklan_video() {
+            // function next_videos() {
+            //     document.getElementById('myVideo').addEventListener('ended', function() {
+            //         var video = document.getElementById('myVideo');
+            //         setTimeout(() => {
+            //             video.play();
+            //         }, 3000)
+            //     });
+            // }
+
+            // var video = $('#video-container').children('video#myVideo');
+            // if(!video){
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "url",
+            //         data: "data",
+            //         dataType: "dataType",
+            //         success: function (response) {
+
+            //         }
+            //     });
+            // }
+        }
 
         function currency_table_auto_scroll() {
             console.log('currency init');

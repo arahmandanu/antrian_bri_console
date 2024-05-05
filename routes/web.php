@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MainController::class, 'index'])->name('ShowConsoleIndex');
+Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
-
     Route::group(['middleware' => ['islogin?']], function () {
         Route::get('/login', [AuthController::class, 'index'])->withoutMiddleware('auth:web')->name('ShowAdminLoginPage');
         Route::post('/verify', [AuthController::class, 'verify'])->withoutMiddleware('auth:web')->name('VerifyLoginAccount');
