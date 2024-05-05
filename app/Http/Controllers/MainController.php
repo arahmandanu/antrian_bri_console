@@ -51,12 +51,13 @@ class MainController extends Controller
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
         $data['footer_text'] = $properties->footer_text ?? null;
         $data['videos'] = $videos;
+
         return view('shared.main', $data);
     }
 
     public function videosList(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];

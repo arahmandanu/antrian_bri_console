@@ -17,7 +17,7 @@ class PropertiesController extends Controller
     public function index()
     {
         return view('admin.properties.index', [
-            'settings' => Properties::first()
+            'settings' => Properties::first(),
         ]);
     }
 
@@ -34,7 +34,6 @@ class PropertiesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -69,7 +68,6 @@ class PropertiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Properties  $properties
      * @return \Illuminate\Http\Response
      */
     public function show(Properties $properties)
@@ -80,7 +78,6 @@ class PropertiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Properties  $properties
      * @return \Illuminate\Http\Response
      */
     public function edit(Properties $properties)
@@ -91,8 +88,6 @@ class PropertiesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Properties  $properties
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Properties $properties)
@@ -103,7 +98,6 @@ class PropertiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Properties  $properties
      * @return \Illuminate\Http\Response
      */
     public function destroy(Properties $properties)
