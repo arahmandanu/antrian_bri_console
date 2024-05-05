@@ -13,15 +13,22 @@
 
 html {
     height: 100%;
+    overflow: hidden;
 }
 
 .bg-primary-app {
     background-color: #023e85;
 }
 
-div#corousel_iklan_parent{
+div#corousel_iklan_parent {
     div#parent-container-video {
         video#myVideo {
+            padding: 0.3%;
+            height: 100%;
+            width: 100%;
+        }
+
+        img#myImage {
             padding: 0.3%;
             height: 100%;
             width: 100%;
@@ -171,6 +178,10 @@ table.table-currency {
     }
 
     tbody {
+        td {
+            border-bottom: 1px solid rgb(146, 99, 11);
+        }
+
         tr {
             td {
                 text-align: center;
@@ -197,6 +208,10 @@ table.table-currency {
 
 table.my-table-product {
     tbody {
+        td {
+            border-bottom: 1px solid rgb(146, 99, 11);
+        }
+
         tr:nth-child(odd) {
             td {
                 color: white;
@@ -238,7 +253,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 200px;
+        height: 70%;
+        width: 100%;
     }
 }
 
@@ -248,7 +264,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 200px;
+        height: 70%;
+        width: 100%;
     }
 }
 
@@ -258,7 +275,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 200px;
+        height: 70%;
+        width: 100%;
     }
 }
 
@@ -268,7 +286,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 200px;
+        height: 70%;
+        width: 100%;
     }
 }
 
@@ -278,7 +297,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 200px;
+        height: 70%;
+        width: 100%;
     }
 }
 
@@ -288,7 +308,8 @@ table.my-table-product {
     }
 
     img.logo-call {
-        width: 250px;
+        height: 70%;
+        width: 100%;
     }
 }
 

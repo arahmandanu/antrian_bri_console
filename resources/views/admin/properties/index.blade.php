@@ -94,22 +94,43 @@
                                                     <div class="col-sm-10">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                   name="show_currency" id="show_currency1" value="1"
-                                                            @if (isset($settings) && $settings->show_currency == '1') @checked(true) @endif>
+                                                                name="show_currency" id="show_currency1" value="1"
+                                                                @if (isset($settings) && $settings->show_currency == '1') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency1">
                                                                 ya
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                   name="show_currency" id="show_currency2" value="0"
-                                                            @if (isset($settings) && $settings->show_currency == '0') @checked(true) @endif>
+                                                                name="show_currency" id="show_currency2" value="0"
+                                                                @if (isset($settings) && $settings->show_currency == '0') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency2">
                                                                 tidak
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </fieldset>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Catatan</h5>
+                                                        <p>
+                                                            Untuk iklan video silahkan ditambahkan saja ke folder
+                                                            <span class="badge bg-danger">{{ public_path('video') }}</span>
+                                                        </p>
+                                                        <i>file: 'mov', 'mp4', 'flv', 'mpg', 'mpeg','mpv'</i>
+                                                        <hr>
+
+                                                        <p>
+                                                            Untuk iklan Gambar silahkan ditambahkan saja ke folder
+                                                            <span
+                                                                class="badge bg-danger">{{ public_path('iklan_image') }}</span>
+                                                        </p>
+                                                        <i>file: 'jpg', 'jpeg', 'giv', 'png'</i>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="text-center">

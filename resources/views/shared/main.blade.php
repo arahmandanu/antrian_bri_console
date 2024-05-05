@@ -19,7 +19,7 @@
                 <div class="row">
                     <div id="carouselExampleControlsIklan" class="carousel slide carousel-fade">
                         <div class="carousel-inner" id="corousel_iklan_parent">
-
+                            {{-- IKLAN VIDEO --}}
                             @forelse ($videos as $item)
                                 @if ($loop->first)
                                     <div class="carousel-item active">
@@ -51,28 +51,52 @@
                                     </div>
                                 @endif
                             @empty
-                                <div class="col-md-12" id="parent-container-video">
-                                    <div
-                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                @if (empty($images))
+                                    <div class="col-md-12" id="parent-container-video">
+                                        <div
+                                            class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                            <video src="#" id="myVideo"></video>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+                            @endforelse
+                            {{-- END OF IKLAN VIDEO --}}
+
+                            {{-- IKLAN GAMBAR --}}
+                            @forelse ($images as $item)
+                                @if ($loop->first)
+                                    <div class="carousel-item @if (empty($videos)) active @endif">
+                                        <div class="col-md-12" id="parent-container-video" data_type="image">
+                                            <div
+                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                                <img class="object-fit-contain" id="myImage"
+                                                    src="{{ asset("iklan_image/$item ") }}">
+
+                                                unsupported video! {{ $item }}
+                                                </img>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="carousel-item">
+                                        <div class="col-md-12" id="parent-container-video" data_type="image">
+                                            <div
+                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                                <img class="object-fit-contain" id="myImage"
+                                                    src="{{ asset("iklan_image/$item ") }}">
+
+                                                unsupported video! {{ $item }}
+                                                </img>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @empty
                             @endforelse
                         </div>
+
+                        {{-- END OF IKLAN GAMBAR --}}
                     </div>
-
-                    {{-- <div class="col-md-12" id="parent-container-video">
-                        <div
-                            class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                            video perlu cek settingan tampilan produk!!!!
-                            <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline autoplay
-                                muted loop id="myVideo" class="object-fit-none" src="{{ asset('video/video.mp4') }}"
-                                type="video/mp4">
-
-                                unsupported video!
-                            </video>
-                        </div>
-                    </div> --}}
-
                 </div>
 
                 @if ($show_product || $show_currency)
@@ -298,10 +322,10 @@
 
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
-                            <div class="col-5 text-center counter-div-left rounded">
+                            <div class="col-5 text-center counter-div-left">
                                 <span class="counter-left counter-color counter-number">1</span>
                             </div>
-                            <div class="col-7 text-center counter-div-right rounded">
+                            <div class="col-7 text-center counter-div-right">
                                 <span class="counter-right counter-color counter-number">A05</span>
                             </div>
                         </div>
@@ -309,10 +333,10 @@
 
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent right-bar-title">
-                            <div class="col-5 text-center title-div-left rounded">
+                            <div class="col-5 text-center title-div-left">
                                 <span>LOKET</span>
                             </div>
-                            <div class="col-7 text-center title-div-right rounded">
+                            <div class="col-7 text-center title-div-right">
                                 <span>NO TIKET</span>
                             </div>
                         </div>
@@ -321,29 +345,29 @@
                     <div id="content-righ-bar">
                         {{-- INCOMING ANTRIAN --}}
                         <div class="col-md-12 container-fluid">
-                            <div class="row counter-parent right-bar-counter rounded">
+                            <div class="row counter-parent right-bar-counter">
                                 <div class="col-5 text-center right-bar-counter-left">
-                                    <div class="parent-right-bar-counter-left rounded">
+                                    <div class="parent-right-bar-counter-left">
                                         <h1 class="text-white counter-number">02</h1>
                                     </div>
                                 </div>
 
-                                <div class="col-7 text-center rounded">
-                                    <div class="parent-right-bar-counter-right rounded">
+                                <div class="col-7 text-center">
+                                    <div class="parent-right-bar-counter-right">
                                         <h1 class="text-white right-bar-counter-left counter-number">A001</h1>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row counter-parent right-bar-counter rounded">
+                            <div class="row counter-parent right-bar-counter">
                                 <div class="col-5 text-center right-bar-counter-left">
-                                    <div class="parent-right-bar-counter-left rounded">
+                                    <div class="parent-right-bar-counter-left">
                                         <h1 class="text-white counter-number">03</h1>
                                     </div>
                                 </div>
 
                                 <div class="col-7 text-center">
-                                    <div class="parent-right-bar-counter-right rounded">
+                                    <div class="parent-right-bar-counter-right">
                                         <h1 class="text-white right-bar-counter-left counter-number">A003</h1>
                                     </div>
                                 </div>
@@ -351,13 +375,13 @@
                         </div>
 
                         <div class="col-md-12 container-fluid">
-                            <div class="row counter-parent rounded">
-                                <div class="col-5 text-center ">
-                                    <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI"
-                                        class="logo-call">
+                            <div class="row counter-parent">
+                                <div class="col-5 text-center right-bar-counter-left " style="align-content: center">
+                                    <img src="{{ asset('images/contact_bri.jpg') }}" alt="Logo Call BRI"
+                                        class="object-fit-fill logo-call">
                                 </div>
-                                <div class="col-7 text-end align-middle">
-                                    <h1 class="timer display-time">20:19:33</h1>
+                                <div class="col-7 text-end align-middle" style="align-content: center">
+                                    <h1 class="timer-left display-time">20:19:33</h1>
                                     <hr class="timer border border-success border-3 opacity-100">
                                     <h1 class="timer" id="display-date">Minggu, 28 April 2024</h1>
                                 </div>
@@ -412,16 +436,21 @@
                 });
             }
 
+            function play_images($el) {
+                setTimeout(() => {
+                    init_iklan_video(index + 1, true);
+                }, 5000)
+            }
+
             if (next) $('#carouselExampleControlsIklan').carousel('next');
             var firstCorouselIklan = $("div#carouselExampleControlsIklan div#parent-container-video");
             if (firstCorouselIklan.length === 0) return;
             if (firstCorouselIklan[index] === undefined) return init_iklan_video(0);
 
             if (firstCorouselIklan[index].getAttribute('data_type') === 'video') {
-
                 play_videos(firstCorouselIklan[index]);
             } else {
-
+                play_images(firstCorouselIklan[index]);
             }
         }
 

@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public const FLAG_PATH = ['mov', 'mp4', 'flv', 'mpg', 'mpeg', 'mpv'];
+    public const VIDEO_EXTENSION = ['mov', 'mp4', 'flv', 'mpg', 'mpeg', 'mpv'];
+    public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
 
     /**
      * Display a listing of the resource.
@@ -22,8 +23,17 @@ class MainController extends Controller
         $videos = [];
         foreach ($listFile as $key => $value) {
             $title = explode('.', $value);
-            if (in_array(end($title), $this::FLAG_PATH)) {
+            if (in_array(end($title), $this::VIDEO_EXTENSION)) {
                 array_push($videos, $value);
+            }
+        }
+
+        $listImages = scandir(public_path('/iklan_image'));
+        $images = [];
+        foreach ($listImages as $key => $value) {
+            $title = explode('.', $value);
+            if (in_array(end($title), $this::IMAGE_EXTENSION)) {
+                array_push($images, $value);
             }
         }
 
@@ -51,19 +61,20 @@ class MainController extends Controller
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
         $data['footer_text'] = $properties->footer_text ?? null;
         $data['videos'] = $videos;
+        $data['images'] = $images;
 
         return view('shared.main', $data);
     }
 
     public function videosList(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
         foreach ($listFile as $key => $value) {
             $title = explode('.', $value);
-            if (in_array(end($title), $this::FLAG_PATH)) {
+            if (in_array(end($title), $this::VIDEO_EXTENSION)) {
                 array_push($videos, $value);
             }
         }
