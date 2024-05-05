@@ -12193,25 +12193,24 @@ html {
   background-color: #023e85;
 }
 
-div#parent-container-video div.video-container-minimize {
+div#corousel_iklan_parent div#parent-container-video video#myVideo {
+  padding: 0.3%;
+  height: 100%;
+  width: 100%;
+}
+div#corousel_iklan_parent div#parent-container-video div.video-container-minimize {
   width: 100%;
   height: 40vh !important;
   margin: 3px;
   background-color: black;
   margin-left: 0.5%;
 }
-div#parent-container-video div.video-container-full {
+div#corousel_iklan_parent div#parent-container-video div.video-container-full {
   width: 100%;
   height: 80vh !important;
   margin: 3px;
   background-color: black;
   margin-left: 0.5%;
-}
-
-video#myVideo {
-  padding: 0.3%;
-  height: 100%;
-  width: 100%;
 }
 
 div.title-info {

@@ -59,6 +59,26 @@
         </li>
         {{-- END OF MASTER CURRENCY --}}
 
+        {{-- MASTER IKLAN --}}
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/currency*') ? '' : 'collapsed' }}" data-bs-target="#currency-nav"
+               data-bs-toggle="collapse" href="#">
+                <i class="bx bx-money"></i><span>Master Currency</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="currency-nav" class="nav-content collapse {{ request()->is('admin/currency*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('ConsoleIndexCurrency') }}"
+                       class="{{ request()->is('admin/currency/list*') || request()->is('admin/currency/create') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Iklan</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        {{-- END OF MASTER IKLAN --}}
+
         {{-- MASTER PROPERTIES --}}
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/properties*') ? '' : 'collapsed' }}"

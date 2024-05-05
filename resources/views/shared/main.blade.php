@@ -17,10 +17,53 @@
         <div class="row ">
             <div class="col-md-7 container-fluid">
                 <div class="row">
-                    <div class="col-md-12" id="parent-container-video">
+                    <div id="carouselExampleControlsIklan" class="carousel slide carousel-fade">
+                        <div class="carousel-inner" id="corousel_iklan_parent">
+
+                            @forelse ($videos as $item)
+                                @if ($loop->first)
+                                    <div class="carousel-item active">
+                                        <div class="col-md-12" id="parent-container-video" data_type="video">
+                                            <div
+                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                                <video class="rounded" onloadedmetadata="this.muted = true" controls
+                                                    playsinline muted id="myVideo" class="object-fit-none"
+                                                    src="{{ asset("video/$item ") }}" type="video/mov">
+
+                                                    unsupported video! {{ $item }}
+                                                </video>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="carousel-item">
+                                        <div class="col-md-12" id="parent-container-video" data_type="video">
+                                            <div
+                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                                <video class="rounded" onloadedmetadata="this.muted = true" controls
+                                                    playsinline muted id="myVideo" class="object-fit-none"
+                                                    src="{{ asset("video/$item ") }}" type="video/mov">
+
+                                                    unsupported video! {{ $item }}
+                                                </video>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @empty
+                                <div class="col-md-12" id="parent-container-video">
+                                    <div
+                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                    </div>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    {{-- <div class="col-md-12" id="parent-container-video">
                         <div
                             class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                            {{-- video perlu cek settingan tampilan produk!!!! --}}
+                            video perlu cek settingan tampilan produk!!!!
                             <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline autoplay
                                 muted loop id="myVideo" class="object-fit-none" src="{{ asset('video/video.mp4') }}"
                                 type="video/mp4">
@@ -28,7 +71,8 @@
                                 unsupported video!
                             </video>
                         </div>
-                    </div>
+                    </div> --}}
+
                 </div>
 
                 @if ($show_product || $show_currency)
@@ -349,35 +393,36 @@
 
     <script>
         $(document).ready(function() {
-            init_iklan_video();
+            init_iklan_video(0);
             product_corousel(true);
             showTime();
             updateDate();
             currency_table_auto_scroll();
         });
 
-        function init_iklan_video() {
-            // function next_videos() {
-            //     document.getElementById('myVideo').addEventListener('ended', function() {
-            //         var video = document.getElementById('myVideo');
-            //         setTimeout(() => {
-            //             video.play();
-            //         }, 3000)
-            //     });
-            // }
+        function init_iklan_video(index = 0, next = false) {
+            function play_videos($el) {
+                local_video = $el.getElementsByTagName('video');
+                local_video[0].play();
+                local_video[0].addEventListener('ended', function() {
+                    setTimeout(() => {
 
-            // var video = $('#video-container').children('video#myVideo');
-            // if(!video){
-            //     $.ajax({
-            //         type: "GET",
-            //         url: "url",
-            //         data: "data",
-            //         dataType: "dataType",
-            //         success: function (response) {
+                        init_iklan_video(index + 1, true);
+                    }, 3000)
+                });
+            }
 
-            //         }
-            //     });
-            // }
+            if (next) $('#carouselExampleControlsIklan').carousel('next');
+            var firstCorouselIklan = $("div#carouselExampleControlsIklan div#parent-container-video");
+            if (firstCorouselIklan.length === 0) return;
+            if (firstCorouselIklan[index] === undefined) return init_iklan_video(0);
+
+            if (firstCorouselIklan[index].getAttribute('data_type') === 'video') {
+
+                play_videos(firstCorouselIklan[index]);
+            } else {
+
+            }
         }
 
         function currency_table_auto_scroll() {
@@ -523,7 +568,7 @@
             const containerProduct = $("div#carouselExampleControlsProduct");
             if (containerProduct.length) {
                 console.log('product corousel init');
-                var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child')
+                var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child');
                 if (with_enabled == true) {
                     firstCorousel.addClass('active');
                 }
