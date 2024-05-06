@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class MainController extends Controller
 {
     public const VIDEO_EXTENSION = ['mov', 'mp4', 'flv', 'mpg', 'mpeg', 'mpv'];
+
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
 
     /**
@@ -76,7 +77,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];

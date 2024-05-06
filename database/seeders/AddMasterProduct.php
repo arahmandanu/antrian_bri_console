@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\MasterProduct;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddMasterProduct extends Seeder
@@ -19,43 +18,43 @@ class AddMasterProduct extends Seeder
             [
                 'name' => 'BRITAMA (RP)',
                 'display_number' => 1,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'BRITAMA (USD)',
                 'display_number' => 2,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'GIRO (RP)',
                 'display_number' => 3,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'SIMPEDES',
                 'display_number' => 4,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'DEPOSITO',
                 'display_number' => 5,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'TABUNGANKU',
                 'display_number' => 6,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'PENJAMINAN (RP)',
                 'display_number' => 7,
-                'show' => true
+                'show' => true,
             ],
             [
                 'name' => 'PENJAMINAN (USD)',
                 'display_number' => 8,
-                'show' => true
-            ]
+                'show' => true,
+            ],
         ];
 
         foreach ($data as $key => $value) {

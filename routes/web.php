@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\Advertisement\ImageController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
