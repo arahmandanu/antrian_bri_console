@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Currency;
 use App\Models\MasterProduct;
 use App\Models\Properties;
+use App\Models\TempCallWeb;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -56,12 +57,19 @@ class MainController extends Controller
             $data['currencies'] = Currency::show()->get();
         }
 
+        $listQueues = TempCallWeb::listNewest()->take(3)->get();
+        $datalistQueues = [];
+        foreach ($listQueues as $key => $queue) {
+            array_push($datalistQueues, $queue);
+        }
+
         $data['show_product'] = $properties->show_product ?? true;
         $data['show_currency'] = $properties->show_currency ?? true;
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
         $data['footer_text'] = $properties->footer_text ?? null;
         $data['videos'] = $videos;
         $data['images'] = $images;
+        $data['historyQueues'] = $datalistQueues;
 
         return view('shared.main', $data);
     }

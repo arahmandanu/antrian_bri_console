@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\TempCallWebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('ShowConsoleIndex');
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
+Route::group(['prefix' => 'queue'], function () {
+    Route::get('/next', [TempCallWebController::class, 'nextQueue'])->name('GetNextQueueTempCallWeb');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     Route::group(['middleware' => ['islogin?']], function () {

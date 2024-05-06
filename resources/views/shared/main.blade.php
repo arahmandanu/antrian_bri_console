@@ -323,10 +323,22 @@
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
                             <div class="col-5 text-center counter-div-left">
-                                <span class="counter-left counter-color counter-number">1</span>
+                                <span class="counter-left counter-color counter-number" id="history_1_left">
+                                    @if (array_key_exists(0, $historyQueues))
+                                        {{ $historyQueues[0]->Counter }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </span>
                             </div>
                             <div class="col-7 text-center counter-div-right">
-                                <span class="counter-right counter-color counter-number">A05</span>
+                                <span class="counter-right counter-color counter-number" id="history_1_right">
+                                    @if (array_key_exists(0, $historyQueues))
+                                        {{ $historyQueues[0]->SeqNumber }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -348,13 +360,26 @@
                             <div class="row counter-parent right-bar-counter">
                                 <div class="col-5 text-center right-bar-counter-left">
                                     <div class="parent-right-bar-counter-left">
-                                        <h1 class="text-white counter-number">02</h1>
+                                        <h1 class="text-white counter-number" id="history_2_left">
+                                            @if (array_key_exists(1, $historyQueues))
+                                                {{ $historyQueues[1]->Counter }}
+                                            @else
+                                                <span class="invisible">-</span>
+                                            @endif
+                                        </h1>
                                     </div>
                                 </div>
 
                                 <div class="col-7 text-center">
                                     <div class="parent-right-bar-counter-right">
-                                        <h1 class="text-white right-bar-counter-left counter-number">A001</h1>
+                                        <h1 class="text-white right-bar-counter-left counter-number"
+                                            id="history_2_right">
+                                            @if (array_key_exists(1, $historyQueues))
+                                                {{ $historyQueues[1]->SeqNumber }}
+                                            @else
+                                                <span class="invisible">-</span>
+                                            @endif
+                                        </h1>
                                     </div>
                                 </div>
                             </div>
@@ -362,13 +387,26 @@
                             <div class="row counter-parent right-bar-counter">
                                 <div class="col-5 text-center right-bar-counter-left">
                                     <div class="parent-right-bar-counter-left">
-                                        <h1 class="text-white counter-number">03</h1>
+                                        <h1 class="text-white counter-number" id="history_3_left">
+                                            @if (array_key_exists(2, $historyQueues))
+                                                {{ $historyQueues[2]->Counter }}
+                                            @else
+                                                <span class="invisible">-</span>
+                                            @endif
+                                        </h1>
                                     </div>
                                 </div>
 
                                 <div class="col-7 text-center">
                                     <div class="parent-right-bar-counter-right">
-                                        <h1 class="text-white right-bar-counter-left counter-number">A003</h1>
+                                        <h1 class="text-white right-bar-counter-left counter-number"
+                                            id="history_3_right">
+                                            @if (array_key_exists(2, $historyQueues))
+                                                {{ $historyQueues[2]->SeqNumber }}
+                                            @else
+                                                <span class="invisible">-</span>
+                                            @endif
+                                        </h1>
                                     </div>
                                 </div>
                             </div>

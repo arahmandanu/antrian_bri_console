@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -191,7 +192,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ])->toArray(),
 
 ];

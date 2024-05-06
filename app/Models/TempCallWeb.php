@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TempCallWeb extends Model
+{
+    protected $table = 'temp_call_web';
+
+    public function scopelistNewest(Builder $query): void
+    {
+        $query->orderBy('id', 'desc');
+    }
+
+    use HasFactory;
+}
