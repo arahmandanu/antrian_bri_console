@@ -460,7 +460,60 @@
             showTime();
             updateDate();
             currency_table_auto_scroll();
+            setInterval(() => {
+                get_next_queue()
+            }, 5000);
         });
+
+        function get_next_queue() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('GetNextQueueTempCallWeb') }}",
+                data: {},
+                dataType: "json",
+                success: function(data, status, xhr) {
+                    if (xhr.status == 200) {
+                        console.log(data.queue)
+                        if (data.queue === null) {} else {
+                            show_next_queue(data.queue);
+                        }
+                    } else {
+                        console.log('error please contact your admin');
+                    }
+                }
+            });
+        }
+
+        function show_next_queue(record) {
+            function change(elem, value) {
+                elem.fadeOut(function() {
+                    elem.html(value);
+                    elem.fadeIn();
+                });
+            }
+
+            var left1 = $("#history_1_left");
+            var textl1 = left1.text();
+            var right1 = $("#history_1_right");
+            var textr1 = right1.text();
+
+            var left2 = $("#history_2_left");
+            var textl2 = left2.text();
+            var right2 = $("#history_2_right");
+            var textr2 = right2.text();
+
+            var left3 = $("#history_3_left");
+            var right3 = $("#history_3_right");
+
+            change(left1, record.Counter);
+            change(right1, record.SeqNumber);
+
+            change(left2, textl1);
+            change(right2, textr1);
+
+            change(left3, textl2);
+            change(right3, textr2);
+        }
 
         function init_iklan_video(index = 0, next = false) {
             function play_videos($el) {

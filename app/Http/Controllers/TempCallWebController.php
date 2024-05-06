@@ -19,8 +19,18 @@ class TempCallWebController extends Controller
 
     public function nextQueue()
     {
-        $all = TempCallWeb::orderBy('id', 'asc')->all();
-        dd($all);
+        $data = null;
+        $queue = TempCallWeb::listNewest()->take(1)->get()->first();
+        if ($queue) {
+            if ($queue->Tampil == 'n') {
+                $data = $queue;
+                $queue->update(['Tampil' => 'y']);
+            }
+        }
+
+        return response()->json([
+            'queue' => $data,
+        ], 200);
     }
 
     /**

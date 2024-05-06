@@ -77,7 +77,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
