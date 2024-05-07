@@ -6,7 +6,6 @@ use App\Models\Currency;
 use App\Models\MasterProduct;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
-use COM;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -78,7 +77,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
@@ -96,12 +95,12 @@ class MainController extends Controller
 
     public function consoleApp(Request $request)
     {
-        $task_list = array();
-        exec("start /B tasklist  2>NUL", $task_list);
+        $task_list = [];
+        exec('start /B tasklist  2>NUL', $task_list);
         $message = null;
         $enabler = true;
         foreach ($task_list as $key => $value) {
-            if ($value !== "") {
+            if ($value !== '') {
                 if (str_contains($value, 'Console.exe')) {
                     $enabler = false;
                     $message = 'Console sudah aktif sebelumnya!';
@@ -116,7 +115,7 @@ class MainController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message
+            'message' => $message,
         ], 200);
     }
 

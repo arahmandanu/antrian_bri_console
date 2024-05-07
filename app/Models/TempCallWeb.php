@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class TempCallWeb extends Model
 {
     public $timestamps = false;
+
     protected $table = 'temp_call_web';
 
     public function scopelistNewest(Builder $query): void
@@ -19,6 +20,6 @@ class TempCallWeb extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Tampil'
+        'Tampil',
     ];
 }
