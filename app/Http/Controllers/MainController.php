@@ -6,6 +6,7 @@ use App\Models\Currency;
 use App\Models\MasterProduct;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
+use COM;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -91,6 +92,28 @@ class MainController extends Controller
         return response()->json([
             'videos' => $videos,
         ], 200);
+    }
+
+    public function consoleApp(Request $request)
+    {
+        // abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        // dd(public_path('console') . "\\test.php");
+        // $a = exec('pwd');
+        // dd($a);
+        // exec("start D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe");
+        // system('cmd /c "D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe"');
+        // pclose(popen("start /B " . 'D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe', "r"));
+        // exec($file);
+        // $a = (exec("ls"));
+        dd(base_path());
+        // shell_exec(public_path('console/Console.exe'));
+        // shell_exec(public_path('ss.exe'));
+        // sleep(10);
+        // var_dump($output);
+        // return response()->json([
+        //     'success' => true,
+        //     'file' => public_path('console/Console.exe')
+        // ], 200);
     }
 
     /**

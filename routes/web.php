@@ -26,6 +26,8 @@ Route::group(['prefix' => 'queue'], function () {
     Route::get('/next', [TempCallWebController::class, 'nextQueue'])->name('GetNextQueueTempCallWeb');
 });
 
+Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     Route::group(['middleware' => ['islogin?']], function () {
         Route::get('/login', [AuthController::class, 'index'])->withoutMiddleware('auth:web')->name('ShowAdminLoginPage');

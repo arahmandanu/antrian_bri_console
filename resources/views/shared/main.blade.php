@@ -463,7 +463,24 @@
             setInterval(() => {
                 get_next_queue()
             }, 5000);
+            call_console();
         });
+
+        function call_console() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('callConsoleApp') }}",
+                data: {},
+                dataType: "json",
+                success: function(data, status, xhr) {
+                    if (xhr.status == 200) {
+                        console.log(data)
+                    } else {
+                        console.log('error when calling console please contact your admin');
+                    }
+                }
+            });
+        }
 
         function get_next_queue() {
             $.ajax({
