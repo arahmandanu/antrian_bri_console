@@ -96,24 +96,28 @@ class MainController extends Controller
 
     public function consoleApp(Request $request)
     {
-        // abort_if(!$request->wantsJson(), 403, 'Invalid request!');
-        // dd(public_path('console') . "\\test.php");
-        // $a = exec('pwd');
-        // dd($a);
-        // exec("start D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe");
-        // system('cmd /c "D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe"');
-        // pclose(popen("start /B " . 'D:\\projekan\\antrian_bri_console\\public\\console\\Console.exe', "r"));
-        // exec($file);
-        // $a = (exec("ls"));
-        dd(base_path());
-        // shell_exec(public_path('console/Console.exe'));
-        // shell_exec(public_path('ss.exe'));
-        // sleep(10);
-        // var_dump($output);
-        // return response()->json([
-        //     'success' => true,
-        //     'file' => public_path('console/Console.exe')
-        // ], 200);
+        $task_list = array();
+        exec("start /B tasklist  2>NUL", $task_list);
+        $message = null;
+        $enabler = true;
+        foreach ($task_list as $key => $value) {
+            if ($value !== "") {
+                if (str_contains($value, 'Console.exe')) {
+                    $enabler = false;
+                    $message = 'Console sudah aktif sebelumnya!';
+                }
+            }
+        }
+
+        if ($enabler == true) {
+            pclose(popen('start /B cmd /C "php D:\projekan\antrian_bri_console\console\my_script.php >NUL 2>NUL"', 'r'));
+            $message = 'Console berhasil di jalankan!';
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $message
+        ], 200);
     }
 
     /**

@@ -474,7 +474,7 @@
                 dataType: "json",
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
-                        console.log(data)
+                        console.log(data);
                     } else {
                         console.log('error when calling console please contact your admin');
                     }
@@ -490,7 +490,6 @@
                 dataType: "json",
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
-                        console.log(data.queue)
                         if (data.queue === null) {} else {
                             show_next_queue(data.queue);
                         }
