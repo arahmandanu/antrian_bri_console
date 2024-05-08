@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MainController::class, 'index'])->name('ShowConsoleIndex');
+Route::get('/close_console', [MainController::class, 'closeConsole'])->name('CloseConsole');
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
 Route::group(['prefix' => 'queue'], function () {
     Route::get('/next', [TempCallWebController::class, 'nextQueue'])->name('GetNextQueueTempCallWeb');

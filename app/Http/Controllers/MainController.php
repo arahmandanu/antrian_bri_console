@@ -97,7 +97,7 @@ class MainController extends Controller
     public function consoleApp(Request $request)
     {
         $task_list = [];
-        exec('start /B tasklist  2>NUL', $task_list);
+        exec('start /B tasklist 2>NUL', $task_list);
         $message = null;
         $enabler = true;
         foreach ($task_list as $key => $value) {
@@ -110,7 +110,10 @@ class MainController extends Controller
         }
 
         if ($enabler == true) {
-            pclose(popen('start /B cmd /C "php D:\projekan\antrian_bri_console\console\my_script.php >NUL 2>NUL"', 'r'));
+            $path = base_path('call_console.php');
+            // exec("php $path", $test);
+            // dd($test);
+            pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
             $message = 'Console berhasil di jalankan!';
         }
 
@@ -118,6 +121,11 @@ class MainController extends Controller
             'success' => true,
             'message' => $message,
         ], 200);
+    }
+
+    public function closeConsole(Request $request)
+    {
+        dd('masukl');
     }
 
     /**
