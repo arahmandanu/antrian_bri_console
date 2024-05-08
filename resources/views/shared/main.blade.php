@@ -7,6 +7,10 @@
 
     <title>BRI Console</title>
 
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
@@ -470,6 +474,8 @@
         var productContainer = document.getElementById('content_product');
         var firstCorouselProduct = $('div#carouselExampleControlsProduct div#corousel-parent:first-child');
         var all = $('div#corousel-parent');
+        var currencyTable = $('div.table-currency');
+        var currencyTableST = currencyTable.scrollTop();
 
         $(document).ready(function() {
             init_iklan_video(0);
@@ -526,6 +532,8 @@
                         elem.html(value);
                     }
                     elem.fadeIn();
+                    elem = undefined;
+                    value = undefined;
                 });
             }
             var textl1 = left1.text();
@@ -539,18 +547,25 @@
 
             change(left2, textl1);
             change(right2, textr1);
-            console.log(textl2);
+
             change(left3, textl2);
             change(right3, textr2);
+
+            textl1 = undefined;
+            textr1 = undefined;
+            textl2 = undefined;
+            textr2 = undefined;
+            record = undefined;
         }
 
         function init_iklan_video(index = 0, next = false) {
             function play_videos($el) {
                 local_video = $el.getElementsByTagName('video');
                 local_video[0].play();
-                local_video[0].addEventListener('ended', function() {
+                local_video[0].addEventListener('ended', function handler(e) {
                     setTimeout(() => {
-
+                        local_video[0].removeEventListener(e.type, handler);
+                        local_video = undefined;
                         init_iklan_video(index + 1, true);
                     }, 3000)
                 });
@@ -564,7 +579,7 @@
 
             if (next) carouselExampleControlsIklan.carousel('next');
             if (firstCorouselIklan.length === 0) return;
-            if (firstCorouselIklan[index] === undefined) return init_iklan_video(0);
+            if (firstCorouselIklan[index] === undefined) return init_iklan_video();
 
             if (firstCorouselIklan[index].getAttribute('data_type') === 'video') {
                 play_videos(firstCorouselIklan[index]);
@@ -574,16 +589,13 @@
         }
 
         function currency_table_auto_scroll() {
-            console.log('currency init');
             if (currencyContainer === null) return;
-            currencyContainer = currencyContainer.className.split(/\s+/);
+            currencyContainerClassList = currencyContainer.className.split(/\s+/);
 
             function scroolUp() {
-                var $el = $('div.table-currency');
-                var st = $el.scrollTop();
-                var sb = $el.prop("scrollHeight") - $el.innerHeight();
-                $el.animate({
-                    scrollTop: st < sb / 2 ? sb : 0
+                var sb = currencyTable.prop("scrollHeight") - currencyTable.innerHeight();
+                currencyTable.animate({
+                    scrollTop: currencyTableST < sb / 2 ? sb : 0
                 }, {
                     duration: 15000,
                     complete: function() {
@@ -598,22 +610,25 @@
                                 currency_table_auto_scroll()
                             }, 2000);
                         }
+
+                        sb = undefined;
                     }
                 });
             }
-            if (!currencyContainer.includes('invisible')) {
-                var $el = $('div.table-currency');
-                var st = $el.scrollTop();
-                var sb = $el.prop("scrollHeight") - $el.innerHeight();
-                $el.animate({
-                    scrollTop: st < sb / 2 ? sb : 0
+            if (!currencyContainerClassList.includes('invisible')) {
+                var sb = currencyTable.prop("scrollHeight") - currencyTable.innerHeight();
+                currencyTable.animate({
+                    scrollTop: currencyTableST < sb / 2 ? sb : 0
                 }, {
                     duration: 15000,
                     complete: function() {
                         scroolUp()
+                        sb = undefined;
                     }
                 });
             }
+
+            currencyContainerClassList = undefined;
         }
 
         // Time
@@ -624,6 +639,7 @@
             });
             // jangan di ubah timeout detikannya
             setTimeout(showTime, 1000);
+            time = undefined;
         }
 
         // Date
@@ -635,7 +651,7 @@
                 month = today.getMonth(),
                 year = today.getFullYear();
 
-            const months = [
+            var months = [
                 "Januari",
                 "Februari",
                 "Maret",
@@ -649,7 +665,7 @@
                 "November",
                 "Desember"
             ];
-            const dayWeek = [
+            var dayWeek = [
                 "Senin",
                 "Selasa",
                 "Rabu",
@@ -659,11 +675,20 @@
                 "Minggu",
             ];
             // value -> ID of the html element
-            const IDCollection = ["day", "daynum", "month", "year"];
+            var IDCollection = ["day", "daynum", "month", "year"];
 
             // return value array with number as a index
-            const val = [dayWeek[dayName], dayNum, months[month], year];
+            var val = [dayWeek[dayName], dayNum, months[month], year];
             document.getElementById('display-date').innerHTML = (val[0] + ", " + val[1] + " " + val[2] + " " + val[3]);
+            today = undefined;
+            dayName = undefined;
+            dayNum = undefined;
+            month = undefined;
+            year = undefined;
+            months = undefined;
+            dayWeek = undefined;
+            IDCollection = undefined;
+            val = undefined;
         }
 
         function run_next_corousel(ids, current_id) {
@@ -688,6 +713,7 @@
                     setTimeout(() => {
                         var current_id = ids.shift();
                         run_next_corousel(ids, current_id);
+                        current_id = undefined;
                     }, 2000);
                 }, 2000);
             }
@@ -701,13 +727,15 @@
                 duration: 15000,
                 complete: function() {
                     delayNext(ids, current_id)
+                    current_scroll_table = undefined;
+                    st = undefined;
+                    sb = undefined;
                 }
             });
         }
 
         function product_corousel(with_enabled) {
             if (containerProduct.length) {
-                console.log('product corousel init');
                 if (with_enabled == true) {
                     firstCorouselProduct.addClass('active');
                 }
@@ -729,6 +757,11 @@
                     duration: 15000,
                     complete: function() {
                         run_next_corousel(new_map, current_id)
+                        current_id = undefined;
+                        new_map = undefined;
+                        $el = undefined;
+                        st = undefined;
+                        sb = undefined;
                     }
                 });
             }
