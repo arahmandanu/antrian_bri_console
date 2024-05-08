@@ -70,6 +70,7 @@ class MainController extends Controller
         $data['footer_text'] = $properties->footer_text ?? null;
         $data['videos'] = $videos;
         $data['images'] = $images;
+        $data['company_name'] = $properties->company_name ?? null;
         $data['historyQueues'] = $datalistQueues;
 
         return view('shared.main', $data);
@@ -77,7 +78,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];

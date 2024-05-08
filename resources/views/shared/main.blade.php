@@ -316,7 +316,7 @@
                     <div class="col-md-12 container-fluid">
                         <div class="text-center">
                             <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
-                            <h1 class="text-white">{{ $properties->company_name ?? 'Nama Cabang Kosong' }}</h1>
+                            <h1 class="text-white">{{ $company_name ?? 'Nama Cabang Kosong' }}</h1>
                         </div>
                     </div>
 
@@ -454,6 +454,23 @@
     @include('shared.footer', ['footer_text' => $footer_text])
 
     <script>
+        var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};
+        var left1 = $("#history_1_left");
+        var right1 = $("#history_1_right");
+        var left2 = $("#history_2_left");
+        var right2 = $("#history_2_right");
+        var left3 = $("#history_3_left");
+        var right3 = $("#history_3_right");
+        var displayTime = document.querySelector(".display-time");
+        var firstCorouselIklan = $("div#carouselExampleControlsIklan div#parent-container-video");
+        const containerProduct = $("div#carouselExampleControlsProduct");
+        var carouselExampleControlsIklan = $('#carouselExampleControlsIklan');
+        var carouselExampleControlsProduct = $('#carouselExampleControlsProduct')
+        var currencyContainer = document.getElementById('content_currency');
+        var productContainer = document.getElementById('content_product');
+        var firstCorouselProduct = $('div#carouselExampleControlsProduct div#corousel-parent:first-child');
+        var all = $('div#corousel-parent');
+
         $(document).ready(function() {
             init_iklan_video(0);
             product_corousel(true);
@@ -462,7 +479,7 @@
             currency_table_auto_scroll();
             setInterval(() => {
                 get_next_queue()
-            }, 5000);
+            }, intervalNextQueue);
             call_console();
         });
 
@@ -503,30 +520,26 @@
         function show_next_queue(record) {
             function change(elem, value) {
                 elem.fadeOut(function() {
-                    elem.html(value);
+                    if (value.trim() == '-') {
+                        elem.html("<span class='invisible'>-</span>")
+                    } else {
+                        elem.html(value);
+                    }
                     elem.fadeIn();
                 });
             }
-
-            var left1 = $("#history_1_left");
             var textl1 = left1.text();
-            var right1 = $("#history_1_right");
             var textr1 = right1.text();
 
-            var left2 = $("#history_2_left");
             var textl2 = left2.text();
-            var right2 = $("#history_2_right");
             var textr2 = right2.text();
-
-            var left3 = $("#history_3_left");
-            var right3 = $("#history_3_right");
 
             change(left1, record.Counter);
             change(right1, record.SeqNumber);
 
             change(left2, textl1);
             change(right2, textr1);
-
+            console.log(textl2);
             change(left3, textl2);
             change(right3, textr2);
         }
@@ -549,8 +562,7 @@
                 }, 5000)
             }
 
-            if (next) $('#carouselExampleControlsIklan').carousel('next');
-            var firstCorouselIklan = $("div#carouselExampleControlsIklan div#parent-container-video");
+            if (next) carouselExampleControlsIklan.carousel('next');
             if (firstCorouselIklan.length === 0) return;
             if (firstCorouselIklan[index] === undefined) return init_iklan_video(0);
 
@@ -563,10 +575,8 @@
 
         function currency_table_auto_scroll() {
             console.log('currency init');
-            var classList = document.getElementById('content_currency');
-            if (classList === null) return;
-
-            classList = classList.className.split(/\s+/);
+            if (currencyContainer === null) return;
+            currencyContainer = currencyContainer.className.split(/\s+/);
 
             function scroolUp() {
                 var $el = $('div.table-currency');
@@ -577,9 +587,7 @@
                 }, {
                     duration: 15000,
                     complete: function() {
-                        var productContainer = document.getElementById('content_product');
                         if (productContainer) {
-                            var currencyContainer = document.getElementById('content_currency');
                             productContainer.classList.remove("invisible");
                             currencyContainer.classList.add("invisible");
                             setTimeout(() => {
@@ -593,7 +601,7 @@
                     }
                 });
             }
-            if (!classList.includes('invisible')) {
+            if (!currencyContainer.includes('invisible')) {
                 var $el = $('div.table-currency');
                 var st = $el.scrollTop();
                 var sb = $el.prop("scrollHeight") - $el.innerHeight();
@@ -610,7 +618,6 @@
 
         // Time
         function showTime() {
-            const displayTime = document.querySelector(".display-time");
             let time = new Date();
             displayTime.innerText = time.toLocaleTimeString("en-US", {
                 hour12: false
@@ -662,9 +669,7 @@
         function run_next_corousel(ids, current_id) {
             function delayNext(ids, current_id) {
                 if (ids[0] === undefined) {
-                    var currencyContainer = document.getElementById('content_currency');
                     if (currencyContainer) {
-                        var productContainer = document.getElementById('content_product');
                         currencyContainer.classList.remove("invisible");
                         productContainer.classList.add("invisible");
                         setTimeout(() => {
@@ -678,7 +683,7 @@
                 }
 
                 setTimeout(() => {
-                    $('#carouselExampleControlsProduct').carousel('next');
+                    carouselExampleControlsProduct.carousel('next');
 
                     setTimeout(() => {
                         var current_id = ids.shift();
@@ -701,25 +706,20 @@
         }
 
         function product_corousel(with_enabled) {
-            const containerProduct = $("div#carouselExampleControlsProduct");
             if (containerProduct.length) {
                 console.log('product corousel init');
-                var firstCorousel = $('div#carouselExampleControlsProduct div#corousel-parent:first-child');
                 if (with_enabled == true) {
-                    firstCorousel.addClass('active');
+                    firstCorouselProduct.addClass('active');
                 }
 
-                var current_id = firstCorousel.attr('data_id');
-                var listCorousel = $('div#corousel-parent');
-
-                var all = $('div#corousel-parent');
+                var current_id = firstCorouselProduct.attr('data_id');
                 var new_map = $.map(all, function(elementOrValue, indexOrKey) {
                     if (elementOrValue.getAttribute('data_id') != current_id) return elementOrValue
                         .getAttribute(
                             'data_id');
                 });
 
-                var $el = firstCorousel.children().children().children().children('.table-auto-scroll');
+                var $el = firstCorouselProduct.children().children().children().children('.table-auto-scroll');
 
                 var st = $el.scrollTop();
                 var sb = $el.prop("scrollHeight") - $el.innerHeight();
