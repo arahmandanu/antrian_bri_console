@@ -97,7 +97,7 @@ class MainController extends Controller
     public function consoleApp(Request $request)
     {
         $task_list = [];
-        exec('start /B tasklist 2>NUL', $task_list);
+        exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
         $message = null;
         $enabler = true;
         foreach ($task_list as $key => $value) {
@@ -125,7 +125,28 @@ class MainController extends Controller
 
     public function closeConsole(Request $request)
     {
-        dd('masukl');
+        $task_list = [];
+        exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
+        $message = null;
+        $alreadyRun = false;
+        $data = [];
+        foreach ($task_list as $key => $value) {
+            if ($value !== '') {
+                if (str_contains($value, 'Console.exe')) {
+                    $alreadyRun = true;
+                    array_push($data, $value);
+                    $message = 'Console tidak aktif sebelumnya!';
+                }
+            }
+        }
+
+        if ($alreadyRun == true) {
+            $message = shell_exec('taskkill /F /IM  Console.exe');
+        }
+
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 
     /**

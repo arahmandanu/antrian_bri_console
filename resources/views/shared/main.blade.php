@@ -416,7 +416,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 container-fluid">
+                        <div class="col-md-12 container-fluid" onclick="closeApp()">
                             <div class="row counter-parent">
                                 <div class="col-5 text-center right-bar-counter-left " style="align-content: center">
                                     <img src="{{ asset('images/contact_bri.jpg') }}" alt="Logo Call BRI"
@@ -488,6 +488,31 @@
             }, intervalNextQueue);
             call_console();
         });
+
+        function closeApp() {
+            if (confirm("Press a button!") == true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('CloseConsole') }}",
+                    data: {},
+                    dataType: "json",
+                    success: function(data, status, xhr) {
+                        if (xhr.status == 200) {
+                            // window.open("", '_self').window.close();
+                            alert(data.message);
+                            // window.open("", "_blank", "");
+                            // var customWindow = window.open('', '_blank', '');
+                            // customWindow.close();
+                            setTimeout(() => {
+                                $('body').html('');
+                            }, 1000);
+                        } else {
+                            console.log('gagal menutup aplikasi, Silahkan hubungi administrator anda!');
+                        }
+                    }
+                });
+            }
+        }
 
         function call_console() {
             $.ajax({
