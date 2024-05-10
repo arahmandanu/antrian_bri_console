@@ -41,7 +41,6 @@ class PropertiesController extends Controller
         $validated = Validator::make($request->all(), [
             'company_name' => 'required|string|max:244',
             'company_code' => 'required|string|max:244',
-            'footer_text' => 'required|string|max:244',
             'show_product' => 'required',
             'show_currency' => 'required',
         ])->validate();

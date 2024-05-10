@@ -69,11 +69,17 @@
                 data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('ConsoleIndexProperties') }}"
-                        class="{{ request()->is('admin/properties*') ? 'active' : '' }}">
+                        class="{{ request()->is('admin/properties/index') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Settings</span>
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('ConsoleIndexFooterText') }}"
+                        class="{{ request()->is('admin/properties/footer_text*') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Text Berjalan</span>
+                    </a>
+                </li>
             </ul>
         </li>
         {{-- END OF MASTER PROPERTIES --}}

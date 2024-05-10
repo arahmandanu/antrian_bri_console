@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Currency;
+use App\Models\FooterText;
 use App\Models\MasterProduct;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
@@ -67,7 +68,7 @@ class MainController extends Controller
         $data['show_product'] = $properties->show_product ?? true;
         $data['show_currency'] = $properties->show_currency ?? true;
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
-        $data['footer_text'] = $properties->footer_text ?? null;
+        $data['footer_text'] = FooterText::show()->get();
         $data['videos'] = $videos;
         $data['images'] = $images;
         $data['company_name'] = $properties->company_name ?? null;
@@ -78,7 +79,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
@@ -113,7 +114,7 @@ class MainController extends Controller
             $path = base_path('call_console.php');
             // exec("php $path", $test);
             // dd($test);
-            pclose(popen('start /B cmd /C "php '.$path.' >NUL 2>NUL"', 'r'));
+            pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
             $message = 'Console berhasil di jalankan!';
         }
 

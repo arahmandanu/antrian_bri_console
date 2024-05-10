@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\FooterTextController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
@@ -74,5 +75,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
         Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
         Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');
+
+        Route::prefix('footer_text')->group(function () {
+            Route::get('/index', [FooterTextController::class, 'index'])->name('ConsoleIndexFooterText');
+            Route::get('/create', [FooterTextController::class, 'create'])->name('ConsoleCreateFooterText');
+            Route::post('/store', [FooterTextController::class, 'store'])->name('ConsoleStoreFooterText');
+            Route::get('/edit/{footer_text}', [FooterTextController::class, 'edit'])->name('ConsoleEditFooterText');
+            Route::post('/update/{footer_text}', [FooterTextController::class, 'update'])->name('ConsoleUpdateFooterText');
+
+            Route::delete('/delete/{footer_text}', [FooterTextController::class, 'destroy'])->name('ConsoleDestroyFooterText');
+        });
     });
 });

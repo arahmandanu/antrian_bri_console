@@ -53,16 +53,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="form-floating">
-                                                    <input required type="text" class="form-control" id="floatingEmail"
-                                                        placeholder="Text footer berjalan"
-                                                        value="{{ $settings->footer_text ?? '' }}" name="footer_text">
-                                                    <label for="floatingTextarea">Text Footer</label>
-                                                </div>
-                                                <hr>
-                                            </div>
-
                                             <div class="col-md-12">
                                                 <fieldset class="row mb-3">
                                                     <legend class="col-form-label col-sm-2 pt-0">Tampilkan Product</legend>

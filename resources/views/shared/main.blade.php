@@ -13,6 +13,7 @@
     <meta http-equiv="Cache" content="no-cache">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('js/simplemarquee.js') }}"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-primary-app">
@@ -129,25 +130,17 @@
 
                                                                     <div class="col-6">
                                                                         <div>
-                                                                            <h1
-                                                                                class="fw-bolder text-center text-white title-info">
+                                                                            <h1 class="fw-bolder text-white title-info">
                                                                                 {{ Str::upper($item->name) }}
                                                                             </h1>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-6">
-                                                                        <div
-                                                                            style="
-                                                                border-top:1px solid rgba(255, 255, 255, 0.438);
-                                                                border-left:1px solid rgba(255, 255, 255, 0.267);
-                                                               border-top-left-radius: 500px;
-                                                               margin-top:5px;">
-                                                                            <h1 class="fw-bolder text-center title-info"
-                                                                                style="color: #faa901!important;">
-                                                                                TARIF SUKU
-                                                                                BUNGA (% PA) </h1>
-                                                                        </div>
+                                                                    <div class="col-6" style="align-content: end">
+                                                                        <h1 class="fw-bolder "
+                                                                            style="color: #faa901!important; font-size: 25px; float: right">
+                                                                            TARIF SUKU
+                                                                            BUNGA (% PA) </h1>
                                                                     </div>
 
                                                                     <div class="col-12 text-center">
@@ -198,17 +191,10 @@
 
                                                                     </div>
                                                                     <div class="col-6">
-                                                                        <div
-                                                                            style="
-                                                                border-top:1px solid rgb(255, 255, 255);
-                                                            border-left:1px solid rgb(255, 255, 255);
-                                                            border-top-left-radius: 500px;
-                                                            margin-top:5px;">
-                                                                            <h1 class="fw-bolder text-center title-info"
-                                                                                style="color: #faa901!important;">
-                                                                                TARIF SUKU
-                                                                                BUNGA (% PA) </h1>
-                                                                        </div>
+                                                                        <h1 class="fw-bolder text-center title-info"
+                                                                            style="color: #faa901!important;">
+                                                                            TARIF SUKU
+                                                                            BUNGA (% PA) </h1>
                                                                     </div>
 
                                                                     <div class="col-12 text-center">

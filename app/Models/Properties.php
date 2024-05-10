@@ -12,7 +12,6 @@ class Properties extends Model
     protected $fillable = [
         'company_name',
         'company_code',
-        'footer_text',
         'show_product',
         'show_currency',
     ];
