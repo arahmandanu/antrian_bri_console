@@ -13,7 +13,6 @@
     <meta http-equiv="Cache" content="no-cache">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-primary-app">
@@ -317,10 +316,26 @@
 
             <div class="col-5 container-fluid">
                 <div class="row right-bar position-relative">
-                    <div class="col-md-12 container-fluid">
-                        <div class="text-center">
-                            <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
-                            <h1 class="text-white">{{ $company_name ?? 'Nama Cabang Kosong' }}</h1>
+                    <div class="col-md-12 p-2">
+                        <div class="row">
+                            <div class="col-5">
+                                <img src="{{ asset('images/logo_white.png') }}" class="object-fit-none"
+                                    alt="Logo BRI">
+                            </div>
+                            <div class="col-7 text-center align-content-center">
+                                <div>
+                                    <span class="text-white display-5"
+                                        style="letter-spacing: -4px;">{{ $company_name ?? 'Nama Cabang Kosong' }}
+                                    </span>
+                                </div>
+                                <span class="display-4 text-white"
+                                    style="font-family: kapakana; letter-spacing: -3px;">Melayani Dengan
+                                    Sepenuh Hati</span>
+
+                                {{-- <div class="text-center"> --}}
+                                {{-- <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo"> --}}
+                                {{-- </div> --}}
+                            </div>
                         </div>
                     </div>
 
@@ -490,7 +505,7 @@
         });
 
         function closeApp() {
-            if (confirm("Press a button!") == true) {
+            if (confirm("Yakin untuk keluar dari aplikasi antrian!") == true) {
                 $.ajax({
                     type: "GET",
                     url: "{{ route('CloseConsole') }}",

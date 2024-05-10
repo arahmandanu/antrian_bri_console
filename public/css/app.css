@@ -12172,9 +12172,6 @@ textarea.form-control-lg {
     letter-spacing: -7px;
     font-size: 10vh !important;
   }
-  h1, .h1 {
-    font-size: 3vh !important;
-  }
   hr.timer {
     border-color: #f7ca15 !important;
     margin: 0 !important;
@@ -12187,10 +12184,6 @@ textarea.form-control-lg {
   h1.timer-left, .timer-left.h1 {
     color: yellow !important;
     font-weight: bolder;
-    font-size: 5vh !important;
-  }
-  h2, .h2 {
-    font-size: 3vh !important;
   }
 }
 body {
@@ -12200,6 +12193,10 @@ body {
   margin: 0;
 }
 
+@font-face {
+  font-family: "kapakana";
+  src: url(/fonts/Kapakana.ttf?d165601c68e48bd0e296806ba2aca878);
+}
 html {
   height: 100%;
   overflow: hidden;
