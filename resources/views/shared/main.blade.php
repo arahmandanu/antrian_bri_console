@@ -16,7 +16,7 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-primary-app">
-    <div class="container-fluid">
+    <div class="container-fluid ps-3 pe-3 pt-3">
         <div class="row ">
             <div class="col-md-7 container-fluid">
                 <div class="row">
@@ -319,18 +319,20 @@
                     <div class="col-md-12 p-2">
                         <div class="row">
                             <div class="col-5">
-                                <img src="{{ asset('images/logo_white.png') }}" class="object-fit-none"
-                                    alt="Logo BRI">
+                                <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
+                                    alt="Logo BRI"
+                                    style="max-width: 100%;
+                                    max-height: 100%;">
                             </div>
                             <div class="col-7 text-center align-content-center">
                                 <div>
-                                    <span class="text-white display-5"
-                                        style="letter-spacing: -4px;">{{ $company_name ?? 'Nama Cabang Kosong' }}
-                                    </span>
+                                    <h1 class="text-white fw-bolder display-6">
+                                        {{ $company_name ?? 'Nama Cabang Kosong' }}
+                                    </h1>
                                 </div>
-                                <span class="display-4 text-white"
-                                    style="font-family: kapakana; letter-spacing: -3px;">Melayani Dengan
-                                    Sepenuh Hati</span>
+                                <h1 class="text-white" style="font-family: kapakana;">Melayani
+                                    Dengan
+                                    Sepenuh Hati</h1>
 
                                 {{-- <div class="text-center"> --}}
                                 {{-- <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo"> --}}
