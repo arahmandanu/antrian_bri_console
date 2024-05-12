@@ -111,7 +111,7 @@
                                                                 name="footer_flow" id="show_currency1" value="left"
                                                                 @if (isset($settings) && $settings->footer_flow == 'left') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency1">
-                                                                kiri
+                                                                kanan &rarr; kiri
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
@@ -119,7 +119,7 @@
                                                                 name="footer_flow" id="show_currency2" value="right"
                                                                 @if (isset($settings) && $settings->footer_flow == 'right') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency2">
-                                                                kanan
+                                                                kiri &rarr; kanan
                                                             </label>
                                                         </div>
                                                     </div>

@@ -12045,9 +12045,6 @@ textarea.form-control-lg {
     letter-spacing: -7px;
     font-size: 10vh !important;
   }
-  h1, .h1 {
-    font-size: 3vh !important;
-  }
   hr.timer {
     border-color: #f7ca15 !important;
     margin: 0 !important;
@@ -12067,9 +12064,6 @@ textarea.form-control-lg {
   .counter-number {
     letter-spacing: -7px;
     font-size: 10vh !important;
-  }
-  h1, .h1 {
-    font-size: 3vh !important;
   }
   hr.timer {
     border-color: #f7ca15 !important;
@@ -12091,12 +12085,9 @@ textarea.form-control-lg {
     letter-spacing: -7px;
     font-size: 10vh !important;
   }
-  h1, .h1 {
-    font-size: 3vh !important;
-  }
-  h1 .timer, .h1 .timer {
-    color: white !important;
-    font-weight: bolder;
+  hr.timer {
+    border-color: #f7ca15 !important;
+    margin: 0 !important;
   }
   hr.timer {
     border-color: #f7ca15 !important;
@@ -12113,9 +12104,6 @@ textarea.form-control-lg {
   .counter-number {
     letter-spacing: -7px;
     font-size: 10vh !important;
-  }
-  h1, .h1 {
-    font-size: 3vh !important;
   }
   hr.timer {
     border-color: #f7ca15 !important;
@@ -12143,9 +12131,6 @@ textarea.form-control-lg {
     letter-spacing: -7px;
     font-size: 10vh !important;
   }
-  h1, .h1 {
-    font-size: 3vh !important;
-  }
   hr.timer {
     border-color: #f7ca15 !important;
     margin: 0 !important;
@@ -12158,10 +12143,6 @@ textarea.form-control-lg {
   h1.timer-left, .timer-left.h1 {
     color: yellow !important;
     font-weight: bolder;
-    font-size: 5vh !important;
-  }
-  h2, .h2 {
-    font-size: 3vh !important;
   }
 }
 @media (min-width: 1400px) {
@@ -12261,9 +12242,6 @@ div.counter {
 
 div.right-bar {
   margin-right: 5px;
-}
-div.right-bar div.counter-parent {
-  padding: 5px;
 }
 div.right-bar div.counter-div-left {
   border-right: #ffcd12 solid 0.5px;

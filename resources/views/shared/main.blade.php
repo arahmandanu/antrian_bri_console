@@ -350,6 +350,9 @@
                         </div>
                     </div>
 
+                    <hr class="invisible">
+                    <hr class="invisible">
+
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent right-bar-title">
                             <div class="col-5 text-center title-div-left">
@@ -361,81 +364,75 @@
                         </div>
                     </div>
 
-                    <div id="content-righ-bar">
-                        {{-- INCOMING ANTRIAN --}}
-                        <div class="col-md-12 container-fluid">
-                            <div class="row counter-parent right-bar-counter">
-                                <div class="col-5 text-center right-bar-counter-left">
-                                    <div class="parent-right-bar-counter-left">
-                                        <h1 class="text-white counter-number" id="history_2_left">
-                                            @if (array_key_exists(1, $historyQueues))
-                                                {{ $historyQueues[1]->Counter }}
-                                            @else
-                                                <span class="invisible">-</span>
-                                            @endif
-                                        </h1>
-                                    </div>
-                                </div>
+                    <hr class="invisible">
 
-                                <div class="col-7 text-center">
-                                    <div class="parent-right-bar-counter-right">
-                                        <h1 class="text-white right-bar-counter-left counter-number"
-                                            id="history_2_right">
-                                            @if (array_key_exists(1, $historyQueues))
-                                                {{ $historyQueues[1]->SeqNumber }}
-                                            @else
-                                                <span class="invisible">-</span>
-                                            @endif
-                                        </h1>
-                                    </div>
-                                </div>
+                    {{-- INCOMING ANTRIAN --}}
+                    <div class="col-md-12" style="background-color: #011e40;">
+                        <div class="row right-bar-counter">
+
+                            <div class="col-5 text-center">
+                                <h1 class="text-white counter-number" id="history_2_left">
+                                    @if (array_key_exists(1, $historyQueues))
+                                        {{ $historyQueues[1]->Counter }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </h1>
                             </div>
 
-                            <div class="row counter-parent right-bar-counter">
-                                <div class="col-5 text-center right-bar-counter-left">
-                                    <div class="parent-right-bar-counter-left">
-                                        <h1 class="text-white counter-number" id="history_3_left">
-                                            @if (array_key_exists(2, $historyQueues))
-                                                {{ $historyQueues[2]->Counter }}
-                                            @else
-                                                <span class="invisible">-</span>
-                                            @endif
-                                        </h1>
-                                    </div>
-                                </div>
-
-                                <div class="col-7 text-center">
-                                    <div class="parent-right-bar-counter-right">
-                                        <h1 class="text-white right-bar-counter-left counter-number"
-                                            id="history_3_right">
-                                            @if (array_key_exists(2, $historyQueues))
-                                                {{ $historyQueues[2]->SeqNumber }}
-                                            @else
-                                                <span class="invisible">-</span>
-                                            @endif
-                                        </h1>
-                                    </div>
-                                </div>
+                            <div class="col-7 text-center">
+                                <h1 class="text-white right-bar-counter-left counter-number " id="history_2_right">
+                                    @if (array_key_exists(1, $historyQueues))
+                                        {{ $historyQueues[1]->SeqNumber }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </h1>
                             </div>
                         </div>
 
-                        <div class="col-md-12 container-fluid" onclick="closeApp()">
-                            <div class="row counter-parent">
-                                <div class="col-5 text-center right-bar-counter-left " style="align-content: center">
-                                    <img src="{{ asset('images/contact_bri.jpg') }}" alt="Logo Call BRI"
-                                        class="object-fit-fill logo-call">
-                                </div>
-                                <div class="col-7 text-end align-middle" style="align-content: center">
-                                    <h1 class="timer-left display-time">20:19:33</h1>
-                                    <hr class="timer border border-success border-3 opacity-100">
-                                    <h1 class="timer" id="display-date">Minggu, 28 April 2024</h1>
-                                </div>
+                        <hr class="invisible">
+
+                        <div class="row right-bar-counter">
+                            <div class="col-5 text-center right-bar-counter-left">
+                                <h1 class="text-white counter-number" id="history_3_left">
+                                    @if (array_key_exists(2, $historyQueues))
+                                        {{ $historyQueues[2]->Counter }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </h1>
+                            </div>
+
+                            <div class="col-7 text-center">
+                                <h1 class="text-white right-bar-counter-left counter-number" id="history_3_right">
+                                    @if (array_key_exists(2, $historyQueues))
+                                        {{ $historyQueues[2]->SeqNumber }}
+                                    @else
+                                        <span class="invisible">-</span>
+                                    @endif
+                                </h1>
                             </div>
                         </div>
-                        {{-- END OF INCOMING ANTRIAN --}}
+                    </div>
 
-                        {{-- INI KETIKA ADA ANTRIAN MASUK --}}
-                        {{-- <div class="col-md-12 container-fluid">
+                    <div class="col-md-12 container-fluid" onclick="closeApp()">
+                        <div class="row counter-parent">
+                            <div class="col-5 text-center right-bar-counter-left " style="align-content: center">
+                                <img src="{{ asset('images/contact_bri.jpg') }}" alt="Logo Call BRI"
+                                    class="object-fit-fill logo-call">
+                            </div>
+                            <div class="col-7 text-end align-middle" style="align-content: center">
+                                <h1 class="timer-left display-time">20:19:33</h1>
+                                <hr class="timer border border-success border-3 opacity-100">
+                                <h1 class="timer" id="display-date">Minggu, 28 April 2024</h1>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- END OF INCOMING ANTRIAN --}}
+
+                    {{-- INI KETIKA ADA ANTRIAN MASUK --}}
+                    {{-- <div class="col-md-12 container-fluid">
                             <div class="row counter-parent right-bar-caller">
                                 <div class="col-12 caller-div position-relative">
                                     <div class="col-12" style="padding: 10px">
@@ -450,8 +447,7 @@
                                 </div>
                             </div>
                         </div> --}}
-                        {{-- END ANTRIAN MASUK --}}
-                    </div>
+                    {{-- END ANTRIAN MASUK --}}
                 </div>
             </div>
         </div>
@@ -542,6 +538,7 @@
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
                         if (data.queue === null) {} else {
+                            console.log(data);
                             show_next_queue(data.queue);
                         }
                     } else {

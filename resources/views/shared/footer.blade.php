@@ -36,13 +36,12 @@
                     if (listTextFooter[index] === undefined) {
                         index = 0;
                     }
-
                     $('p#animate_footer').text(listTextFooter[index].text);
                     flag = -elementWidth;
                 }
             }, 10);
         } else {
-            let flag = parentWidth + elementWidth;
+            let flag = parentWidth;
             setInterval(() => {
                 element.style.marginLeft = --flag + "px";
                 if (flag === (0 - elementWidth)) {
@@ -52,7 +51,7 @@
                     }
 
                     $('p#animate_footer').text(listTextFooter[index].text);
-                    flag = parentWidth + elementWidth;
+                    flag = parentWidth;
                 }
             }, 10);
         }
