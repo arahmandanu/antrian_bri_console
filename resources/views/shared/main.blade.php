@@ -458,7 +458,7 @@
     </div>
 
 
-    @include('shared.footer', ['footer_text' => $footer_text])
+    @include('shared.footer', ['footer_text' => $footer_text, 'footer_flow' => $footer_flow])
 
     <script>
         var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};

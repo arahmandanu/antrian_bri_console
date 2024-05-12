@@ -14,5 +14,6 @@ class Properties extends Model
         'company_code',
         'show_product',
         'show_currency',
+        'footer_flow'
     ];
 }
