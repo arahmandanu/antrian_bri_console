@@ -327,6 +327,8 @@
                         </div>
                     </div>
 
+                    <hr class="invisible">
+
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
                             <div class="col-5 text-center counter-div-left">
@@ -364,11 +366,11 @@
                         </div>
                     </div>
 
-                    <hr class="invisible">
+                    <hr class="invisible" style="margin: 1px;">
 
                     {{-- INCOMING ANTRIAN --}}
-                    <div class="col-md-12" style="background-color: #011e40;">
-                        <div class="row right-bar-counter">
+                    <div class="col-md-12 rounded">
+                        <div class="row right-bar-counter" style="background-color: #011e40;">
 
                             <div class="col-5 text-center">
                                 <h1 class="text-white counter-number" id="history_2_left">
@@ -391,9 +393,9 @@
                             </div>
                         </div>
 
-                        <hr class="invisible">
+                        <hr class="invisible" style="margin: 1px">
 
-                        <div class="row right-bar-counter">
+                        <div class="row right-bar-counter" style="background-color: #011e40;">
                             <div class="col-5 text-center right-bar-counter-left">
                                 <h1 class="text-white counter-number" id="history_3_left">
                                     @if (array_key_exists(2, $historyQueues))

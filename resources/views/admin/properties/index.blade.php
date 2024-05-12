@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <div class="row">
                     <!-- Reports -->
-                    <div class="col-12">text-white counter-number
+                    <div class="col-12">
                         <div class="card">
 
                             <div class="card-body">
