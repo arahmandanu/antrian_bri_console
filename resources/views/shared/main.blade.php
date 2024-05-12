@@ -304,7 +304,7 @@
                 <div class="row right-bar position-relative">
                     <div class="col-md-12 p-2">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-5" style="align-self: center;">
                                 <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
                                     alt="Logo BRI"
                                     style="max-width: 100%;
