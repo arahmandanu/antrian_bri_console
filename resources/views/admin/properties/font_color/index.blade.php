@@ -65,7 +65,7 @@
                                                 @forelse ($fontColors as $item)
                                                     <tr>
                                                         @if ($item->name == 'unit_name')
-                                                            <td>Nama Cabang / Unit</td>
+                                                            <td>Cabang / Unit</td>
                                                             <td class="text-center align-middle"
                                                                 style="background: #023e85">
                                                                 <h1

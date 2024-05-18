@@ -33,7 +33,7 @@
                                                 <video class="rounded" onloadedmetadata="this.muted = true" controls
                                                     playsinline muted id="myVideo" class="object-fit-none"
                                                     src="{{ asset("
-                                                                                                                                                                                                                                                                                                                video/$item ") }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                video/$item ") }}"
                                                     type="video/mov">
 
                                                     unsupported video! {{ $item }}
@@ -49,7 +49,7 @@
                                                 <video class="rounded" onloadedmetadata="this.muted = true" controls
                                                     playsinline muted id="myVideo" class="object-fit-none"
                                                     src="{{ asset("
-                                                                                                                                                                                                                                                                                                                video/$item ") }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                video/$item ") }}"
                                                     type="video/mov">
 
                                                     unsupported video! {{ $item }}
@@ -79,7 +79,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <img class="object-fit-contain" id="myImage"
                                                     src="{{ asset("
-                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
 
                                                 unsupported video! {{ $item }}
                                                 </img>
@@ -93,7 +93,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <img class="object-fit-contain" id="myImage"
                                                     src="{{ asset("
-                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
 
                                                 unsupported video! {{ $item }}
                                                 </img>
@@ -318,7 +318,8 @@
                             </div>
                             <div class="col-7 text-center align-content-center">
                                 <div>
-                                    <h1 class="text-white fw-bolder display-6">
+                                    <h1 class="text-white fw-bolder display-6"
+                                        @if (isset($unit_name)) style="color: {{ $unit_name }} !important" @endif>
                                         {{ $company_name ?? 'Nama Cabang Kosong' }}
                                     </h1>
                                 </div>
@@ -339,7 +340,8 @@
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
                             <div class="col-5 text-center counter-div-left">
-                                <span class="counter-left counter-color counter-number" id="history_1_left">
+                                <span class="counter-left counter-color counter-number" id="history_1_left"
+                                    @if (isset($current_queue)) style="color: {{ $current_queue }} !important" @endif>
                                     @if (array_key_exists(0, $historyQueues))
                                         {{ $historyQueues[0]->Counter }}
                                     @else
@@ -348,7 +350,8 @@
                                 </span>
                             </div>
                             <div class="col-7 text-center counter-div-right">
-                                <span class="counter-right counter-color counter-number" id="history_1_right">
+                                <span class="counter-right counter-color counter-number" id="history_1_right"
+                                    @if (isset($current_queue)) style="color: {{ $current_queue }} !important" @endif>
                                     @if (array_key_exists(0, $historyQueues))
                                         {{ $historyQueues[0]->SeqNumber }}
                                     @else
@@ -380,7 +383,8 @@
                         <div class="row right-bar-counter" style="background-color: #011e40;">
 
                             <div class="col-5 text-center">
-                                <h1 class="text-white counter-number" id="history_2_left">
+                                <h1 class="text-white counter-number" id="history_2_left"
+                                    @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
                                     @if (array_key_exists(1, $historyQueues))
                                         {{ $historyQueues[1]->Counter }}
                                     @else
@@ -390,7 +394,8 @@
                             </div>
 
                             <div class="col-7 text-center">
-                                <h1 class="text-white right-bar-counter-left counter-number " id="history_2_right">
+                                <h1 class="text-white right-bar-counter-left counter-number " id="history_2_right"
+                                    @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
                                     @if (array_key_exists(1, $historyQueues))
                                         {{ $historyQueues[1]->SeqNumber }}
                                     @else
@@ -404,7 +409,8 @@
 
                         <div class="row right-bar-counter" style="background-color: #011e40;">
                             <div class="col-5 text-center right-bar-counter-left">
-                                <h1 class="text-white counter-number" id="history_3_left">
+                                <h1 class="text-white counter-number" id="history_3_left"
+                                    @if (isset($second_log)) style="color: {{ $second_log }} !important" @endif>
                                     @if (array_key_exists(2, $historyQueues))
                                         {{ $historyQueues[2]->Counter }}
                                     @else
@@ -414,7 +420,8 @@
                             </div>
 
                             <div class="col-7 text-center">
-                                <h1 class="text-white right-bar-counter-left counter-number" id="history_3_right">
+                                <h1 class="text-white right-bar-counter-left counter-number" id="history_3_right"
+                                    @if (isset($second_log)) style="color: {{ $second_log }} !important" @endif>
                                     @if (array_key_exists(2, $historyQueues))
                                         {{ $historyQueues[2]->SeqNumber }}
                                     @else
@@ -432,9 +439,15 @@
                                     class="object-fit-fill logo-call">
                             </div>
                             <div class="col-7 text-end align-middle" style="align-content: center">
-                                <h1 class="timer-left display-time">20:19:33</h1>
-                                <hr class="timer border border-success border-3 opacity-100">
-                                <h1 class="timer" id="display-date">Minggu, 28 April 2024</h1>
+                                <h1 class="timer-left display-time"
+                                    @if (isset($watch)) style="color: {{ $watch }} !important" @endif>
+                                    >20:19:33</h1>
+                                <hr class="timer border border-success border-3 opacity-100"
+                                    @if (isset($watch)) style="border-color: {{ $watch }} !important" @endif>
+                                >
+                                <h1 class="timer" id="display-date"
+                                    @if (isset($watch)) style="color: {{ $watch }} !important" @endif>
+                                    >Minggu, 28 April 2024</h1>
                             </div>
                         </div>
                     </div>

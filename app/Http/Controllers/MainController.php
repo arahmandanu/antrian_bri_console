@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Currency;
+use App\Models\FontColor;
 use App\Models\FooterText;
 use App\Models\MasterProduct;
 use App\Models\Properties;
@@ -75,12 +76,17 @@ class MainController extends Controller
         $data['company_name'] = $properties->company_name ?? null;
         $data['historyQueues'] = $datalistQueues;
 
+        $colors = FontColor::where('value', '!=', null)->get();
+        foreach ($colors as $key => $value) {
+            $data[$value->name] = $value->value;
+        }
+
         return view('shared.main', $data);
     }
 
     public function videosList(Request $request)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
@@ -115,7 +121,7 @@ class MainController extends Controller
             $path = base_path('call_console.php');
             // exec("php $path", $test);
             // dd($test);
-            pclose(popen('start /B cmd /C "php '.$path.' >NUL 2>NUL"', 'r'));
+            pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
             $message = 'Console berhasil di jalankan!';
         }
 
