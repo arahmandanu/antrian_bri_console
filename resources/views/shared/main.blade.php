@@ -11,8 +11,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Cache" content="no-cache">
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <script src="{{ mix('js/app.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/simplemarquee.js') }}"></script>
 </head>
 
@@ -25,76 +25,76 @@
                         <div class="carousel-inner" id="corousel_iklan_parent">
                             {{-- IKLAN VIDEO --}}
                             @forelse ($videos as $item)
-                                @if ($loop->first)
-                                    <div class="carousel-item active">
-                                        <div class="col-md-12" id="parent-container-video" data_type="video">
-                                            <div
-                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <video class="rounded" onloadedmetadata="this.muted = true" controls
-                                                    playsinline muted id="myVideo" class="object-fit-none"
-                                                    src="{{ asset("video/$item ") }}" type="video/mov">
+                            @if ($loop->first)
+                            <div class="carousel-item active">
+                                <div class="col-md-12" id="parent-container-video" data_type="video">
+                                    <div
+                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                        <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline
+                                            muted id="myVideo" class="object-fit-none" src="{{ asset("
+                                            video/$item ") }}" type="video/mov">
 
-                                                    unsupported video! {{ $item }}
-                                                </video>
-                                            </div>
-                                        </div>
+                                            unsupported video! {{ $item }}
+                                        </video>
                                     </div>
-                                @else
-                                    <div class="carousel-item">
-                                        <div class="col-md-12" id="parent-container-video" data_type="video">
-                                            <div
-                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <video class="rounded" onloadedmetadata="this.muted = true" controls
-                                                    playsinline muted id="myVideo" class="object-fit-none"
-                                                    src="{{ asset("video/$item ") }}" type="video/mov">
+                                </div>
+                            </div>
+                            @else
+                            <div class="carousel-item">
+                                <div class="col-md-12" id="parent-container-video" data_type="video">
+                                    <div
+                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                        <video class="rounded" onloadedmetadata="this.muted = true" controls playsinline
+                                            muted id="myVideo" class="object-fit-none" src="{{ asset("
+                                            video/$item ") }}" type="video/mov">
 
-                                                    unsupported video! {{ $item }}
-                                                </video>
-                                            </div>
-                                        </div>
+                                            unsupported video! {{ $item }}
+                                        </video>
                                     </div>
-                                @endif
+                                </div>
+                            </div>
+                            @endif
                             @empty
-                                @if (empty($images))
-                                    <div class="col-md-12" id="parent-container-video">
-                                        <div
-                                            class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                            <video src="#" id="myVideo"></video>
-                                        </div>
-                                    </div>
-                                @endif
+                            @if (empty($images))
+                            <div class="col-md-12" id="parent-container-video">
+                                <div
+                                    class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                    <video src="#" id="myVideo"></video>
+                                </div>
+                            </div>
+                            @endif
                             @endforelse
                             {{-- END OF IKLAN VIDEO --}}
 
                             {{-- IKLAN GAMBAR --}}
                             @forelse ($images as $item)
-                                @if ($loop->first)
-                                    <div class="carousel-item @if (empty($videos)) active @endif">
-                                        <div class="col-md-12" id="parent-container-video" data_type="image">
-                                            <div
-                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <img class="object-fit-contain" id="myImage"
-                                                    src="{{ asset("iklan_image/$item ") }}">
+                            @if ($loop->first)
+                            <div class="carousel-item @if (empty($videos)) active @endif">
+                                <div class="col-md-12" id="parent-container-video" data_type="image">
+                                    <div
+                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                        <img class="object-fit-contain" id="myImage" src="{{ asset("
+                                            iklan_image/$item ") }}">
 
-                                                unsupported video! {{ $item }}
-                                                </img>
-                                            </div>
-                                        </div>
+                                        unsupported video! {{ $item }}
+                                        </img>
                                     </div>
-                                @else
-                                    <div class="carousel-item">
-                                        <div class="col-md-12" id="parent-container-video" data_type="image">
-                                            <div
-                                                class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <img class="object-fit-contain" id="myImage"
-                                                    src="{{ asset("iklan_image/$item ") }}">
+                                </div>
+                            </div>
+                            @else
+                            <div class="carousel-item">
+                                <div class="col-md-12" id="parent-container-video" data_type="image">
+                                    <div
+                                        class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
+                                        <img class="object-fit-contain" id="myImage" src="{{ asset("
+                                            iklan_image/$item ") }}">
 
-                                                unsupported video! {{ $item }}
-                                                </img>
-                                            </div>
-                                        </div>
+                                        unsupported video! {{ $item }}
+                                        </img>
                                     </div>
-                                @endif
+                                </div>
+                            </div>
+                            @endif
                             @empty
                             @endforelse
                         </div>
@@ -104,199 +104,197 @@
                 </div>
 
                 @if ($show_product || $show_currency)
-                    <div id='content_left_bar'>
-                        <div class="row position-relative">
-                            @if ($show_product)
-                                <div id="content_product" class="col position-absolute top-0 start-0">
-                                    <div class="row">
-                                        <div class="col-md-12 text-center">
-                                            <div class="title-info rounded border-top border-opacity-10">
-                                                <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
-                                            </div>
-                                        </div>
+                <div id='content_left_bar'>
+                    <div class="row position-relative">
+                        @if ($show_product)
+                        <div id="content_product" class="col position-absolute top-0 start-0">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="title-info rounded border-top border-opacity-10">
+                                        <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
                                     </div>
+                                </div>
+                            </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div id="carouselExampleControlsProduct"
-                                                class="carousel slide carousel-fade">
-                                                <div class="carousel-inner" id="container-parent-corousel">
-                                                    @forelse ($products as $item)
-                                                        <div class="carousel-item" id="corousel-parent"
-                                                            data_id="{{ $loop->iteration }}">
-                                                            <div
-                                                                class="title-info rounded border-top border-opacity-10">
-                                                                <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="carouselExampleControlsProduct" class="carousel slide carousel-fade">
+                                        <div class="carousel-inner" id="container-parent-corousel">
+                                            @forelse ($products as $item)
+                                            <div class="carousel-item" id="corousel-parent"
+                                                data_id="{{ $loop->iteration }}">
+                                                <div class="title-info rounded border-top border-opacity-10">
+                                                    <div class="row">
 
-                                                                    <div class="col-6">
-                                                                        <div>
-                                                                            <h1 class="fw-bolder text-white title-info">
-                                                                                {{ Str::upper($item->name) }}
-                                                                            </h1>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6" style="align-content: end">
-                                                                        <h1 class="fw-bolder "
-                                                                            style="color: #faa901!important; font-size: 25px; float: right">
-                                                                            TARIF SUKU
-                                                                            BUNGA (% PA) </h1>
-                                                                    </div>
-
-                                                                    <div class="col-12 text-center">
-                                                                        <div
-                                                                            class="table-info parent-table-product table-auto-scroll">
-                                                                            <table class="table my-table-product">
-                                                                                <tbody>
-                                                                                    @forelse ($item->productDetails as $productDetail)
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <h2>{{ Str::upper($productDetail->value) }}
-                                                                                                </h2>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <h2>{{ Str::upper($productDetail->suku_bunga) }}
-                                                                                                </h2>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    @empty
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <h2>-</h2>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <h2>-</h2>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    @endforelse
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="col-6">
+                                                            <div>
+                                                                <h1 class="fw-bolder text-white title-info">
+                                                                    {{ Str::upper($item->name) }}
+                                                                </h1>
                                                             </div>
                                                         </div>
-                                                    @empty
-                                                        <div class="carousel-item" id="corousel-parent" data_id="1">
+
+                                                        <div class="col-6" style="align-content: end">
+                                                            <h1 class="fw-bolder "
+                                                                style="color: #faa901!important; font-size: 25px; float: right">
+                                                                TARIF SUKU
+                                                                BUNGA (% PA) </h1>
+                                                        </div>
+
+                                                        <div class="col-12 text-center">
                                                             <div
-                                                                class="title-info rounded border-top border-opacity-10">
-                                                                <div class="row">
-                                                                    <div class="col-6">
-                                                                        <div>
-                                                                            <h1
-                                                                                class="fw-bolder text-center text-white title-info">
-                                                                                -
-                                                                            </h1>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <h1 class="fw-bolder text-center title-info"
-                                                                            style="color: #faa901!important;">
-                                                                            TARIF SUKU
-                                                                            BUNGA (% PA) </h1>
-                                                                    </div>
-
-                                                                    <div class="col-12 text-center">
-                                                                        <div
-                                                                            class="table-info parent-table-product table-auto-scroll">
-                                                                            <table class="table my-table-product">
-                                                                                <tbody>
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                class="table-info parent-table-product table-auto-scroll">
+                                                                <table class="table my-table-product">
+                                                                    <tbody>
+                                                                        @forelse ($item->productDetails as $proDet)
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h2>{{ Str::upper($proDet->value)
+                                                                                    }}
+                                                                                </h2>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h2>{{
+                                                                                    Str::upper($proDet->suku_bunga)
+                                                                                    }}
+                                                                                </h2>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @empty
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h2>-</h2>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h2>-</h2>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforelse
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
-                                                    @endforelse
+                                                    </div>
                                                 </div>
                                             </div>
+                                            @empty
+                                            <div class="carousel-item" id="corousel-parent" data_id="1">
+                                                <div class="title-info rounded border-top border-opacity-10">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div>
+                                                                <h1 class="fw-bolder text-center text-white title-info">
+                                                                    -
+                                                                </h1>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <h1 class="fw-bolder text-center title-info"
+                                                                style="color: #faa901!important;">
+                                                                TARIF SUKU
+                                                                BUNGA (% PA) </h1>
+                                                        </div>
+
+                                                        <div class="col-12 text-center">
+                                                            <div
+                                                                class="table-info parent-table-product table-auto-scroll">
+                                                                <table class="table my-table-product">
+                                                                    <tbody>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforelse
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-
-                            @if ($show_currency)
-                                <div id="content_currency"
-                                    class="col position-absolute top-0 start-0 {{ $show_both ? 'invisible' : '' }}">
-                                    <div class="row">
-                                        <div class="col-md-12 text-center">
-                                            <div class="title-info rounded border-top border-opacity-10">
-                                                <h1 class="fw-bolder text-white"> BANK NOTE DD/TT </h1>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 text-center">
-                                            <div class="table-currency rounded border-top border-opacity-10">
-                                                <table id="table table-currency" class="table table-currency">
-                                                    <thead>
-                                                        <tr>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">KURS</h2>
-                                                            </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">JUAL</h2>
-                                                            </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">BELI</h2>
-                                                            </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">JUAL</h2>
-                                                            </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">BELI</h2>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-
-                                                    <tbody>
-                                                        @forelse ($currencies as $currency)
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="d-flex flex-row text-center">
-                                                                        <div class="p-2"><img
-                                                                                src="{{ asset($currency->flag_url) }}"
-                                                                                style='height:3vh;width:6vh'
-                                                                                alt="flag" class="rounded-circle">
-                                                                        </div>
-                                                                        <div class="p-2">
-                                                                            <h3 class="text-white">
-                                                                                {{ Str::upper($currency->name) }}</h3>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td>
-                                                                    <h3>{{ $currency->jual_a }}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3>{{ $currency->beli_a }}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3>{{ $currency->jual_b }}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3>{{ $currency->beli_b }}</h3>
-                                                                </td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="5">
-                                                                    <h2>-</h2>
-                                                                </td>
-                                                            </tr>
-                                                        @endforelse
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                            </div>
                         </div>
+                        @endif
+
+                        @if ($show_currency)
+                        <div id="content_currency"
+                            class="col position-absolute top-0 start-0 {{ $show_both ? 'invisible' : '' }}">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="title-info rounded border-top border-opacity-10">
+                                        <h1 class="fw-bolder text-white"> BANK NOTE DD/TT </h1>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <div class="table-currency rounded border-top border-opacity-10">
+                                        <table id="table table-currency" class="table table-currency">
+                                            <thead>
+                                                <tr>
+                                                    <th width="20%">
+                                                        <h2 class="fw-bolder text-white">KURS</h2>
+                                                    </th>
+                                                    <th width="20%">
+                                                        <h2 class="fw-bolder text-white">JUAL</h2>
+                                                    </th>
+                                                    <th width="20%">
+                                                        <h2 class="fw-bolder text-white">BELI</h2>
+                                                    </th>
+                                                    <th width="20%">
+                                                        <h2 class="fw-bolder text-white">JUAL</h2>
+                                                    </th>
+                                                    <th width="20%">
+                                                        <h2 class="fw-bolder text-white">BELI</h2>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            {{-- <tbody>
+                                                @forelse ($currencies as $currency)
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex flex-row text-center">
+                                                            <div class="p-2"><img src="{{ asset($currency->flag_url) }}"
+                                                                    style='height:3vh;width:6vh' alt="flag"
+                                                                    class="rounded-circle">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <h3 class="text-white">
+                                                                    {{ Str::upper($currency->name) }}</h3>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <h3>{{ $currency->jual_a }}</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3>{{ $currency->beli_a }}</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3>{{ $currency->jual_b }}</h3>
+                                                    </td>
+                                                    <td>
+                                                        <h3>{{ $currency->beli_b }}</h3>
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <h2>-</h2>
+                                                    </td>
+                                                </tr>
+                                                @endforelse
+                                            </tbody> --}}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
+                </div>
                 @endif
             </div>
 
@@ -306,8 +304,7 @@
                         <div class="row">
                             <div class="col-5" style="align-self: center;">
                                 <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
-                                    alt="Logo BRI"
-                                    style="max-width: 100%;
+                                    alt="Logo BRI" style="max-width: 100%;
                                     max-height: 100%;">
                             </div>
                             <div class="col-7 text-center align-content-center">
@@ -321,8 +318,9 @@
                                     Sepenuh Hati</h1>
 
                                 {{-- <div class="text-center"> --}}
-                                {{-- <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo"> --}}
-                                {{-- </div> --}}
+                                    {{-- <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
+                                    --}}
+                                    {{-- </div> --}}
                             </div>
                         </div>
                     </div>
@@ -334,18 +332,18 @@
                             <div class="col-5 text-center counter-div-left">
                                 <span class="counter-left counter-color counter-number" id="history_1_left">
                                     @if (array_key_exists(0, $historyQueues))
-                                        {{ $historyQueues[0]->Counter }}
+                                    {{ $historyQueues[0]->Counter }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </span>
                             </div>
                             <div class="col-7 text-center counter-div-right">
                                 <span class="counter-right counter-color counter-number" id="history_1_right">
                                     @if (array_key_exists(0, $historyQueues))
-                                        {{ $historyQueues[0]->SeqNumber }}
+                                    {{ $historyQueues[0]->SeqNumber }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </span>
                             </div>
@@ -375,9 +373,9 @@
                             <div class="col-5 text-center">
                                 <h1 class="text-white counter-number" id="history_2_left">
                                     @if (array_key_exists(1, $historyQueues))
-                                        {{ $historyQueues[1]->Counter }}
+                                    {{ $historyQueues[1]->Counter }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </h1>
                             </div>
@@ -385,9 +383,9 @@
                             <div class="col-7 text-center">
                                 <h1 class="text-white right-bar-counter-left counter-number " id="history_2_right">
                                     @if (array_key_exists(1, $historyQueues))
-                                        {{ $historyQueues[1]->SeqNumber }}
+                                    {{ $historyQueues[1]->SeqNumber }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </h1>
                             </div>
@@ -399,9 +397,9 @@
                             <div class="col-5 text-center right-bar-counter-left">
                                 <h1 class="text-white counter-number" id="history_3_left">
                                     @if (array_key_exists(2, $historyQueues))
-                                        {{ $historyQueues[2]->Counter }}
+                                    {{ $historyQueues[2]->Counter }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </h1>
                             </div>
@@ -409,9 +407,9 @@
                             <div class="col-7 text-center">
                                 <h1 class="text-white right-bar-counter-left counter-number" id="history_3_right">
                                     @if (array_key_exists(2, $historyQueues))
-                                        {{ $historyQueues[2]->SeqNumber }}
+                                    {{ $historyQueues[2]->SeqNumber }}
                                     @else
-                                        <span class="invisible">-</span>
+                                    <span class="invisible">-</span>
                                     @endif
                                 </h1>
                             </div>
@@ -435,20 +433,20 @@
 
                     {{-- INI KETIKA ADA ANTRIAN MASUK --}}
                     {{-- <div class="col-md-12 container-fluid">
-                            <div class="row counter-parent right-bar-caller">
-                                <div class="col-12 caller-div position-relative">
-                                    <div class="col-12" style="padding: 10px">
-                                        <p class="display-5">Antrian Nomor</p>
-                                        <span class="display-1 counter-color">A001</span>
-                                    </div>
+                        <div class="row counter-parent right-bar-caller">
+                            <div class="col-12 caller-div position-relative">
+                                <div class="col-12" style="padding: 10px">
+                                    <p class="display-5">Antrian Nomor</p>
+                                    <span class="display-1 counter-color">A001</span>
+                                </div>
 
-                                    <div class="col-12" style="padding: 10px">
-                                        <p class="display-5">Silahkan Menuju Ke</p>
-                                        <span class="display-1 counter-color">02</span>
-                                    </div>
+                                <div class="col-12" style="padding: 10px">
+                                    <p class="display-5">Silahkan Menuju Ke</p>
+                                    <span class="display-1 counter-color">02</span>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
+                    </div> --}}
                     {{-- END ANTRIAN MASUK --}}
                 </div>
             </div>
