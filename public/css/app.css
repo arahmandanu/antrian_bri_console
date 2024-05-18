@@ -12403,5 +12403,5 @@ table.my-table-product tbody tr:nth-child(even) td:nth-child(2) {
 }
 @font-face {
     font-family: 'kapakana';
-    src: url(../fonts/Kapakana.ttf?d165601c68e48bd0e296806ba2aca878);
+    src: url(/fonts/Kapakana.ttf?d165601c68e48bd0e296806ba2aca878);
 }

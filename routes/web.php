@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\FontColorController;
 use App\Http\Controllers\Admin\FooterTextController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
@@ -84,6 +85,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::post('/update/{footer_text}', [FooterTextController::class, 'update'])->name('ConsoleUpdateFooterText');
 
             Route::delete('/delete/{footer_text}', [FooterTextController::class, 'destroy'])->name('ConsoleDestroyFooterText');
+        });
+
+        Route::prefix('font_colour')->group(function () {
+            Route::get('/index', [FontColorController::class, 'index'])->name('ConsoleIndexFontColor');
+            Route::post('/update', [FontColorController::class, 'update'])->name('ConsoleUpdateFontColor');
         });
     });
 });

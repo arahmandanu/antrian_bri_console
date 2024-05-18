@@ -80,6 +80,13 @@
                         <i class="bi bi-circle"></i><span>Text Berjalan</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('ConsoleIndexFontColor') }}"
+                        class="{{ request()->is('admin/properties/warna_text*') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Warna Text</span>
+                    </a>
+                </li>
             </ul>
         </li>
         {{-- END OF MASTER PROPERTIES --}}

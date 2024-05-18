@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSuperAdminSeeder::class,
             AddMasterProduct::class,
+            CreateFontColorData::class
         ]);
     }
 }

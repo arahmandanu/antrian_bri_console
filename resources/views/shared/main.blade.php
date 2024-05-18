@@ -33,7 +33,7 @@
                                                 <video class="rounded" onloadedmetadata="this.muted = true" controls
                                                     playsinline muted id="myVideo" class="object-fit-none"
                                                     src="{{ asset("
-                                                                                                                                                    video/$item ") }}"
+                                                                                                                                                                                                                                                                                                                video/$item ") }}"
                                                     type="video/mov">
 
                                                     unsupported video! {{ $item }}
@@ -49,7 +49,7 @@
                                                 <video class="rounded" onloadedmetadata="this.muted = true" controls
                                                     playsinline muted id="myVideo" class="object-fit-none"
                                                     src="{{ asset("
-                                                                                                                                                    video/$item ") }}"
+                                                                                                                                                                                                                                                                                                                video/$item ") }}"
                                                     type="video/mov">
 
                                                     unsupported video! {{ $item }}
@@ -79,7 +79,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <img class="object-fit-contain" id="myImage"
                                                     src="{{ asset("
-                                                                                                                                                    iklan_image/$item ") }}">
+                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
 
                                                 unsupported video! {{ $item }}
                                                 </img>
@@ -93,7 +93,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <img class="object-fit-contain" id="myImage"
                                                     src="{{ asset("
-                                                                                                                                                    iklan_image/$item ") }}">
+                                                                                                                                                                                                                                                                                                                iklan_image/$item ") }}">
 
                                                 unsupported video! {{ $item }}
                                                 </img>
@@ -257,43 +257,44 @@
                                                         </tr>
                                                     </thead>
 
-                                                    {{-- <tbody>
-                                                @forelse ($currencies as $currency)
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex flex-row text-center">
-                                                            <div class="p-2"><img src="{{ asset($currency->flag_url) }}"
-                                                                    style='height:3vh;width:6vh' alt="flag"
-                                                                    class="rounded-circle">
-                                                            </div>
-                                                            <div class="p-2">
-                                                                <h3 class="text-white">
-                                                                    {{ Str::upper($currency->name) }}</h3>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                                    <tbody>
+                                                        @forelse ($currencies as $currency)
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="d-flex flex-row text-center">
+                                                                        <div class="p-2"><img
+                                                                                src="{{ asset($currency->flag_url) }}"
+                                                                                style='height:3vh;width:6vh'
+                                                                                alt="flag" class="rounded-circle">
+                                                                        </div>
+                                                                        <div class="p-2">
+                                                                            <h3 class="text-white">
+                                                                                {{ Str::upper($currency->name) }}</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
 
-                                                    <td>
-                                                        <h3>{{ $currency->jual_a }}</h3>
-                                                    </td>
-                                                    <td>
-                                                        <h3>{{ $currency->beli_a }}</h3>
-                                                    </td>
-                                                    <td>
-                                                        <h3>{{ $currency->jual_b }}</h3>
-                                                    </td>
-                                                    <td>
-                                                        <h3>{{ $currency->beli_b }}</h3>
-                                                    </td>
-                                                </tr>
-                                                @empty
-                                                <tr>
-                                                    <td colspan="5">
-                                                        <h2>-</h2>
-                                                    </td>
-                                                </tr>
-                                                @endforelse
-                                            </tbody> --}}
+                                                                <td>
+                                                                    <h3>{{ $currency->jual_a }}</h3>
+                                                                </td>
+                                                                <td>
+                                                                    <h3>{{ $currency->beli_a }}</h3>
+                                                                </td>
+                                                                <td>
+                                                                    <h3>{{ $currency->jual_b }}</h3>
+                                                                </td>
+                                                                <td>
+                                                                    <h3>{{ $currency->beli_b }}</h3>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <h2>-</h2>
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
