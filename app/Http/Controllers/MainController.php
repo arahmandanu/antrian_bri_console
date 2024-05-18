@@ -80,7 +80,7 @@ class MainController extends Controller
 
     public function videosList(Request $request)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $listFile = scandir(public_path('/video'));
         $videos = [];
@@ -115,7 +115,7 @@ class MainController extends Controller
             $path = base_path('call_console.php');
             // exec("php $path", $test);
             // dd($test);
-            pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
+            pclose(popen('start /B cmd /C "php '.$path.' >NUL 2>NUL"', 'r'));
             $message = 'Console berhasil di jalankan!';
         }
 

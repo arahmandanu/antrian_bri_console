@@ -90,6 +90,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
         Route::prefix('font_colour')->group(function () {
             Route::get('/index', [FontColorController::class, 'index'])->name('ConsoleIndexFontColor');
             Route::post('/update', [FontColorController::class, 'update'])->name('ConsoleUpdateFontColor');
+            Route::get('/reset/{font_color}', [FontColorController::class, 'reset'])->name('ConsoleResetFontColor');
         });
     });
 });

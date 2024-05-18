@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Currency;
 use App\Models\FooterText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +17,7 @@ class FooterTextController extends Controller
     public function index()
     {
         return view('admin.properties.footer_text.index', [
-            'footers' => FooterText::all()
+            'footers' => FooterText::all(),
         ]);
     }
 
@@ -33,7 +32,7 @@ class FooterTextController extends Controller
         $all = FooterText::all()->pluck('display_number')->toArray();
 
         return view('admin.properties.footer_text.create', [
-            'displayNumbers' => array_diff($defaultNumber, $all)
+            'displayNumbers' => array_diff($defaultNumber, $all),
         ]);
     }
 
@@ -83,7 +82,7 @@ class FooterTextController extends Controller
 
         return view('admin.properties.footer_text.edit', [
             'displayNumbers' => array_diff($defaultNumber, $all),
-            'footerText' => $footer_text
+            'footerText' => $footer_text,
         ]);
     }
 
@@ -125,6 +124,7 @@ class FooterTextController extends Controller
             $code = 422;
             $status = 'Failed';
         }
+
         return response()->json([
             'status' => $status,
         ], $code);

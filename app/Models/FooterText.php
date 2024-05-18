@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FooterText extends Model
 {
-
     use HasFactory;
 
     public function scopeShow(Builder $query): void

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\FontColor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FontColorSeeder extends Seeder
@@ -35,7 +34,7 @@ class FontColorSeeder extends Seeder
             [
                 'name' => 'watch',
                 'value' => null,
-            ]
+            ],
         ]);
     }
 }

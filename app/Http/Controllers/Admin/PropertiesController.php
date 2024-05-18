@@ -43,7 +43,7 @@ class PropertiesController extends Controller
             'company_code' => 'required|string|max:244',
             'show_product' => 'required',
             'show_currency' => 'required',
-            'footer_flow' => 'required|in:left,right'
+            'footer_flow' => 'required|in:left,right',
         ])->validate();
 
         $record = Properties::first();

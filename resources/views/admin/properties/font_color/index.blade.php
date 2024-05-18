@@ -4,7 +4,18 @@
     <style>
         table#editor>tbody>tr>td {
             padding: 20px;
-            font-weight: bolder
+            font-weight: 500;
+        }
+
+        table#editor>tbody>tr>td:nth-child(2) {
+            align-content: center;
+            text-align: middle;
+            font-weight: bolder !important;
+
+            h1 {
+                font-size: 5vh !important;
+            }
+
         }
     </style>
     <div class="pagetitle">
@@ -45,7 +56,8 @@
                                                 <tr>
                                                     <th width="10%"></th>
                                                     <th width="80%"></th>
-                                                    <th width="10%"></th>
+                                                    <th width="5%"></th>
+                                                    <th width="5%"></th>
                                                 </tr>
                                             </thead>
 
@@ -57,7 +69,7 @@
                                                             <td class="text-center align-middle"
                                                                 style="background: #023e85">
                                                                 <h1
-                                                                    style="@if (isset($item->value)) color: {{ $item->value }} !important @endif">
+                                                                    style="@if (isset($item->value)) color: {{ $item->value }} !important  @else color: #ffffff @endif">
                                                                     {{ $properties->company_name ?? 'Nama Unit Anda' }}
                                                                 </h1>
                                                             </td>
@@ -138,6 +150,10 @@
                                                                     onchange='changeColor("{{ $item->name }}", this)'>
                                                             </td>
                                                         @endif
+                                                        <td class="text-middle align-middle">
+                                                            <a type="button" class="btn btn-link"
+                                                                href="{{ route('ConsoleResetFontColor', $item->id) }}">reset</a>
+                                                        </td>
                                                     </tr>
                                                 @empty
                                                     <tr>

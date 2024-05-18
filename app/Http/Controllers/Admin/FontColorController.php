@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\FontColor;
 use App\Models\Properties;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class FontColorController extends Controller
 {
@@ -19,71 +18,8 @@ class FontColorController extends Controller
     {
         return view('admin.properties.font_color.index', [
             'fontColors' => FontColor::all(),
-            'properties' => Properties::first()
+            'properties' => Properties::first(),
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $validated = Validator::make($request->all(), [
-            'company_name' => 'required|string|max:244',
-            'company_code' => 'required|string|max:244',
-            'show_product' => 'required',
-            'show_currency' => 'required',
-            'footer_flow' => 'required|in:left,right'
-        ])->validate();
-
-        $record = Properties::first();
-        // dd($record, $validated);
-        if ($record) {
-            if ($record->update($validated)) {
-                flash('Sukses menambahkan Properties!')->success();
-            } else {
-                flash('Gagal menambahkan Properties!')->error();
-            }
-        } else {
-            if (Properties::create($validated)) {
-                flash('Sukses mengubah Properties!')->success();
-            } else {
-                flash('Gagal mengubah Properties!')->error();
-            }
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Properties $properties)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
     }
 
     /**
@@ -117,8 +53,14 @@ class FontColorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Properties $properties)
+    public function reset(FontColor $font_color)
     {
-        //
+        if ($font_color->update(['value' => null])) {
+            flash('Sukses mereset warna!')->success();
+        } else {
+            flash('Gagal mereset warna!')->error();
+        }
+
+        return redirect()->back();
     }
 }
