@@ -69,7 +69,7 @@ class MainController extends Controller
         $data['show_product'] = $properties->show_product ?? true;
         $data['show_currency'] = $properties->show_currency ?? true;
         $data['show_both'] = $data['show_product'] && $data['show_currency'];
-        $data['footer_text'] = FooterText::show()->get();
+        $data['list_footer_text'] = FooterText::show()->get();
         $data['footer_flow'] = $properties->footer_flow ?? 'right';
         $data['videos'] = $videos;
         $data['images'] = $images;

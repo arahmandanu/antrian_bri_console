@@ -35,6 +35,10 @@ class FontColorSeeder extends Seeder
                 'name' => 'watch',
                 'value' => null,
             ],
+            [
+                'name' => 'footer_text',
+                'value' => null,
+            ],
         ]);
     }
 }

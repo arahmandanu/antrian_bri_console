@@ -1,15 +1,18 @@
 <footer class="bg-black for-footer mt-auto" style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
 
-    @if ($footer_text->count() == 0)
-        <p class="text-white walking-text invisible" style="white-space: nowrap; float: left;">-</p>
+    @if ($list_footer_text->count() == 0)
+        <p class="text-white walking-text invisible"
+            style="white-space: nowrap; float: left; @if (isset($footer_text)) color: {{ $footer_text }} !important @endif">
+            -</p>
     @else
-        <p id="animate_footer" class="text-white walking-text" style="white-space: nowrap; float: left;"
+        <p id="animate_footer" class="text-white walking-text"
+            style="white-space: nowrap; float: left;  @if (isset($footer_text)) color: {{ $footer_text }} !important @endif"
             flow='{{ $footer_flow }}'></p>
     @endif
 </footer>
 
 <script>
-    const listTextFooter = {!! json_encode($footer_text) !!};
+    const listTextFooter = {!! json_encode($list_footer_text) !!};
     $(document).ready(function() {
         if (document.getElementById('animate_footer')) {
             animate();

@@ -12046,11 +12046,11 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h1.timer, .timer.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
   }
   h2, .h2 {
@@ -12066,11 +12066,11 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h1.timer, .timer.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
   }
   h2, .h2 {
@@ -12086,11 +12086,11 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h2, .h2 {
@@ -12106,7 +12106,7 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h1 .timer, .h1 .timer {
@@ -12115,7 +12115,7 @@ textarea.form-control-lg {
     font-weight: bolder;
   }
   h1.timer-left, .timer-left.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
     font-size: 5vh !important;
   }
@@ -12132,16 +12132,16 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h1.timer, .timer.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
     font-size: 3vh;
   }
   h1.timer-left, .timer-left.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
   }
 }
@@ -12154,16 +12154,16 @@ textarea.form-control-lg {
     font-size: 10vh !important;
   }
   hr.timer {
-    border-color: #f7ca15 !important;
+    border-color: #faa901 !important;
     margin: 0 !important;
   }
   h1.timer, .timer.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
     font-size: 3vh !important;
   }
   h1.timer-left, .timer-left.h1 {
-    color: yellow !important;
+    color: #faa901 !important;
     font-weight: bolder;
   }
 }
@@ -12240,7 +12240,7 @@ div.right-bar {
   margin-right: 5px;
 }
 div.right-bar div.counter-div-left {
-  border-right: #ffcd12 solid 0.5px;
+  border-right: #faa901 solid 0.5px;
   background-color: #011e40;
 }
 div.right-bar div.counter-div-right {
@@ -12259,7 +12259,7 @@ div.right-bar div.right-bar-title {
   font-size: 50px;
 }
 div.right-bar div.right-bar-title div.title-div-left {
-  border-right: #ffcd12 solid 0.5px;
+  border-right: #faa901 solid 0.5px;
   background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 }
 div.right-bar div.right-bar-title div.title-div-left span {
@@ -12285,7 +12285,7 @@ div.right-bar div.right-bar-counter div.parent-right-bar-counter-right span {
 }
 
 .counter-color {
-  color: #ffcd12;
+  color: #faa901;
   font-weight: bolder;
 }
 
