@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FooterTextController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
+use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TempCallWebController;
 use Illuminate\Support\Facades\Route;
@@ -92,5 +93,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::post('/update', [FontColorController::class, 'update'])->name('ConsoleUpdateFontColor');
             Route::get('/reset/{font_color}', [FontColorController::class, 'reset'])->name('ConsoleResetFontColor');
         });
+    });
+
+    Route::prefix('report')->group(function () {
+        Route::get('/index', [ReportController::class, 'index'])->name('ConsoleIndexReport');
     });
 });

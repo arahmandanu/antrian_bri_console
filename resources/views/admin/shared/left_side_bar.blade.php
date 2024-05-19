@@ -10,6 +10,26 @@
             </a>
         </li>
 
+        {{-- MASTER REPORT --}}
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/report*') ? '' : 'collapsed' }}" data-bs-target="#report-nav"
+                data-bs-toggle="collapse" href="#">
+                <i class="bx bxs-report"></i><span>Report</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="report-nav" class="nav-content collapse {{ request()->is('admin/report*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('ConsoleIndexReport') }}"
+                        class="{{ request()->is('admin/report*') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Detail</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {{-- END OF MASTER REPORT --}}
+
+
         {{-- MASTER PRODUCT --}}
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/product*') ? '' : 'collapsed' }}" data-bs-target="#product-nav"
@@ -41,8 +61,8 @@
 
         {{-- MASTER CURRENCY --}}
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/currency*') ? '' : 'collapsed' }}" data-bs-target="#currency-nav"
-                data-bs-toggle="collapse" href="#">
+            <a class="nav-link {{ request()->is('admin/currency*') ? '' : 'collapsed' }}"
+                data-bs-target="#currency-nav" data-bs-toggle="collapse" href="#">
                 <i class="bx bx-money"></i><span>Master Currency</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
