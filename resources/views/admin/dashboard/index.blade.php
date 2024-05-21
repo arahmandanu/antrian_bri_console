@@ -33,7 +33,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Total Antrian {{ $item->Name }} <span>| Hari ini</span></h5>
 
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center align-center text-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="ri-account-circle-line"></i>
@@ -72,7 +72,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-body text-center">
-                                    <blockquote class="blockquote mb-0">
+                                    <blockquote class="blockquote mb-0 align-center text-center">
                                         <p>Selamat Datang di console antrian,</p>
                                         <footer class="blockquote-footer">{{ auth()->user()->name }} <cite
                                                 title="Source Title">silahkan setting aplikasi sesuai kebutuhan anda</cite>

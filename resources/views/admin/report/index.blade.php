@@ -32,14 +32,59 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="card-body text-center">
-                                    <blockquote class="blockquote mb-0">
-                                        <p>Selamat Datang di console antrian,</p>
-                                        <footer class="blockquote-footer">{{ auth()->user()->name }}<cite
-                                                title="Source Title">silahkan setting aplikasi sesuai kebutuhan anda</cite>
-                                        </footer>
-                                    </blockquote>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Multi Columns Form</h5>
+
+                                        <!-- Multi Columns Form -->
+                                        <form class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="inputCity" class="form-label">City</label>
+                                                <input type="text" class="form-control" id="inputCity">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="inputState" class="form-label">State</label>
+                                                <select id="inputState" class="form-select">
+                                                    <option selected>Choose...</option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="inputZip" class="form-label">Zip</label>
+                                                <input type="text" class="form-control" id="inputZip">
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                            </div>
+
+                                            <input class="datepicker" type="text" name="datetimes">
+
+                                        </form>
+                                        <!-- End Multi Columns Form -->
+
+                                    </div>
                                 </div>
+                                <hr>
+                                <table class="table table-striped" id="report-admin">
+                                    <thead>
+                                        <tr>
+                                            <th>1</th>
+                                            <th>1</th>
+                                            <th>1</th>
+                                            <th>1</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
                         </div>
@@ -50,4 +95,25 @@
             <!-- End Left side columns -->
         </div>
     </section>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                    format: 'M/DD hh:mm A'
+                }
+            });
+
+            $('#report-admin').DataTable({
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
