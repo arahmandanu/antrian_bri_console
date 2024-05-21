@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use Carbon\Carbon;
+
 trait DateRange
 {
     public function getfromToDateRange($dateRangeInput)
@@ -9,9 +11,12 @@ trait DateRange
         abort_if($dateRangeInput === '', 422, 'Not Valid Date range!');
         $formated = explode(' ', $dateRangeInput);
         if ($formated[0] == "") {
-            return false;
+            $from = now()->subDays(5);
+            $to = now();
         } else {
-            return [$formated[0], $formated[2]];
+            $from = $formated[0];
+            $to = $formated[2];
         }
+        return [Carbon::parse($from), Carbon::parse($to)];
     }
 }

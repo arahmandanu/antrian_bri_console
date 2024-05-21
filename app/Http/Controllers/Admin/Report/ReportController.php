@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Controller;
 use App\Models\TransactionCustomer;
 use App\Models\TransactionParam;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -19,11 +20,17 @@ class ReportController extends Controller
         $queryDate = self::getfromToDateRange($request->input('datetimes'));
         $trxParam = $request->input('trx_param');
         $typeSla = $request->input('type_sla');
+
+        if ($queryDate[0]->diffInMonths($queryDate[1]) >= 4) {
+            flash()->error('Maksimal Pencarian 3 bulan');
+            return redirect()->route('ConsoleIndexReport');
+        }
+
         $transactions = TransactionCustomer::select('transactioncust.*', 'trxparam.*')
             ->leftJoin('trxparam', 'transactioncust.TrxDesc', '=', 'trxparam.TrxCode')
-            // ->when($queryDate, function ($query, $queryDate) {
-            //     $query->where('role_id', $role);
-            // })
+            ->when($queryDate, function ($query, $queryDate) {
+                $query->whereBetween('BaseDt', [$queryDate[0]->isoFormat('OYMMDD'), $queryDate[1]->isoFormat('OYMMDD')]);
+            })
             ->when($trxParam, function ($query, $trxParam) {
                 $query->where('TrxDesc', $trxParam);
             })
@@ -36,7 +43,7 @@ class ReportController extends Controller
             })
             ->whereNotNull('TOverSLA')
             ->get();
-        // dd($transactions);
+
         session()->flashInput($request->input());
         return view('admin.report.index', [
             'transactions' => $transactions,

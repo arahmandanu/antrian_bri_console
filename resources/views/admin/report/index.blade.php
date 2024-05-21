@@ -54,10 +54,9 @@
                                         <form class="row g-3" method="GET" action="{{ route('ConsoleIndexReport') }}">
                                             @csrf
                                             <div class="col-md-3">
-                                                <label for="inputCity" class="form-label">Tanggal</label>
+                                                <label for="inputCity" class="form-label">Tanggal (MM/DD/YYYY)</label>
                                                 <input class="datepicker form-control" type="text" name="datetimes"
-                                                    id="dateRange">
-
+                                                    id="dateRange" value="{{ old('datetimes') }}">
                                             </div>
 
                                             <div class="col-md-2">
@@ -95,7 +94,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <table class="table table-hover table-bordered" id="report-admin">
+                                <table class="table table-hover" id="report-admin">
                                     <thead>
                                         <tr>
                                             <th width="8%">Tanggal</th>
@@ -135,9 +134,9 @@
                                                 </td>
                                             </tr>
                                         @empty
-                                            <tr>
-                                                <td colspan="10">No Data Available</td>
-                                            </tr>
+                                            {{-- <tr>
+                                                <td>No Data Available</td>
+                                            </tr> --}}
                                         @endforelse
                                     </tbody>
                                 </table>
