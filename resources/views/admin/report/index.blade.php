@@ -51,7 +51,8 @@
                                         <h5 class="card-title">Filter</h5>
 
                                         <!-- Multi Columns Form -->
-                                        <form class="row g-3">
+                                        <form class="row g-3" method="GET" action="{{ route('ConsoleIndexReport') }}">
+                                            @csrf
                                             <div class="col-md-3">
                                                 <label for="inputCity" class="form-label">Tanggal</label>
                                                 <input class="datepicker form-control" type="text" name="datetimes"
@@ -61,21 +62,28 @@
 
                                             <div class="col-md-2">
                                                 <label for="inputState" class="form-label">Tipe Transaksi</label>
-                                                <select id="inputState" class="form-select">
+                                                <select id="inputState" class="form-select" name="trx_param">
+                                                    <option></option>
                                                     @forelse ($transactionType as $item)
-                                                        <option value="{{ $item->TrxCode }}">
-                                                            {{ Str::upper($item->TrxName) }}</option>
+                                                        <option value="{{ $item->TrxCode }}"
+                                                            @if (old('trx_param') == $item->TrxCode) selected @endif>
+                                                            {{ Str::upper($item->TrxName) }}
+                                                        </option>
                                                     @empty
                                                         <option selected>KOSONG</option>
                                                     @endforelse
                                                 </select>
                                             </div>
+
                                             <div class="col-md-2">
                                                 <label for="inputZip" class="form-label">SLA</label>
-                                                <select name="cars" class="form-control" id="cars">
-                                                    <option value="volvo">ALL</option>
-                                                    <option value="saab">OVER SLA</option>
-                                                    <option value="mercedes">ACHIVE SLA</option>
+                                                <select name="type_sla" class="form-control" id="type_sla">
+                                                    <option></option>
+                                                    <option value="over"
+                                                        @if (old('type_sla') == 'over') selected @endif>OVER SLA</option>
+                                                    <option value="achive"
+                                                        @if (old('type_sla') == 'achive') selected @endif>ACHIVE SLA
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2 text-center" style="align-self: flex-end;">
