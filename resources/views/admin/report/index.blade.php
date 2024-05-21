@@ -1,6 +1,20 @@
 @extends('admin.shared.main')
 
 @section('content')
+    <style>
+        div.dt-container .dt-paging .dt-paging-button {
+            padding: 0.1em 0.1em !important;
+        }
+
+        table>thead>tr>th {
+            text-align: left !important;
+        }
+
+        table>tbody>tr>td {
+            text-align: left !important;
+        }
+    </style>
+
     <div class="pagetitle">
         <h1>Dashboard</h1>
         <nav>
@@ -34,55 +48,89 @@
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Multi Columns Form</h5>
+                                        <h5 class="card-title">Filter</h5>
 
                                         <!-- Multi Columns Form -->
                                         <form class="row g-3">
-                                            <div class="col-md-6">
-                                                <label for="inputCity" class="form-label">City</label>
-                                                <input type="text" class="form-control" id="inputCity">
+                                            <div class="col-md-3">
+                                                <label for="inputCity" class="form-label">Tanggal</label>
+                                                <input class="datepicker form-control" type="text" name="datetimes"
+                                                    id="dateRange">
+
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="inputState" class="form-label">State</label>
+
+                                            <div class="col-md-2">
+                                                <label for="inputState" class="form-label">Tipe Transaksi</label>
                                                 <select id="inputState" class="form-select">
-                                                    <option selected>Choose...</option>
-                                                    <option>...</option>
+                                                    @forelse ($transactionType as $item)
+                                                        <option value="{{ $item->TrxCode }}">
+                                                            {{ Str::upper($item->TrxName) }}</option>
+                                                    @empty
+                                                        <option selected>KOSONG</option>
+                                                    @endforelse
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
-                                                <label for="inputZip" class="form-label">Zip</label>
-                                                <input type="text" class="form-control" id="inputZip">
+                                                <label for="inputZip" class="form-label">SLA</label>
+                                                <select name="cars" class="form-control" id="cars">
+                                                    <option value="volvo">ALL</option>
+                                                    <option value="saab">OVER SLA</option>
+                                                    <option value="mercedes">ACHIVE SLA</option>
+                                                </select>
                                             </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <div class="col-md-2 text-center" style="align-self: flex-end;">
+                                                <button type="submit" class="btn btn-primary"> <i class="bx bx-search"></i>
+                                                    Cari</button>
                                             </div>
-
-                                            <input class="datepicker" type="text" name="datetimes">
-
                                         </form>
                                         <!-- End Multi Columns Form -->
-
                                     </div>
                                 </div>
                                 <hr>
-                                <table class="table table-striped" id="report-admin">
+                                <table class="table table-hover table-bordered" id="report-admin">
                                     <thead>
                                         <tr>
-                                            <th>1</th>
-                                            <th>1</th>
-                                            <th>1</th>
-                                            <th>1</th>
+                                            <th width="8%">Tanggal</th>
+                                            <th width="5%">No Antrian</th>
+                                            <th width="5%">Unit</th>
+                                            <th width="5%">No Counter</th>
+                                            <th width="15%">Tipe Antrian</th>
+                                            <th width="10%">User</th>
+                                            <th width="10%">Jam Antrian Masuk</th>
+                                            <th width="10%">Jam Antrian Dipanggil</th>
+                                            <th width="10%">Lama Customer Menunggu</th>
+                                            <th>Over SLA</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
+                                        @forelse ($transactions as $transaction)
+                                            <tr>
+                                                <td> {{ $transaction->BaseDt ?? '-' }}</td>
+                                                <td> {{ $transaction->SeqNumber ?? '-' }}</td>
+                                                <td> {{ $transaction->UnitServe ?? '-' }}</td>
+                                                <td> {{ $transaction->CounterNo ?? '-' }}</td>
+                                                <td> {{ $transaction->TrxName ?? '-' }}</td>
+                                                <td> {{ $transaction->UserId ?? '-' }}</td>
+                                                <td> {{ $transaction->TimeTicket ?? '-' }}</td>
+                                                <td> {{ $transaction->TimeCall ?? '-' }}</td>
+                                                <td> {{ $transaction->CustWaitDuration ?? '-' }}</td>
+                                                <td>
+                                                    <?php
+                                                    $data = $transaction->TOverSLA ?? '00:00:00';
+                                                    if ($data == '00:00:00') {
+                                                        echo "<span class='badge bg-success'>$data</span>";
+                                                    } else {
+                                                        echo "<span class='badge bg-danger'>$data</span>";
+                                                    }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="10">No Data Available</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -98,16 +146,26 @@
 
     <script>
         jQuery(document).ready(function($) {
-            $('input[name="datetimes"]').daterangepicker({
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
+            $('input#dateRange').daterangepicker({
+                autoUpdateInput: false,
                 locale: {
-                    format: 'M/DD hh:mm A'
-                }
+                    cancelLabel: 'Clear'
+                },
             });
 
+            $('input#dateRange').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
+                    'MM/DD/YYYY'));
+            });
+
+            $('input#dateRange').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+
             $('#report-admin').DataTable({
+                responsive: true,
+                "pageLength": 20,
                 layout: {
                     topStart: {
                         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']

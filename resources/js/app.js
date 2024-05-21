@@ -8,7 +8,10 @@ window.Swal = Swal;
 require('./tabl_auto_scroll_down');
 require('../vendor/tinymce');
 require('./main');
+import moment from 'moment';
+window.moment = moment;
 
+require('daterangepicker');
 require('jszip');
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "./data_table/fvs_font";

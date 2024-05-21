@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\TransactionCustomer;
+use App\Models\TransactionParam;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -14,7 +16,10 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        return view('admin.report.index');
+        return view('admin.report.index', [
+            'transactions' => TransactionCustomer::select('transactioncust.*', 'trxparam.*')->leftJoin('trxparam', 'transactioncust.TrxDesc', '=', 'trxparam.TrxCode')->get(),
+            'transactionType' => TransactionParam::enabled()->get()
+        ]);
     }
 
     /**

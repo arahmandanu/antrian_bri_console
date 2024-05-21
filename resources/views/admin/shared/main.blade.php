@@ -25,13 +25,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/_data_table.css') }}">
-
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 
 <body>
