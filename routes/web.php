@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\Report\ReportController;
+use App\Http\Controllers\DashboardKiosController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TempCallWebController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,14 @@ Route::group(['prefix' => 'queue'], function () {
 });
 
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
+
+Route::prefix('/kios')->group(function () {
+    Route::get('/index', [DashboardKiosController::class, 'index'])->name('DashboardKios');
+
+    Route::get('/menu_main_index', [DashboardKiosController::class, 'menuMainIndex'])->name('DashboardKiosMenuMainIndex');
+    Route::get('/teller', [DashboardKiosController::class, 'menuTeller'])->name('DashboardKiosTeller');
+    Route::get('/cs', [DashboardKiosController::class, 'menucs'])->name('DashboardKiosCs');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     Route::group(['middleware' => ['islogin?']], function () {
