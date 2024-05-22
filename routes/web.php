@@ -35,7 +35,7 @@ Route::group(['prefix' => 'queue'], function () {
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
 
 Route::prefix('/kios')->group(function () {
-    Route::get('/index', [DashboardKiosController::class, 'index'])->name('DashboardKios');
+    Route::get('', [DashboardKiosController::class, 'index'])->name('DashboardKios');
 
     Route::get('/menu_main_index', [DashboardKiosController::class, 'menuMainIndex'])->name('DashboardKiosMenuMainIndex');
     Route::get('/teller', [DashboardKiosController::class, 'menuTeller'])->name('DashboardKiosTeller');

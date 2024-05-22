@@ -31,7 +31,6 @@
                         <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade"
                             data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                {{-- {{ dd($listGambar) }} --}}
                                 @forelse ($listGambar as $item)
                                     @if ($loop->first)
                                         <div class="carousel-item active" data-bs-interval="10000">
