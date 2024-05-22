@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class DashboardKiosController extends Controller
 {
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
+
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +21,9 @@ class DashboardKiosController extends Controller
                 array_push($gambar, $value);
             }
         }
+
         return view('kios.shared.main', [
-            'listGambar' => $gambar
+            'listGambar' => $gambar,
         ]);
     }
 
