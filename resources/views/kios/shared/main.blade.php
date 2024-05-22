@@ -99,7 +99,6 @@
             getMainMenu();
         });
 
-
         function getMainMenu() {
             $('#list_buttons').load("{{ URL::to('kios/menu_main_index') }}");
         }
@@ -108,7 +107,7 @@
             if (type === 'A') {
                 $('#list_buttons').load("{{ URL::to('kios/teller') }}");
             } else {
-                console.log('salah menu')
+                $('#list_buttons').load("{{ URL::to('kios/cs') }}");
             }
         }
     </script>

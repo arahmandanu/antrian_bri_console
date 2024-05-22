@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionParam;
+
 class DashboardKiosController extends Controller
 {
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
@@ -34,10 +36,15 @@ class DashboardKiosController extends Controller
 
     public function menuTeller()
     {
-        return view('kios.teller');
+        return view('kios.teller', [
+            'buttons' => TransactionParam::show()->where('UnitService', '=', '01')->get()
+        ]);
     }
 
     public function menuCs()
     {
+        return view('kios.cs', [
+            'buttons' => TransactionParam::show()->where('UnitService', '=', '02')->get()
+        ]);
     }
 }

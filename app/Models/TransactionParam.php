@@ -18,6 +18,11 @@ class TransactionParam extends Model
 
     public const ENABLED_TRX = ['01', '02'];
 
+    public function scopeshow(Builder $query): void
+    {
+        $query->where('displayed', true);
+    }
+
     public function scopeenabled(Builder $query): void
     {
         $query->WhereIn('UnitService', self::ENABLED_TRX);
