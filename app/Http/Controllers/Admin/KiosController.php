@@ -24,9 +24,9 @@ class KiosController extends Controller
     {
         $transaction_param->displayed = ($status == 'hide') ? false : true;
         if ($transaction_param->save()) {
-            flash('Sukses merubah tipe transaksi!')->success();
+            flash('Sukses merubah menu kios!')->success();
         } else {
-            flash('Gagal merubah tipe transaksi!')->error();
+            flash('Gagal merubah menu kios!')->error();
         }
 
         return redirect()->back();
