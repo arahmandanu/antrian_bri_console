@@ -97,15 +97,15 @@
                                 <table class="table table-hover" id="report-admin">
                                     <thead>
                                         <tr>
-                                            <th width="8%">Tanggal</th>
-                                            <th width="5%">No Antrian</th>
-                                            <th width="5%">Unit</th>
-                                            <th width="5%">No Counter</th>
-                                            <th width="15%">Tipe Antrian</th>
-                                            <th width="10%">User</th>
-                                            <th width="10%">Jam Antrian Masuk</th>
-                                            <th width="10%">Jam Antrian Dipanggil</th>
-                                            <th width="10%">Lama Customer Menunggu</th>
+                                            <th>Tanggal</th>
+                                            <th>No Antrian</th>
+                                            <th>Unit</th>
+                                            <th>No Counter</th>
+                                            <th>Tipe Antrian</th>
+                                            <th>User</th>
+                                            <th>Jam Antrian Masuk</th>
+                                            <th>Jam Antrian Dipanggil</th>
+                                            <th>Lama Customer Menunggu</th>
                                             <th>Over SLA</th>
                                         </tr>
                                     </thead>
