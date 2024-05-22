@@ -79,6 +79,26 @@
         </li>
         {{-- END OF MASTER CURRENCY --}}
 
+        {{-- MASTER CURRENCY --}}
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/kios*') ? '' : 'collapsed' }}" data-bs-target="#kios-nav"
+                data-bs-toggle="collapse" href="#">
+                <i class="bx bxs-grid"></i><span>Master Kios</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="kios-nav" class="nav-content collapse {{ request()->is('admin/kios*') ? 'show' : '' }}"
+                data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('ConsoleIndexKios') }}"
+                        class="{{ request()->is('admin/currency/list*') || request()->is('admin/kios/index') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Settings Menu</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        {{-- END OF MASTER CURRENCY --}}
+
         {{-- MASTER PROPERTIES --}}
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/properties*') ? '' : 'collapsed' }}"
@@ -110,7 +130,6 @@
             </ul>
         </li>
         {{-- END OF MASTER PROPERTIES --}}
-    </ul>
     </ul>
 </aside>
 <!-- End Sidebar-->

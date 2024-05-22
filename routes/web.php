@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FontColorController;
 use App\Http\Controllers\Admin\FooterTextController;
+use App\Http\Controllers\Admin\KiosController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
@@ -93,6 +94,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::post('/update', [FontColorController::class, 'update'])->name('ConsoleUpdateFontColor');
             Route::get('/reset/{font_color}', [FontColorController::class, 'reset'])->name('ConsoleResetFontColor');
         });
+    });
+
+    Route::prefix('kios')->group(function () {
+        Route::get('/index', [KiosController::class, 'index'])->name('ConsoleIndexKios');
+        Route::get('/toogle/{transaction_param}/{status}', [KiosController::class, 'toogle'])->name('ConsoleToogleKios');
     });
 
     Route::prefix('report')->group(function () {

@@ -10,11 +10,17 @@ class TransactionParam extends Model
 {
     use HasFactory;
     protected $table = 'trxparam';
-
+    protected $primaryKey = 'TrxCode';
+    public $timestamps = false;
     public const ENABLED_TRX = ['01', '02'];
 
     public function scopeenabled(Builder $query): void
     {
         $query->WhereIn('UnitService', self::ENABLED_TRX);
     }
+
+    protected $fillable = [
+        'displayed',
+        'TrxCode'
+    ];
 }
