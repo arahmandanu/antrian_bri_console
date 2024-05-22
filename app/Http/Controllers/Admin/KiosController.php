@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MasterProduct;
 use App\Models\TransactionParam;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class KiosController extends Controller
     public function index()
     {
         return view('admin.kios.index', [
-            'Services' => TransactionParam::enabled()->get()
+            'Services' => TransactionParam::enabled()->get(),
         ]);
     }
 

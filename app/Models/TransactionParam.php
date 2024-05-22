@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionParam extends Model
 {
     use HasFactory;
+
     protected $table = 'trxparam';
+
     protected $primaryKey = 'TrxCode';
+
     public $timestamps = false;
+
     public const ENABLED_TRX = ['01', '02'];
 
     public function scopeenabled(Builder $query): void
@@ -21,6 +25,6 @@ class TransactionParam extends Model
 
     protected $fillable = [
         'displayed',
-        'TrxCode'
+        'TrxCode',
     ];
 }

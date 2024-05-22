@@ -28,7 +28,7 @@ class AuthController extends Controller
             'password' => 'required',
         ])->validate();
 
-        if (!Auth::attempt($request->only(['password', 'email']))) {
+        if (! Auth::attempt($request->only(['password', 'email']))) {
             flash('Email atau Password salah!')->error();
 
             return redirect()->back();

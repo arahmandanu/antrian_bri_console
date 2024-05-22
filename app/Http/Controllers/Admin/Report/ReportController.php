@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Controller;
 use App\Models\TransactionCustomer;
 use App\Models\TransactionParam;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -18,6 +17,7 @@ class ReportController extends Controller
 
         if ($queryDate[0]->diffInMonths($queryDate[1]) >= 4) {
             flash()->error('Maksimal Pencarian 3 bulan');
+
             return redirect()->route('ConsoleIndexReport');
         }
 
@@ -33,16 +33,17 @@ class ReportController extends Controller
                 if ($typeSla == 'over') {
                     return $query->whereNotIn('TOverSLA', ['00:00:00']);
                 } else {
-                    return  $query->whereIn('TOverSLA', ['00:00:00']);
+                    return $query->whereIn('TOverSLA', ['00:00:00']);
                 }
             })
             ->whereNotNull('TOverSLA')
             ->get();
 
         session()->flashInput($request->input());
+
         return view('admin.report.index', [
             'transactions' => $transactions,
-            'transactionType' => TransactionParam::enabled()->get()
+            'transactionType' => TransactionParam::enabled()->get(),
         ]);
     }
 
@@ -59,7 +60,6 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -92,7 +92,6 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionCustomer extends Model
 {
     use HasFactory;
+
     protected $table = 'transactioncust';
 }
