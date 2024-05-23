@@ -15,5 +15,6 @@ class Properties extends Model
         'show_product',
         'show_currency',
         'footer_flow',
+        'footer_flow_kios',
     ];
 }

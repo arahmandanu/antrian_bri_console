@@ -127,30 +127,32 @@
                                                 </fieldset>
                                             </div>
 
-                                            {{-- <div class="col-md-12">
+                                            <div class="col-md-12">
                                                 <fieldset class="row mb-3">
                                                     <legend class="col-form-label col-sm-2 pt-0">Arah Teks Berjalan
                                                         (Kios)</legend>
                                                     <div class="col-sm-1">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                name="footer_flow" id="show_currency1" value="left"
-                                                                @if (isset($settings) && $settings->footer_flow == 'left') @checked(true) @endif>
+                                                                name="footer_flow_kios" id="show_currency1"
+                                                                value="left"
+                                                                @if (isset($settings) && $settings->footer_flow_kios == 'left') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency1">
                                                                 kanan &rarr; kiri
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                name="footer_flow" id="show_currency2" value="right"
-                                                                @if (isset($settings) && $settings->footer_flow == 'right') @checked(true) @endif>
+                                                                name="footer_flow_kios" id="show_currency2"
+                                                                value="right"
+                                                                @if (isset($settings) && $settings->footer_flow_kios == 'right') @checked(true) @endif>
                                                             <label class="form-check-label" for="show_currency2">
                                                                 kiri &rarr; kanan
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </fieldset>
-                                            </div> --}}
+                                            </div>
 
                                             <div class="col-md-12">
                                                 <div class="card">

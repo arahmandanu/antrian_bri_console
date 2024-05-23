@@ -44,10 +44,10 @@ class PropertiesController extends Controller
             'show_product' => 'required',
             'show_currency' => 'required',
             'footer_flow' => 'required|in:left,right',
+            'footer_flow_kios' => 'required|in:left,right',
         ])->validate();
 
         $record = Properties::first();
-        // dd($record, $validated);
         if ($record) {
             if ($record->update($validated)) {
                 flash('Sukses menambahkan Properties!')->success();

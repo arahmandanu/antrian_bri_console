@@ -167,6 +167,25 @@
                                                                     title="Choose your color"
                                                                     onchange='changeColor("{{ $item->name }}", this)'>
                                                             </td>
+                                                        @elseif ($item->name == 'kios_footer_text_color')
+                                                            <td>Footer <br> (Text berjalan Kios)</td>
+                                                            <td class="text-center align-middle"
+                                                                style="background: black; border-top: solid #e08b16 7px;">
+                                                                <marquee direction="right">
+                                                                    <h1
+                                                                        style="@if (isset($item->value)) color: {{ $item->value }} !important  @else color: #ffffff @endif">
+                                                                        Example footer text
+                                                                    </h1>
+                                                                </marquee>
+                                                            </td>
+                                                            <td class="text-middle align-middle">
+                                                                <input type="color"
+                                                                    class="form-control form-control-color align-middle"
+                                                                    id="exampleColorInput"
+                                                                    @if (isset($item->value)) value="{{ $item->value }}" @else value="#ffffff" @endif"
+                                                                    title="Choose your color"
+                                                                    onchange='changeColor("{{ $item->name }}", this)'>
+                                                            </td>
                                                         @endif
                                                         <td class="text-middle align-middle">
                                                             <a type="button" class="btn btn-link"

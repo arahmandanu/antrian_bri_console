@@ -39,6 +39,10 @@ class FontColorSeeder extends Seeder
                 'name' => 'footer_text',
                 'value' => null,
             ],
+            [
+                'name' => 'kios_footer_text_color',
+                'value' => null,
+            ],
         ]);
     }
 }

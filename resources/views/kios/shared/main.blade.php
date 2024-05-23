@@ -91,16 +91,25 @@
         <footer class="bg-black for-footer mt-auto"
             style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
             <div class="vw-20" style="border-top: solid #e08b16 7px">
-                <marquee behavior="" direction="">
-                    <h1 class="display-1">tess asdasds aasdsa </h1>
-                </marquee>
+                @if ($footerTexts->count() == 0)
+                    <h1 class="text-white walking-text invisible display-1"
+                        style="white-space: nowrap; float: left;  @if (isset($fotrColor)) color: {{ $fotrColor }} !important @endif">
+                        -</h1>
+                @else
+                    <h1 id="animate_footer" class="text-white walking-text- display-1"
+                        style="white-space: nowrap; float: left;  @if (isset($fotrColor)) color: {{ $fotrColor }} !important @endif"
+                        flow='{{ $footer_flow }}'></h1>
+                @endif
             </div>
         </footer>
     </div>
 
     <script>
+        const listTextFooter = {!! json_encode($footerTexts) !!};
+
         $(document).ready(function() {
             getMainMenu();
+            animate();
         });
 
         function getMainMenu() {
@@ -113,6 +122,48 @@
             } else {
                 $('#list_buttons').load("{{ route('DashboardKiosCs') }}");
             }
+        }
+
+        function animate(index = 0) {
+            var element = document.getElementById('animate_footer');
+            const flow = element.getAttribute("flow");
+            if (listTextFooter.length == 0) return;
+            if (listTextFooter[index] === undefined) return animate();
+
+            $('h1#animate_footer').text(listTextFooter[index].text);
+            let elementWidth = element.offsetWidth;
+            let parentWidth = element.parentElement.offsetWidth;
+
+            if (flow === 'right') {
+                let flag = -elementWidth;
+                setInterval(() => {
+                    element.style.marginLeft = ++flag + "px";
+                    if (parentWidth == flag) {
+
+                        index = index + 1;
+                        if (listTextFooter[index] === undefined) {
+                            index = 0;
+                        }
+                        $('h1#animate_footer').text(listTextFooter[index].text);
+                        flag = -elementWidth;
+                    }
+                }, 10);
+            } else {
+                let flag = parentWidth;
+                setInterval(() => {
+                    element.style.marginLeft = --flag + "px";
+                    if (flag === (0 - elementWidth)) {
+                        index = index + 1;
+                        if (listTextFooter[index] === undefined) {
+                            index = 0;
+                        }
+
+                        $('h1#animate_footer').text(listTextFooter[index].text);
+                        flag = parentWidth;
+                    }
+                }, 10);
+            }
+
         }
     </script>
 </body>

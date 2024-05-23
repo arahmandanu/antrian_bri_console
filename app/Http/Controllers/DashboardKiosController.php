@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Codeservice;
+use App\Models\FontColor;
+use App\Models\FooterText;
 use App\Models\OriginCustomer;
+use App\Models\Properties;
 use App\Models\TransactionParam;
 use Exception;
 use Illuminate\Http\Request;
@@ -32,8 +35,18 @@ class DashboardKiosController extends Controller
             }
         }
 
+        $footerTexts = FooterText::show()->kios()->get();
+        $properties = Properties::first();
+        $footerColorRecord = FontColor::where('name', '=', 'kios_footer_text_color')->first();
+
+        $footerFlow =  $properties ? $properties->footer_flow_kios ?? 'left' : 'left';
+        $fotrColor = $footerColorRecord ? $footerColorRecord->value ?? 'white' : 'white';
+
         return view('kios.shared.main', [
             'listGambar' => $gambar,
+            'footerTexts' => $footerTexts,
+            'footer_flow' => $footerFlow,
+            'fotrColor' => $fotrColor
         ]);
     }
 
@@ -52,14 +65,14 @@ class DashboardKiosController extends Controller
                 $nextNumber = $currentQue->CurrentQNo + 1;
                 $myQueue = self::formatQueue($nextNumber);
                 $currentTime = now();
-                $unitNextNumber = $request['unit_service'].$myQueue;
+                $unitNextNumber = $request['unit_service'] . $myQueue;
                 $params = [
                     'BaseDt' => $currentTime->isoFormat('OYMMDD'),
                     'SeqNumber' => $unitNextNumber,
                     'UnitServe' => $request['unit_service'],
                     'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
                     'Flag' => 'P',
-                    'DescTransaksi' => 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
+                    'DescTransaksi' => 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
                     'UnitCall' => $request['unit_service'],
                     'code_trx' => $request['trx_param'],
                     'SLA_Trx' => $trxParam->Tservice,
@@ -108,7 +121,7 @@ class DashboardKiosController extends Controller
                         $printer->close();
                     } catch (Exception $e) {
                         $response = [
-                            'message' => "Couldn't print to this printer: ".$e->getMessage()."\n",
+                            'message' => "Couldn't print to this printer: " . $e->getMessage() . "\n",
                             'error' => false,
                         ];
                         $code = 422;
