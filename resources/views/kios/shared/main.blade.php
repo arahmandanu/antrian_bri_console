@@ -60,7 +60,7 @@
                         <div class="col-12 card" style="background: #053a6c; height: 85vh">
                             <div class="row">
                                 <div class="card-body">
-                                    <div class="col-12 text-center pt-1">
+                                    <div class="col-12 text-center pt-4">
                                         <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
                                             alt="Logo BRI"
                                             style="max-width: 100%;
@@ -71,11 +71,15 @@
                                             Dengan
                                             Sepenuh Hati</h1>
                                         <hr style="color: #faa901; opacity: 100 !important">
+                                        <h3 class="text-white">Silahkan Mengambil Nomor Antrian</h3>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="card h-100" style="padding: 10px !important" id="list_buttons"></div>
+                            <div class="h-100"
+                                style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important"
+                                id="list_buttons">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,14 +103,14 @@
         });
 
         function getMainMenu() {
-            $('#list_buttons').load("{{ URL::to('kios/menu_main_index') }}");
+            $('#list_buttons').load("{{ route('DashboardKiosMenuMainIndex') }}");
         }
 
         function getMenu(type) {
             if (type === 'A') {
-                $('#list_buttons').load("{{ URL::to('kios/teller') }}");
+                $('#list_buttons').load("{{ route('DashboardKiosTeller') }}");
             } else {
-                $('#list_buttons').load("{{ URL::to('kios/cs') }}");
+                $('#list_buttons').load("{{ route('DashboardKiosCs') }}");
             }
         }
     </script>

@@ -10,4 +10,14 @@ class Codeservice extends Model
     use HasFactory;
 
     protected $table = 'codeservice';
+
+    protected $primaryKey = 'Initial';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'Name',
+        'Initial',
+        'CurrentQNo',
+    ];
 }

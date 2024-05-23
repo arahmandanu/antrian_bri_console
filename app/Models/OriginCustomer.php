@@ -9,5 +9,22 @@ class OriginCustomer extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'originationcust';
+
+    protected $fillable = [
+        'SeqNumber',
+        'BaseDt',
+        'UnitServe',
+        'TimeTicket',
+        'TimeCall',
+        'WaitDuration',
+        'Flag',
+        'SeqDt',
+        'DescTransaksi',
+        'UnitCall',
+        'code_trx',
+        'SLA_Trx',
+    ];
 }
