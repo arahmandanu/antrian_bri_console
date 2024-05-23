@@ -12,6 +12,7 @@
     <!-- Vendor CSS Files -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Template Main CSS File -->
+    <link href="{{ asset('css/kios.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
@@ -76,8 +77,8 @@
                                 </div>
                             </div>
 
-                            <div class="h-100"
-                                style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important"
+                            <div class="h-100 scrollbar5"
+                                style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important; overflow: auto !important"
                                 id="list_buttons">
                             </div>
                         </div>

@@ -90,11 +90,17 @@
                 data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('ConsoleIndexKios') }}"
-                        class="{{ request()->is('admin/currency/list*') || request()->is('admin/kios/index') ? 'active' : '' }}">
+                        class="{{ request()->is('admin/kios/index') ? 'active' : '' }}">
                         <i class="bi bi-circle"></i><span>Settings Menu</span>
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('ConsoleIndexKiosFooterText') }}"
+                        class="{{ request()->is('admin/kios/footer_text*') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Text Berjalan</span>
+                    </a>
+                </li>
             </ul>
         </li>
         {{-- END OF MASTER CURRENCY --}}

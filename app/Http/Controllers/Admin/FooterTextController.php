@@ -17,7 +17,7 @@ class FooterTextController extends Controller
     public function index()
     {
         return view('admin.properties.footer_text.index', [
-            'footers' => FooterText::all(),
+            'footers' => FooterText::console()->get(),
         ]);
     }
 
@@ -29,7 +29,7 @@ class FooterTextController extends Controller
     public function create()
     {
         $defaultNumber = range(1, 100);
-        $all = FooterText::all()->pluck('display_number')->toArray();
+        $all = FooterText::console()->pluck('display_number')->toArray();
 
         return view('admin.properties.footer_text.create', [
             'displayNumbers' => array_diff($defaultNumber, $all),
@@ -78,7 +78,7 @@ class FooterTextController extends Controller
     public function edit(FooterText $footer_text)
     {
         $defaultNumber = range(1, 100);
-        $all = FooterText::where('id', '!=', $footer_text->id)->get()->pluck('display_number')->toArray();
+        $all = FooterText::console()->where('id', '!=', $footer_text->id)->get()->pluck('display_number')->toArray();
 
         return view('admin.properties.footer_text.edit', [
             'displayNumbers' => array_diff($defaultNumber, $all),

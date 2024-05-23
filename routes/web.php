@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FontColorController;
 use App\Http\Controllers\Admin\FooterTextController;
 use App\Http\Controllers\Admin\KiosController;
+use App\Http\Controllers\Admin\KiosFooterTextController;
 use App\Http\Controllers\Admin\Product\SukuBungaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertiesController;
@@ -115,6 +116,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
 
         Route::post('/store', [KiosController::class, 'store'])->name('ConsoleStoreKios');
         Route::post('/update/{transaction_param}', [KiosController::class, 'update'])->name('ConsoleUpdateKiosMenu');
+
+        Route::prefix('footer_text')->group(function () {
+            Route::get('/index', [KiosFooterTextController::class, 'index'])->name('ConsoleIndexKiosFooterText');
+            Route::get('/create', [KiosFooterTextController::class, 'create'])->name('ConsoleCreateKiosFooterText');
+            Route::post('/store', [KiosFooterTextController::class, 'store'])->name('ConsoleStoreKiosFooterText');
+            Route::get('/edit/{footer_text}', [KiosFooterTextController::class, 'edit'])->name('ConsoleEditKiosFooterText');
+            Route::post('/update/{footer_text}', [KiosFooterTextController::class, 'update'])->name('ConsoleUpdateKiosFooterText');
+
+            Route::delete('/delete/{footer_text}', [KiosFooterTextController::class, 'destroy'])->name('ConsoleDestroyKiosFooterText');
+        });
     });
 
     Route::prefix('report')->group(function () {
