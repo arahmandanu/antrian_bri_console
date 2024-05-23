@@ -10,6 +10,7 @@
         <h1>KEMBALI KE MENU UTAMA</h1>
     </button>
 </div>
+
 <script>
     $(document).ready(function() {
         console.log('ini dari CS');
@@ -26,7 +27,11 @@
             },
             dataType: "json",
             success: function(data, textStatus, xhr) {
-                log(data);
+                if (xhr.status == 201) {
+                    getMainMenu()
+                } else {
+                    console.log(data.message);
+                }
             }
         });
     }

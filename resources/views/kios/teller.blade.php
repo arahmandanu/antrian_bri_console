@@ -11,7 +11,6 @@
     </button>
 </div>
 
-
 <script>
     $(document).ready(function() {
         console.log('ini dari teller');
@@ -28,7 +27,11 @@
             },
             dataType: "json",
             success: function(data, textStatus, xhr) {
-                log(data);
+                if (xhr.status == 201) {
+                    getMainMenu()
+                } else {
+                    console.log(data.message);
+                }
             }
         });
     }
