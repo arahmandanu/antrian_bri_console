@@ -110,6 +110,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     Route::prefix('kios')->group(function () {
         Route::get('/index', [KiosController::class, 'index'])->name('ConsoleIndexKios');
         Route::get('/toogle/{transaction_param}/{status}', [KiosController::class, 'toogle'])->name('ConsoleToogleKios');
+        Route::get('/create', [KiosController::class, 'create'])->name('ConsoleCreateKios');
+        Route::get('/edit/{transaction_param}', [KiosController::class, 'edit'])->name('ConsoleEditKios');
+
+        Route::post('/store', [KiosController::class, 'store'])->name('ConsoleStoreKios');
+        Route::post('/update/{transaction_param}', [KiosController::class, 'update'])->name('ConsoleUpdateKiosMenu');
     });
 
     Route::prefix('report')->group(function () {

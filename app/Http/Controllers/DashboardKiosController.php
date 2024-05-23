@@ -9,8 +9,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
 
 class DashboardKiosController extends Controller
 {
@@ -52,14 +52,14 @@ class DashboardKiosController extends Controller
                 $nextNumber = $currentQue->CurrentQNo + 1;
                 $myQueue = self::formatQueue($nextNumber);
                 $currentTime = now();
-                $unitNextNumber = $request['unit_service'] . $myQueue;
+                $unitNextNumber = $request['unit_service'].$myQueue;
                 $params = [
                     'BaseDt' => $currentTime->isoFormat('OYMMDD'),
                     'SeqNumber' => $unitNextNumber,
                     'UnitServe' => $request['unit_service'],
                     'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
                     'Flag' => 'P',
-                    'DescTransaksi' => 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
+                    'DescTransaksi' => 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
                     'UnitCall' => $request['unit_service'],
                     'code_trx' => $request['trx_param'],
                     'SLA_Trx' => $trxParam->Tservice,
@@ -77,7 +77,7 @@ class DashboardKiosController extends Controller
 
                         $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
                         $printer->setJustification(Printer::JUSTIFY_CENTER);
-                        $logo = EscposImage::load("images/logo_bri_black.png", false);
+                        $logo = EscposImage::load('images/logo_bri_black.png', false);
                         $printer->bitImage($logo);
                         $printer->feed(1);
 
@@ -85,7 +85,7 @@ class DashboardKiosController extends Controller
                         $printer->setJustification(Printer::JUSTIFY_CENTER);
                         $printer->setTextSize(1, 2);
                         $printer->setUnderline(2);
-                        $printer->text("Selamat datang!");
+                        $printer->text('Selamat datang!');
                         $printer->feed(2);
                         $printer->setUnderline(0);
                         $printer->setTextSize(1, 1);
@@ -101,14 +101,14 @@ class DashboardKiosController extends Controller
                         $printer->feed();
                         $printer->text("Terima kasih atas kedatangan anda.\n");
                         $printer->feed(4);
-                        $printer->text("");
+                        $printer->text('');
                         // END BODY
 
                         $printer->cut();
                         $printer->close();
                     } catch (Exception $e) {
                         $response = [
-                            'message' =>  "Couldn't print to this printer: " . $e->getMessage() . "\n",
+                            'message' => "Couldn't print to this printer: ".$e->getMessage()."\n",
                             'error' => false,
                         ];
                         $code = 422;

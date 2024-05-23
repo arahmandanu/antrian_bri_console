@@ -37,27 +37,15 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Reports</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Welcome -->
-
-                    <!-- Welcome -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Filter</h5>
-
-
-                                    </div>
-                                </div>
+                                <a type="button" class="btn btn-success" href="{{ route('ConsoleCreateKios') }}"><i
+                                        class="bx  bx-plus"></i> Tambah Menu
+                                    Kios</a>
                                 <hr>
                                 <table class="table table-hover" id="kios-list">
                                     <thead>
                                         <tr>
                                             <th width="10%">Kode</th>
+                                            <th width="10%">Nama Service</th>
                                             <th width="20%">Nama Menu</th>
                                             <th width="20%">SLA</th>
                                             <th width="5%">Ditampilkan?</th>
@@ -69,6 +57,7 @@
                                         @forelse ($Services as $item)
                                             <tr>
                                                 <td>{{ $item->TrxCode }}</td>
+                                                <td>{{ $item->UnitService == '01' ? 'Teller' : 'cs' }}</td>
                                                 <td>{{ $item->TrxName }}</td>
                                                 <td>{{ $item->Tservice }}</td>
                                                 <td style="text-align: center">
@@ -81,15 +70,18 @@
                                                 <td class="align-end text-end">
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
-                                                        @if ($item->displayed == '1')
-                                                            <a class="btn btn-warning"
-                                                                href="{{ route('ConsoleToogleKios', [$item->TrxCode, 'hide']) }}">
-                                                                <i class="bx bx-hide"></i> hide</a>
-                                                        @else
-                                                            <a class="btn btn-danger"
-                                                                href="{{ route('ConsoleToogleKios', [$item->TrxCode, 'show']) }}">
-                                                                <i class="bx bx-hide"></i> show</a>
-                                                        @endif
+                                                        <a type="button" class="btn btn-primary"
+                                                            href="{{ route('ConsoleEditKios', $item->TrxCode) }}"><i
+                                                                class="bx bxs-pencil"></i> Edit</button>
+                                                            @if ($item->displayed == '1')
+                                                                <a class="btn btn-warning"
+                                                                    href="{{ route('ConsoleToogleKios', [$item->TrxCode, 'hide']) }}">
+                                                                    <i class="bx bx-hide"></i> hide </a>
+                                                            @else
+                                                                <a class="btn btn-danger"
+                                                                    href="{{ route('ConsoleToogleKios', [$item->TrxCode, 'show']) }}">
+                                                                    <i class="bx bx-hide"></i> show</a>
+                                                            @endif
                                                     </div>
                                                 </td>
                                             </tr>

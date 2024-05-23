@@ -31,5 +31,8 @@ class TransactionParam extends Model
     protected $fillable = [
         'displayed',
         'TrxCode',
+        'Tservice',
+        'TrxName',
+        'UnitService',
     ];
 }

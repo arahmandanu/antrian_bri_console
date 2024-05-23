@@ -36,7 +36,7 @@ return [
             'username' => env('CUPS_SERVER_USERNAME'),
             'password' => env('CUPS_SERVER_PASSWORD'),
             'port' => env('CUPS_SERVER_PORT', 631),
-        ]
+        ],
 
         /*
          * Add your custom drivers here:
