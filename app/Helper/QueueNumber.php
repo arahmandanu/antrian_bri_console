@@ -8,8 +8,10 @@ trait QueueNumber
 
     public function formatQueue($que)
     {
-        if (strlen($que) == self::MAX_QUEUE) return $que;
+        if (strlen($que) == self::MAX_QUEUE) {
+            return $que;
+        }
 
-        return $this->formatQueue('0' . $que);
+        return $this->formatQueue('0'.$que);
     }
 }

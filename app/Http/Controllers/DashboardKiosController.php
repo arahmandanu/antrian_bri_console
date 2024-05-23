@@ -7,7 +7,6 @@ use App\Models\OriginCustomer;
 use App\Models\TransactionParam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Exists;
 
 class DashboardKiosController extends Controller
 {
@@ -51,46 +50,47 @@ class DashboardKiosController extends Controller
                 $currentTime = now();
                 $params = [
                     'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-                    'SeqNumber' => ($request['unit_service'] . $myQueue),
+                    'SeqNumber' => ($request['unit_service'].$myQueue),
                     'UnitServe' => $request['unit_service'],
                     'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
                     'Flag' => 'P',
-                    'DescTransaksi' => 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
+                    'DescTransaksi' => 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
                     'UnitCall' => $request['unit_service'],
-                    'code_trx' =>  $request['trx_param'],
-                    'SLA_Trx' =>   $trxParam->Tservice
+                    'code_trx' => $request['trx_param'],
+                    'SLA_Trx' => $trxParam->Tservice,
                 ];
                 $currentQue->CurrentQNo = $nextNumber;
                 if (OriginCustomer::create($params) && $currentQue->save()) {
                     $response = [
                         'message' => 'Sukses membuat antrian!',
-                        'error' => false
+                        'error' => false,
                     ];
                     $code = 201;
                 } else {
                     $response = [
                         'message' => 'Gagal membuat antrian!',
-                        'error' => true
+                        'error' => true,
                     ];
                     $code = 422;
                 }
             } else {
                 $response = [
                     'message' => 'Unit service not found!',
-                    'error' => true
+                    'error' => true,
                 ];
                 $code = 404;
             }
         } else {
             $response = [
                 'message' => 'Failed request!',
-                'error' => true
+                'error' => true,
             ];
             $code = 405;
         }
 
         return response()->json($response, $code);
     }
+
     public function menuMainIndex()
     {
         return view('kios.index');
@@ -99,14 +99,14 @@ class DashboardKiosController extends Controller
     public function menuTeller()
     {
         return view('kios.teller', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', '01')->get()
+            'buttons' => TransactionParam::show()->where('UnitService', '=', '01')->get(),
         ]);
     }
 
     public function menuCs()
     {
         return view('kios.cs', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', '02')->get()
+            'buttons' => TransactionParam::show()->where('UnitService', '=', '02')->get(),
         ]);
     }
 }
