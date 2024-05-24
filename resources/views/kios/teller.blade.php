@@ -23,7 +23,6 @@
             },
             dataType: "json",
             success: function(data, textStatus, xhr) {
-                console.log('asd');
                 if (xhr.status == 201) {
                     getMainMenu()
                 }

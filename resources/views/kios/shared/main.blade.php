@@ -12,6 +12,10 @@
     <!-- Vendor CSS Files -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Template Main CSS File -->
+    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+
     <link href="{{ asset('css/kios.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
@@ -104,13 +108,63 @@
         </footer>
     </div>
 
+    <div class="modal fade" id="verticalycentered" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Silahkan Scan Barcode Anda!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body" id="modal_scan_barcode"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Vertically centered Modal-->
+
     <script>
         const listTextFooter = {!! json_encode($footerTexts) !!};
 
         $(document).ready(function() {
             getMainMenu();
             animate();
+
+            document.getElementById('verticalycentered').addEventListener('shown.bs.modal', function() {
+                $('div#modal_scan_barcode').html(
+                    '<input class="form-control" type="text" name="scan" id="scan" onchange="getBarcodeQueue(this)">'
+                );
+                $('input#scan').focus();
+
+            })
+
+            document.getElementById('verticalycentered').addEventListener('hidden.bs.modal', function(event) {
+                $('div#modal_scan_barcode').html('');
+            })
         });
+
+        function getBarcodeQueue(e) {
+            console.log(e.value);
+            $.ajax({
+                type: "GET",
+                url: "{{ route('DashboardKiosPrintOnlineQueue') }}" + '?data=' + e.value,
+                dataType: "json",
+                success: function(data, textStatus, xhr) {
+                    if (xhr.status == 201) {
+                        $('#verticalycentered').modal('hide');
+                    }
+                },
+                complete: function(data) {
+                    $('input#scan').val()
+                    if (data.status == 422) {
+                        $('div#modal_scan_barcode').html("<span>" + data.responseJSON.message +
+                            "</span>")
+                    }
+                }
+            });
+        }
 
         function getMainMenu() {
             $('#list_buttons').load("{{ route('DashboardKiosMenuMainIndex') }}");

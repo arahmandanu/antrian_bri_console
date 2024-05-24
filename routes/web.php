@@ -43,6 +43,8 @@ Route::prefix('/kios')->group(function () {
     Route::get('/cs', [DashboardKiosController::class, 'menucs'])->name('DashboardKiosCs');
 
     Route::post('/create_antrian', [DashboardKiosController::class, 'createAntrian'])->name('DashboardKiosCreateAntrianTeller');
+
+    Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->name('DashboardKiosPrintOnlineQueue');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {

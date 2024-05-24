@@ -51,6 +51,99 @@ class DashboardKiosController extends Controller
         ]);
     }
 
+    public function printOnlineQueue(Request $request)
+    {
+        if (!$request->wantsJson() || empty($request->input('data'))) {
+            $response = [
+                'message' => 'Failed request!',
+                'error' => true,
+            ];
+            $code = 405;
+        } else {
+            $barcode = $request->input('data');
+            $date = substr($barcode, 0, 8);
+            $companyId = substr($barcode, 8, 5);
+            $unitService = substr($barcode, 13, 1);
+            $antrian = substr($barcode, 14, 3);
+            $currentTime = now();
+            $properties = Properties::first();
+
+            // // validate Date or online to local company
+            if (empty($properties) || $properties->company_code !=  $companyId || $currentTime->format('dmY') !== $date) {
+                $response = [
+                    'message' => 'Tanggal tidak sesuai, silahkan ambil antrian baru!',
+                    'error' => true,
+                ];
+                $code = 422;
+            } else {
+                // check apakah antrian masih bisa di panggil
+                $exist = OriginCustomer::where('BaseDt', '=', $currentTime->format('Ymd'))
+                    ->where('SeqNumber', '=', "$unitService$antrian")
+                    ->where('UnitServe', '=', $unitService)
+                    ->first();
+                if (empty($exist)) {
+                    $codeService = Codeservice::where('Initial', '=', $unitService)->first();
+                    $trxParam = TransactionParam::where('UnitService', '=',  $unitService == 'A' ? '01' : '02')->first();
+
+                    $currentTime = now();
+                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $params = [
+                        'BaseDt' => $currentTime->isoFormat('OYMMDD'),
+                        'SeqNumber' => $unitService . $antrian,
+                        'UnitServe' => $unitService,
+                        'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                        'Flag' => 'P',
+                        'DescTransaksi' => $descTransaction,
+                        'UnitCall' => $unitService,
+                        'code_trx' => $trxParam->TrxCode,
+                        'SLA_Trx' => $trxParam->Tservice,
+                        'is_queue_online' => true,
+                    ];
+
+                    $splitAntrian = str_split($antrian);
+                    if ($splitAntrian[0] != 0) {
+                        $nextNumber = $antrian;
+                    } elseif ($splitAntrian[1] != 0) {
+                        $nextNumber = $splitAntrian[1] . $splitAntrian[2];
+                    } elseif ($splitAntrian[2] != 0) {
+                        $nextNumber = $splitAntrian[2];
+                    } else {
+                        $response = [
+                            'message' => 'No antrian sudah terpakai, silahkan ambil antrian baru!',
+                            'error' => true,
+                        ];
+                        $code = 422;
+                        return response()->json($response, $code);
+                    }
+
+                    $codeService->CurrentQNo = $nextNumber;
+                    if (OriginCustomer::create($params) && $codeService->save()) {
+                        $response = [
+                            'message' => 'Sukses membuat antrian!',
+                            'error' => false,
+                        ];
+                        $code = 201;
+                        $this->execPrint($currentTime, $descTransaction,  $unitService . $antrian);
+                    } else {
+                        $response = [
+                            'message' => 'Gagal membuat antrian!',
+                            'error' => true,
+                        ];
+                        $code = 503;
+                    }
+                } else {
+                    $response = [
+                        'message' => 'No antrian sudah terpakai, silahkan ambil antrian baru!',
+                        'error' => true,
+                    ];
+                    $code = 422;
+                }
+            }
+        }
+
+        return response()->json($response, $code);
+    }
+
     public function createAntrian(Request $request)
     {
         if ($request->wantsJson()) {
@@ -94,51 +187,7 @@ class DashboardKiosController extends Controller
                             'error' => false,
                         ];
                         $code = 201;
-                        try {
-                            $connector = new WindowsPrintConnector('POS-76C');
-                            $printer = new Printer($connector);
-
-                            $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
-                            $printer->setJustification(Printer::JUSTIFY_CENTER);
-                            $logo = EscposImage::load('images/logo_bri_black.png', false);
-                            $printer->bitImage($logo);
-                            $printer->feed(1);
-
-                            /* HEADER */
-                            $printer->setJustification(Printer::JUSTIFY_CENTER);
-                            $printer->setTextSize(1, 2);
-                            $printer->setUnderline(2);
-                            $printer->text('Selamat datang!');
-                            $printer->feed(2);
-                            $printer->setUnderline(0);
-                            $printer->setTextSize(1, 1);
-                            $printer->text($date);
-                            $printer->feed(2);
-
-                            // BODY
-                            $printer->setJustification(Printer::JUSTIFY_CENTER);
-                            $printer->text($descTransaction);
-                            $printer->feed(1);
-                            $printer->setTextSize(6, 6);
-                            $printer->setUnderline(0);
-                            $printer->text($unitNextNumber);
-                            $printer->feed(2);
-                            $printer->setTextSize(1, 1);
-                            $printer->feed();
-                            $printer->text("Terima kasih atas kedatangan anda.\n");
-                            $printer->feed(4);
-                            $printer->text('');
-                            // END BODY
-
-                            $printer->cut();
-                            $printer->close();
-                        } catch (Exception $e) {
-                            $response = [
-                                'message' => "Couldn't print to this printer: " . $e->getMessage() . "\n",
-                                'error' => false,
-                            ];
-                            $code = 503;
-                        }
+                        $this->execPrint($currentTime, $descTransaction, $unitNextNumber);
                     } else {
                         $response = [
                             'message' => 'Gagal membuat antrian!',
