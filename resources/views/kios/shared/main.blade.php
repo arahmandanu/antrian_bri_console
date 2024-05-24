@@ -72,12 +72,12 @@
                                             Dengan
                                             Sepenuh Hati</h1>
                                         <hr style="color: #faa901; opacity: 100 !important">
-                                        <h3 class="text-white">Silahkan Mengambil Nomor Antrian</h3>
+                                        <h3 class="text-white">Silahkan Ambil Antrian</h3>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="h-100 scrollbar5"
+                            <div class="h-100 scrollbar2"
                                 style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important; overflow: auto !important"
                                 id="list_buttons">
                             </div>
@@ -122,6 +122,15 @@
             } else {
                 $('#list_buttons').load("{{ route('DashboardKiosCs') }}");
             }
+        }
+
+        function alertDevice(message) {
+            console.log(message);
+            Swal.fire({
+                title: "Device is ready?",
+                text: message,
+                icon: "question"
+            });
         }
 
         function animate(index = 0) {

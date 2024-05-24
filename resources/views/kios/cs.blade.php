@@ -12,10 +12,6 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        console.log('ini dari CS');
-    });
-
     function createAntrianCs(unit_service, code) {
         $.ajax({
             type: "POST",
@@ -27,10 +23,16 @@
             },
             dataType: "json",
             success: function(data, textStatus, xhr) {
+                console.log('asd');
                 if (xhr.status == 201) {
                     getMainMenu()
+                }
+            },
+            complete: function(data) {
+                if (data.status == 503) {
+                    alertDevice(data.responseJSON.message);
                 } else {
-                    console.log(data.message);
+                    console.log(data.responseJSON);
                 }
             }
         });

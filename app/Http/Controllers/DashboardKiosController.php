@@ -17,6 +17,7 @@ use Mike42\Escpos\Printer;
 
 class DashboardKiosController extends Controller
 {
+
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
 
     /**
@@ -53,92 +54,105 @@ class DashboardKiosController extends Controller
     public function createAntrian(Request $request)
     {
         if ($request->wantsJson()) {
-            Validator::make($request->all(), [
-                'trx_param' => 'required|exists:trxparam,TrxCode',
-                'unit_service' => 'required|in:A,B',
-            ])->validate();
-
-            $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
-            $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
-
-            if ($currentQue) {
-                $nextNumber = $currentQue->CurrentQNo + 1;
-                $myQueue = self::formatQueue($nextNumber);
-                $currentTime = now();
-                $unitNextNumber = $request['unit_service'] . $myQueue;
-                $params = [
-                    'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-                    'SeqNumber' => $unitNextNumber,
-                    'UnitServe' => $request['unit_service'],
-                    'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
-                    'Flag' => 'P',
-                    'DescTransaksi' => 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS'),
-                    'UnitCall' => $request['unit_service'],
-                    'code_trx' => $request['trx_param'],
-                    'SLA_Trx' => $trxParam->Tservice,
+            $properties = Properties::first();
+            if (!$properties || $properties->printer_name == null) {
+                $response = [
+                    'message' => 'Pastikan printer siap digunakan!',
+                    'error' => true,
                 ];
-                $currentQue->CurrentQNo = $nextNumber;
-                if (OriginCustomer::create($params) && $currentQue->save()) {
-                    $response = [
-                        'message' => 'Sukses membuat antrian!',
-                        'error' => false,
+                $code = 503;
+            } else {
+                Validator::make($request->all(), [
+                    'trx_param' => 'required|exists:trxparam,TrxCode',
+                    'unit_service' => 'required|in:A,B',
+                ])->validate();
+
+                $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
+                $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
+
+                if ($currentQue) {
+                    $nextNumber = $currentQue->CurrentQNo + 1;
+                    $myQueue = self::formatQueue($nextNumber);
+                    $currentTime = now();
+                    $unitNextNumber = $request['unit_service'] . $myQueue;
+                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $params = [
+                        'BaseDt' => $currentTime->isoFormat('OYMMDD'),
+                        'SeqNumber' => $unitNextNumber,
+                        'UnitServe' => $request['unit_service'],
+                        'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                        'Flag' => 'P',
+                        'DescTransaksi' => $descTransaction,
+                        'UnitCall' => $request['unit_service'],
+                        'code_trx' => $request['trx_param'],
+                        'SLA_Trx' => $trxParam->Tservice,
                     ];
-                    $code = 201;
-                    try {
-                        $connector = new WindowsPrintConnector('POS-76C');
-                        $printer = new Printer($connector);
-
-                        $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
-                        $printer->setJustification(Printer::JUSTIFY_CENTER);
-                        $logo = EscposImage::load('images/logo_bri_black.png', false);
-                        $printer->bitImage($logo);
-                        $printer->feed(1);
-
-                        /* HEADER */
-                        $printer->setJustification(Printer::JUSTIFY_CENTER);
-                        $printer->setTextSize(1, 2);
-                        $printer->setUnderline(2);
-                        $printer->text('Selamat datang!');
-                        $printer->feed(2);
-                        $printer->setUnderline(0);
-                        $printer->setTextSize(1, 1);
-                        $printer->text($date);
-                        $printer->feed(2);
-
-                        // BODY
-                        $printer->setTextSize(6, 6);
-                        $printer->setUnderline(0);
-                        $printer->text($unitNextNumber);
-                        $printer->feed(2);
-                        $printer->setTextSize(1, 1);
-                        $printer->feed();
-                        $printer->text("Terima kasih atas kedatangan anda.\n");
-                        $printer->feed(4);
-                        $printer->text('');
-                        // END BODY
-
-                        $printer->cut();
-                        $printer->close();
-                    } catch (Exception $e) {
+                    $currentQue->CurrentQNo = $nextNumber;
+                    if (OriginCustomer::create($params) && $currentQue->save()) {
                         $response = [
-                            'message' => "Couldn't print to this printer: " . $e->getMessage() . "\n",
+                            'message' => 'Sukses membuat antrian!',
                             'error' => false,
                         ];
-                        $code = 422;
+                        $code = 201;
+                        try {
+                            $connector = new WindowsPrintConnector('POS-76C');
+                            $printer = new Printer($connector);
+
+                            $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
+                            $printer->setJustification(Printer::JUSTIFY_CENTER);
+                            $logo = EscposImage::load('images/logo_bri_black.png', false);
+                            $printer->bitImage($logo);
+                            $printer->feed(1);
+
+                            /* HEADER */
+                            $printer->setJustification(Printer::JUSTIFY_CENTER);
+                            $printer->setTextSize(1, 2);
+                            $printer->setUnderline(2);
+                            $printer->text('Selamat datang!');
+                            $printer->feed(2);
+                            $printer->setUnderline(0);
+                            $printer->setTextSize(1, 1);
+                            $printer->text($date);
+                            $printer->feed(2);
+
+                            // BODY
+                            $printer->setJustification(Printer::JUSTIFY_CENTER);
+                            $printer->text($descTransaction);
+                            $printer->feed(1);
+                            $printer->setTextSize(6, 6);
+                            $printer->setUnderline(0);
+                            $printer->text($unitNextNumber);
+                            $printer->feed(2);
+                            $printer->setTextSize(1, 1);
+                            $printer->feed();
+                            $printer->text("Terima kasih atas kedatangan anda.\n");
+                            $printer->feed(4);
+                            $printer->text('');
+                            // END BODY
+
+                            $printer->cut();
+                            $printer->close();
+                        } catch (Exception $e) {
+                            $response = [
+                                'message' => "Couldn't print to this printer: " . $e->getMessage() . "\n",
+                                'error' => false,
+                            ];
+                            $code = 503;
+                        }
+                    } else {
+                        $response = [
+                            'message' => 'Gagal membuat antrian!',
+                            'error' => true,
+                        ];
+                        $code = 503;
                     }
                 } else {
                     $response = [
-                        'message' => 'Gagal membuat antrian!',
+                        'message' => 'Unit service not found!',
                         'error' => true,
                     ];
-                    $code = 422;
+                    $code = 404;
                 }
-            } else {
-                $response = [
-                    'message' => 'Unit service not found!',
-                    'error' => true,
-                ];
-                $code = 404;
             }
         } else {
             $response = [
