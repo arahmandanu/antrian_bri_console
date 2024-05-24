@@ -65,13 +65,14 @@ class DashboardKiosController extends Controller
             $companyId = substr($barcode, 8, 5);
             $unitService = substr($barcode, 13, 1);
             $antrian = substr($barcode, 14, 3);
+            $barcodeUnit = substr($barcode, 17, 4);
             $currentTime = now();
             $properties = Properties::first();
 
             // // validate Date or online to local company
             if (empty($properties) || $properties->company_code !=  $companyId || $currentTime->format('dmY') !== $date) {
                 $response = [
-                    'message' => 'Tanggal tidak sesuai, silahkan ambil antrian baru!',
+                    'message' => 'Cabang unit / tanggal tidak sesuai, silahkan ambil antrian baru!',
                     'error' => true,
                 ];
                 $code = 422;
@@ -83,7 +84,20 @@ class DashboardKiosController extends Controller
                     ->first();
                 if (empty($exist)) {
                     $codeService = Codeservice::where('Initial', '=', $unitService)->first();
-                    $trxParam = TransactionParam::where('UnitService', '=',  $unitService == 'A' ? '01' : '02')->first();
+                    if (empty($barcodeUnit)) {
+                        $trxParam = TransactionParam::where('UnitService', '=',  $unitService == 'A' ? '01' : '02')->first();
+                        $trxParamCode = $trxParam->TrxCode;
+                        $trxParamService = $trxParam->Tservice;
+                    } else {
+                        $trxParam = TransactionParam::where('TrxCode', '=',  $barcodeUnit)->first();
+                        if (empty($trxParam)) {
+                            $trxParamCode = $barcodeUnit;
+                            $trxParamService = '00:00:00';
+                        } else {
+                            $trxParamCode = $trxParam->TrxCode;
+                            $trxParamService = $trxParam->Tservice;
+                        }
+                    }
 
                     $currentTime = now();
                     $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
@@ -95,8 +109,8 @@ class DashboardKiosController extends Controller
                         'Flag' => 'P',
                         'DescTransaksi' => $descTransaction,
                         'UnitCall' => $unitService,
-                        'code_trx' => $trxParam->TrxCode,
-                        'SLA_Trx' => $trxParam->Tservice,
+                        'code_trx' => $trxParamCode,
+                        'SLA_Trx' => $trxParamService,
                         'is_queue_online' => true,
                     ];
 

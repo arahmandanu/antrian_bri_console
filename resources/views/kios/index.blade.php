@@ -27,6 +27,7 @@
             box-shadow: none;
         }
     </style>
+
     <button class="disabled-btn" style="background: #053a6c;  border: 0; align-self: self-end;" data-bs-toggle="modal"
         data-bs-target="#verticalycentered">
         <h1 class="align-bottom text-white"
