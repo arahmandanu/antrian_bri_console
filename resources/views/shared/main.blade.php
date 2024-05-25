@@ -560,7 +560,6 @@
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
                         if (data.queue === null) {} else {
-                            console.log(data);
                             show_next_queue(data.queue);
                         }
                     } else {

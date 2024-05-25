@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Codeservice;
 use App\Models\TempCallWeb;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,11 @@ class TempCallWebController extends Controller
             if ($queue->Tampil == 'n') {
                 $data = $queue;
                 $queue->update(['Tampil' => 'y']);
+
+                $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
+                $number = substr($data->SeqNumber, 1, 3);
+                $codeService->last_queue = $number;
+                $codeService->save();
             }
         }
 

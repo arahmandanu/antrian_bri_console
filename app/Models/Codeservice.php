@@ -19,5 +19,6 @@ class Codeservice extends Model
         'Name',
         'Initial',
         'CurrentQNo',
+        'last_queue'
     ];
 }

@@ -82,8 +82,12 @@ class DashboardKiosController extends Controller
                     ->where('SeqNumber', '=', "$unitService$antrian")
                     ->where('UnitServe', '=', $unitService)
                     ->first();
-                if (empty($exist)) {
-                    $codeService = Codeservice::where('Initial', '=', $unitService)->first();
+
+                $codeService = Codeservice::where('Initial', '=', $unitService)->first();
+                $lastCall = $codeService->last_queue;
+                $validNumber = ((int)$antrian > $lastCall);
+
+                if (empty($exist) && $validNumber === true) {
                     if (empty($barcodeUnit)) {
                         $trxParam = TransactionParam::where('UnitService', '=',  $unitService == 'A' ? '01' : '02')->first();
                         $trxParamCode = $trxParam->TrxCode;
@@ -123,7 +127,7 @@ class DashboardKiosController extends Controller
                         $nextNumber = $splitAntrian[2];
                     } else {
                         $response = [
-                            'message' => 'No antrian sudah terpakai, silahkan ambil antrian baru!',
+                            'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
                             'error' => true,
                         ];
                         $code = 422;
@@ -147,7 +151,7 @@ class DashboardKiosController extends Controller
                     }
                 } else {
                     $response = [
-                        'message' => 'No antrian sudah terpakai, silahkan ambil antrian baru!',
+                        'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
                         'error' => true,
                     ];
                     $code = 422;
