@@ -195,13 +195,15 @@ class DashboardKiosController extends Controller
                         'SLA_Trx' => $trxParam->Tservice,
                     ];
                     $currentQue->CurrentQNo = $nextNumber;
-                    if (OriginCustomer::create($params) && $currentQue->save()) {
+                    $recordQueue = OriginCustomer::create($params);
+                    if ($recordQueue && $currentQue->save()) {
                         $response = [
                             'message' => 'Sukses membuat antrian!',
                             'error' => false,
                         ];
                         $code = 201;
                         $this->execPrint($currentTime, $descTransaction, $unitNextNumber);
+                        $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
                     } else {
                         $response = [
                             'message' => 'Gagal membuat antrian!',

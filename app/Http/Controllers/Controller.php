@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\AutoSync;
 use App\Helper\DateRange;
 use App\Helper\PrinterThermal;
 use App\Helper\QueueNumber;
@@ -12,5 +13,5 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DateRange, DispatchesJobs, QueueNumber, ValidatesRequests, PrinterThermal;
+    use AuthorizesRequests, DateRange, DispatchesJobs, QueueNumber, ValidatesRequests, PrinterThermal, AutoSync;
 }
