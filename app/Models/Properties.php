@@ -16,6 +16,6 @@ class Properties extends Model
         'show_currency',
         'footer_flow',
         'footer_flow_kios',
-        'printer_name'
+        'printer_name',
     ];
 }

@@ -26,6 +26,6 @@ class OriginCustomer extends Model
         'UnitCall',
         'code_trx',
         'SLA_Trx',
-        'is_queue_online'
+        'is_queue_online',
     ];
 }

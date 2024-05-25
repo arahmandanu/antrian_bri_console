@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('properties', 'printer_name')) {
+        if (! Schema::hasColumn('properties', 'printer_name')) {
             Schema::table('properties', function (Blueprint $table) {
                 $table->string('printer_name')->nullable(true);
             });

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('properties', 'footer_flow')) {
+        if (! Schema::hasColumn('properties', 'footer_flow')) {
             Schema::table('properties', function (Blueprint $table) {
                 $table->enum('footer_flow', ['left', 'right'])->default('right');
             });

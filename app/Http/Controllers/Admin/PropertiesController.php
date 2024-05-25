@@ -45,7 +45,7 @@ class PropertiesController extends Controller
             'show_currency' => 'required',
             'footer_flow' => 'required|in:left,right',
             'footer_flow_kios' => 'required|in:left,right',
-            'printer_name' => 'nullable'
+            'printer_name' => 'nullable',
         ])->validate();
 
         $record = Properties::first();

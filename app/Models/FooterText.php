@@ -29,6 +29,6 @@ class FooterText extends Model
         'text',
         'show',
         'display_number',
-        'type'
+        'type',
     ];
 }

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Codeservice;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
-use App\Models\TransactionCustomer;
-use Illuminate\Http\Request;
 
 class TempCallWebController extends Controller
 {
@@ -41,7 +39,7 @@ class TempCallWebController extends Controller
         ], 200);
     }
 
-    public function  reportQueue()
+    public function reportQueue()
     {
         $properties = Properties::first();
         if (empty($properties)) {
@@ -57,7 +55,7 @@ class TempCallWebController extends Controller
 
         return response()->json([
             'message' => $message,
-            'success' => $success
+            'success' => $success,
         ], $code);
     }
 }

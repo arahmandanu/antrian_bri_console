@@ -8,16 +8,11 @@ use App\Models\FooterText;
 use App\Models\OriginCustomer;
 use App\Models\Properties;
 use App\Models\TransactionParam;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\Printer;
 
 class DashboardKiosController extends Controller
 {
-
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
 
     /**
@@ -40,20 +35,20 @@ class DashboardKiosController extends Controller
         $properties = Properties::first();
         $footerColorRecord = FontColor::where('name', '=', 'kios_footer_text_color')->first();
 
-        $footerFlow =  $properties ? $properties->footer_flow_kios ?? 'left' : 'left';
+        $footerFlow = $properties ? $properties->footer_flow_kios ?? 'left' : 'left';
         $fotrColor = $footerColorRecord ? $footerColorRecord->value ?? 'white' : 'white';
 
         return view('kios.shared.main', [
             'listGambar' => $gambar,
             'footerTexts' => $footerTexts,
             'footer_flow' => $footerFlow,
-            'fotrColor' => $fotrColor
+            'fotrColor' => $fotrColor,
         ]);
     }
 
     public function printOnlineQueue(Request $request)
     {
-        if (!$request->wantsJson() || empty($request->input('data'))) {
+        if (! $request->wantsJson() || empty($request->input('data'))) {
             $response = [
                 'message' => 'Failed request!',
                 'error' => true,
@@ -70,7 +65,7 @@ class DashboardKiosController extends Controller
             $properties = Properties::first();
 
             // // validate Date or online to local company
-            if (empty($properties) || $properties->company_code !=  $companyId || $currentTime->format('dmY') !== $date) {
+            if (empty($properties) || $properties->company_code != $companyId || $currentTime->format('dmY') !== $date) {
                 $response = [
                     'message' => 'Cabang unit / tanggal tidak sesuai, silahkan ambil antrian baru!',
                     'error' => true,
@@ -85,15 +80,15 @@ class DashboardKiosController extends Controller
 
                 $codeService = Codeservice::where('Initial', '=', $unitService)->first();
                 $lastCall = $codeService->last_queue;
-                $validNumber = ((int)$antrian > $lastCall);
+                $validNumber = ((int) $antrian > $lastCall);
 
                 if (empty($exist) && $validNumber === true) {
                     if (empty($barcodeUnit)) {
-                        $trxParam = TransactionParam::where('UnitService', '=',  $unitService == 'A' ? '01' : '02')->first();
+                        $trxParam = TransactionParam::where('UnitService', '=', $unitService == 'A' ? '01' : '02')->first();
                         $trxParamCode = $trxParam->TrxCode;
                         $trxParamService = $trxParam->Tservice;
                     } else {
-                        $trxParam = TransactionParam::where('TrxCode', '=',  $barcodeUnit)->first();
+                        $trxParam = TransactionParam::where('TrxCode', '=', $barcodeUnit)->first();
                         if (empty($trxParam)) {
                             $trxParamCode = $barcodeUnit;
                             $trxParamService = '00:00:00';
@@ -104,10 +99,10 @@ class DashboardKiosController extends Controller
                     }
 
                     $currentTime = now();
-                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $descTransaction = 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS');
                     $params = [
                         'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-                        'SeqNumber' => $unitService . $antrian,
+                        'SeqNumber' => $unitService.$antrian,
                         'UnitServe' => $unitService,
                         'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
                         'Flag' => 'P',
@@ -122,7 +117,7 @@ class DashboardKiosController extends Controller
                     if ($splitAntrian[0] != 0) {
                         $nextNumber = $antrian;
                     } elseif ($splitAntrian[1] != 0) {
-                        $nextNumber = $splitAntrian[1] . $splitAntrian[2];
+                        $nextNumber = $splitAntrian[1].$splitAntrian[2];
                     } elseif ($splitAntrian[2] != 0) {
                         $nextNumber = $splitAntrian[2];
                     } else {
@@ -131,6 +126,7 @@ class DashboardKiosController extends Controller
                             'error' => true,
                         ];
                         $code = 422;
+
                         return response()->json($response, $code);
                     }
 
@@ -141,7 +137,7 @@ class DashboardKiosController extends Controller
                             'error' => false,
                         ];
                         $code = 201;
-                        $this->execPrint($currentTime, $descTransaction,  $unitService . $antrian);
+                        $this->execPrint($currentTime, $descTransaction, $unitService.$antrian);
                     } else {
                         $response = [
                             'message' => 'Gagal membuat antrian!',
@@ -166,7 +162,7 @@ class DashboardKiosController extends Controller
     {
         if ($request->wantsJson()) {
             $properties = Properties::first();
-            if (!$properties || $properties->printer_name == null) {
+            if (! $properties || $properties->printer_name == null) {
                 $response = [
                     'message' => 'Pastikan printer siap digunakan!',
                     'error' => true,
@@ -192,8 +188,8 @@ class DashboardKiosController extends Controller
                         $myQueue = self::formatQueue($nextNumber);
                     }
 
-                    $unitNextNumber = $request['unit_service'] . $myQueue;
-                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $unitNextNumber = $request['unit_service'].$myQueue;
+                    $descTransaction = 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS');
                     $params = [
                         'BaseDt' => $currentTime->isoFormat('OYMMDD'),
                         'SeqNumber' => $unitNextNumber,

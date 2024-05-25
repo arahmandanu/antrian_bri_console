@@ -13,5 +13,5 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DateRange, DispatchesJobs, QueueNumber, ValidatesRequests, PrinterThermal, AutoSync;
+    use AuthorizesRequests, AutoSync, DateRange, DispatchesJobs, PrinterThermal, QueueNumber, ValidatesRequests;
 }

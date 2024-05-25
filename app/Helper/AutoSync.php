@@ -4,7 +4,6 @@ namespace App\Helper;
 
 use App\Models\OriginCustomer;
 use App\Models\Properties;
-use App\Models\TempCallWeb;
 use App\Models\TransactionCustomer;
 use Illuminate\Support\Facades\Http;
 
@@ -13,14 +12,16 @@ trait AutoSync
     public function execSyncOfflineToOnline(Properties $properties, OriginCustomer $record, $currentTime)
     {
         $url = env('ONLINE_APP_URL', '');
-        if (empty($url) || empty($properties->company_code)) return;
+        if (empty($url) || empty($properties->company_code)) {
+            return;
+        }
 
         $formatedTime = $currentTime->format('Y-m-d H:i:s');
         $data = $record->toArray();
         $data['current_time'] = $formatedTime;
         $data['company_id'] = $properties->company_code;
 
-        $url2  = $url . '/api/sync_from_local';
+        $url2 = $url.'/api/sync_from_local';
         try {
             Http::timeout(3)
                 ->connectTimeout(3)
@@ -46,10 +47,10 @@ trait AutoSync
                 'company_id' => $properties->company_code,
                 'transaction_params_id' => $trx_param,
                 'unitCode' => $unitService,
-                'currentTime' => $formatedTime
+                'currentTime' => $formatedTime,
             ];
 
-            $url2  = $url . '/api/get_number_queue';
+            $url2 = $url.'/api/get_number_queue';
             try {
                 $response = Http::timeout(3)
                     ->connectTimeout(3)
@@ -83,7 +84,7 @@ trait AutoSync
             $result = $reports->get();
 
             if ($result->count() > 0) {
-                $url2  = $url . '/api/sync_report_from_local';
+                $url2 = $url.'/api/sync_report_from_local';
                 try {
                     $response = Http::timeout(3)
                         ->connectTimeout(3)
@@ -94,7 +95,7 @@ trait AutoSync
                         $success = true;
                         $message = 'Success sync';
                         $status = 200;
-                        $reports->update(array('synced' => 'Y'));
+                        $reports->update(['synced' => 'Y']);
                     }
                 } catch (\Throwable $th) {
                     // dd($th);

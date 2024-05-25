@@ -12,6 +12,6 @@ trait QueueNumber
             return $que;
         }
 
-        return $this->formatQueue('0' . $que);
+        return $this->formatQueue('0'.$que);
     }
 }

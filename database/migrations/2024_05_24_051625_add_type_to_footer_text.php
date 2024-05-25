@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('footer_texts', function (Blueprint $table) {
-            if (!Schema::hasColumn('footer_texts', 'type')) {
+            if (! Schema::hasColumn('footer_texts', 'type')) {
                 Schema::table('footer_texts', function (Blueprint $table) {
                     $table->string('type')->default('console');
                 });
