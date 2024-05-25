@@ -176,11 +176,18 @@ class DashboardKiosController extends Controller
 
                 $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
                 $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
-
                 if ($currentQue) {
-                    $nextNumber = $currentQue->CurrentQNo + 1;
-                    $myQueue = self::formatQueue($nextNumber);
                     $currentTime = now();
+                    // Use Online First
+                    $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime);
+                    if ($responseFromServer[0] == true) {
+                        $nextNumber = $responseFromServer[1];
+                        $myQueue = $responseFromServer[1];
+                    } else {
+                        $nextNumber = $currentQue->CurrentQNo + 1;
+                        $myQueue = self::formatQueue($nextNumber);
+                    }
+
                     $unitNextNumber = $request['unit_service'] . $myQueue;
                     $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
                     $params = [
