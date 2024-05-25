@@ -31,6 +31,7 @@ Route::get('/close_console', [MainController::class, 'closeConsole'])->name('Clo
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
 Route::group(['prefix' => 'queue'], function () {
     Route::get('/next', [TempCallWebController::class, 'nextQueue'])->name('GetNextQueueTempCallWeb');
+    Route::get('/report', [TempCallWebController::class, 'reportQueue'])->name('reportQueue');
 });
 
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');

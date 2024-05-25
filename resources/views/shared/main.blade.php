@@ -480,6 +480,8 @@
 
     <script>
         var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};
+        var interva_auto_sync_report = {{ env('INTERVAL_AUTO_SYNC_REPORT', 100000) }};
+        var timeoutAjax = {{ env('TIMEOUT_AJAX', 100000) }};
         var left1 = $("#history_1_left");
         var right1 = $("#history_1_right");
         var left2 = $("#history_2_left");
@@ -507,8 +509,25 @@
             setInterval(() => {
                 get_next_queue()
             }, intervalNextQueue);
+
+            setInterval(() => {
+                sync_reporting()
+            }, interva_auto_sync_report);
             call_console();
         });
+
+        function sync_reporting() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('reportQueue') }}",
+                data: {},
+                dataType: "json",
+                success: function(data, status, xhr) {
+                    console.log(xhr.status, data)
+                },
+                timeout: timeoutAjax
+            });
+        }
 
         function closeApp() {
             if (confirm("Yakin untuk keluar dari aplikasi antrian!") == true) {
@@ -530,7 +549,8 @@
                         } else {
                             console.log('gagal menutup aplikasi, Silahkan hubungi administrator anda!');
                         }
-                    }
+                    },
+                    timeout: timeoutAjax
                 });
             }
         }
@@ -547,7 +567,8 @@
                     } else {
                         console.log('error when calling console please contact your admin');
                     }
-                }
+                },
+                timeout: timeoutAjax
             });
         }
 
@@ -565,7 +586,8 @@
                     } else {
                         console.log('error please contact your admin');
                     }
-                }
+                },
+                timeout: timeoutAjax
             });
         }
 
