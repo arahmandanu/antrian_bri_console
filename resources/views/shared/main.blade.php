@@ -30,8 +30,8 @@
                                         <div class="col-md-12" id="parent-container-video" data_type="video">
                                             <div
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <video class="rounded" onloadedmetadata="this.muted = true" controls
-                                                    playsinline muted id="myVideo" class="object-fit-none"
+                                                <video class="rounded" playsinline muted controls autoplay
+                                                    id="myVideo" class="object-fit-none"
                                                     src="{{ asset("video/$item") }}" type="video/mov">
 
                                                     unsupported video! {{ $item }}
@@ -629,7 +629,13 @@
         function init_iklan_video(index = 0, next = false) {
             function play_videos($el) {
                 local_video = $el.getElementsByTagName('video');
+                local_video[0].muted = false;
                 local_video[0].play();
+
+                setTimeout(() => {
+                    local_video[0].volume = 0.5;
+                }, 1000)
+
                 local_video[0].addEventListener('ended', function handler(e) {
                     setTimeout(() => {
                         local_video[0].removeEventListener(e.type, handler);
