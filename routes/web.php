@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ButtonActorController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FontColorController;
 use App\Http\Controllers\Admin\FooterTextController;
@@ -107,6 +108,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
             Route::get('/reset/{font_color}', [FontColorController::class, 'reset'])->name('ConsoleResetFontColor');
         });
     });
+
+    Route::resource('tombol', ButtonActorController::class);
 
     Route::prefix('kios')->group(function () {
         Route::get('/index', [KiosController::class, 'index'])->name('ConsoleIndexKios');

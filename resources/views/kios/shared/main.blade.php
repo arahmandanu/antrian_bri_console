@@ -179,7 +179,6 @@
         }
 
         function alertDevice(message) {
-            console.log(message);
             Swal.fire({
                 title: "Device is ready?",
                 text: message,
@@ -189,6 +188,8 @@
 
         function animate(index = 0) {
             var element = document.getElementById('animate_footer');
+
+            if (element === null) return;
             const flow = element.getAttribute("flow");
             if (listTextFooter.length == 0) return;
             if (listTextFooter[index] === undefined) return animate();

@@ -28,7 +28,7 @@
                 }
             },
             complete: function(data) {
-                if (data.status == 503) {
+                if (data.status == 503 || data.status == 422) {
                     alertDevice(data.responseJSON.message);
                 } else {
                     console.log(data.responseJSON);

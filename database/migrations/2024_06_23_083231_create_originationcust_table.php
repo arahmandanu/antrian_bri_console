@@ -19,8 +19,8 @@ return new class extends Migration
                 $table->string('SeqNumber');
                 $table->string('UnitServe');
                 $table->string('TimeTicket');
-                $table->string('TimeCall');
-                $table->string('WaitDuration');
+                $table->string('TimeCall')->nullable(true);
+                $table->string('WaitDuration')->nullable(true);
                 $table->string('Flag');
                 $table->integer('SeqDt', true);
                 $table->string('DescTransaksi');

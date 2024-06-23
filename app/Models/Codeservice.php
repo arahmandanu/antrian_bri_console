@@ -13,6 +13,15 @@ class Codeservice extends Model
 
     protected $primaryKey = 'Initial';
 
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public function buttons()
+    {
+        return $this->hasMany(ButtonActor::class, 'initial', 'unit_service');
+    }
+
     protected $fillable = [
         'Name',
         'Initial',

@@ -106,6 +106,8 @@ class DashboardKiosController extends Controller
                         'SeqNumber' => $unitService . $antrian,
                         'UnitServe' => $unitService,
                         'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                        'TimeCall' => null,
+                        'WaitDuration' => null,
                         'Flag' => 'P',
                         'DescTransaksi' => $descTransaction,
                         'UnitCall' => $unitService,
@@ -138,7 +140,15 @@ class DashboardKiosController extends Controller
                             'error' => false,
                         ];
                         $code = 201;
-                        $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
+                        try {
+                            $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
+                        } catch (\Throwable $th) {
+                            $response = [
+                                'message' => 'Printer belum siap digunakan!',
+                                'error' => true,
+                            ];
+                            $code = 422;
+                        }
                     } else {
                         $response = [
                             'message' => 'Gagal membuat antrian!',
@@ -196,6 +206,8 @@ class DashboardKiosController extends Controller
                         'SeqNumber' => $unitNextNumber,
                         'UnitServe' => $request['unit_service'],
                         'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                        'TimeCall' => null,
+                        'WaitDuration' => null,
                         'Flag' => 'P',
                         'DescTransaksi' => $descTransaction,
                         'UnitCall' => $request['unit_service'],
@@ -215,7 +227,7 @@ class DashboardKiosController extends Controller
                             $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
                         } catch (\Throwable $th) {
                             $response = [
-                                'message' => $th->getMessage(),
+                                'message' => 'Printer belum siap digunakan!',
                                 'error' => true,
                             ];
                             $code = 422;
@@ -250,7 +262,10 @@ class DashboardKiosController extends Controller
 
     public function menuMainIndex()
     {
-        return view('kios.index');
+        return view('kios.index', [
+            'tellerCode' => CodeServiceEnum::TELLER,
+            'CsCode' => CodeServiceEnum::CS
+        ]);
     }
 
     public function menuTeller()

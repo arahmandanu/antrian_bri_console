@@ -84,7 +84,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="show_product"
                                                         id="show_product2" value="0"
-                                                        @if (isset($settings) && $settings->show_product == '0') @checked(true) @endif>
+                                                        @if (!isset($settings) || (isset($settings) && $settings->show_product == '0')) @checked(true) @endif>
                                                     <label class="form-check-label" for="show_product2">
                                                         tidak
                                                     </label>
@@ -109,7 +109,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="show_currency"
                                                         id="show_currency2" value="0"
-                                                        @if (isset($settings) && $settings->show_currency == '0') @checked(true) @endif>
+                                                        @if (!isset($settings) || (isset($settings) && $settings->show_currency == '0')) @checked(true) @endif>
                                                     <label class="form-check-label" for="show_currency2">
                                                         tidak
                                                     </label>
@@ -127,7 +127,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="footer_flow"
                                                         id="show_currency1" value="left"
-                                                        @if (isset($settings) && $settings->footer_flow == 'left') @checked(true) @endif>
+                                                        @if (!isset($settings) || (isset($settings) && $settings->footer_flow == 'left')) @checked(true) @endif>
                                                     <label class="form-check-label" for="show_currency1">
                                                         kanan &rarr; kiri
                                                     </label>
@@ -153,7 +153,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio"
                                                         name="footer_flow_kios" id="show_currency1" value="left"
-                                                        @if (isset($settings) && $settings->footer_flow_kios == 'left') @checked(true) @endif>
+                                                        @if (!isset($settings) || (isset($settings) && $settings->footer_flow_kios == 'left')) @checked(true) @endif>
                                                     <label class="form-check-label" for="show_currency1">
                                                         kanan &rarr; kiri
                                                     </label>

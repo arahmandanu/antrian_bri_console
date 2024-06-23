@@ -1,5 +1,5 @@
 <div class="d-grid gap-1 col-12 mx-auto h-100">
-    <button onclick="getMenu('A')"
+    <button onclick="getMenu('{{ $tellerCode }}')"
         style="background: #053a6c;
         border: 0;
         background: none;
@@ -12,7 +12,7 @@
         <h1 class="display-1 text-white" style="font-family: 'boxicons';">Teller</h1>
     </button>
 
-    <button onclick="getMenu('B')"
+    <button onclick="getMenu('{{ $CsCode }}')"
         style="background: #053a6c;
         border: 0;
         background: none;
