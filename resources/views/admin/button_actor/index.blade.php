@@ -34,9 +34,10 @@
                                             <th>Kode Unit</th>
                                             <th>Nama User</th>
                                             <th>Kode Tombol</th>
-                                            <th width='10%'>Aksi</th>
+                                            <th width='13%'>Aksi</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         @forelse ($buttonActors as $item)
                                             <tr>
@@ -44,7 +45,17 @@
                                                 <td>{{ $item->codeService->Name }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->user_button_code }}</td>
-                                                <td>tombo;</td>
+                                                <td>
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic mixed styles example">
+                                                        <button type="button" class="btn btn-danger"
+                                                            onclick="deleteButtonActor({{ $item->id }})">
+                                                            <i class="bx bx-trash"></i> Hapus</button>
+                                                        <a type="button" class="btn btn-primary"
+                                                            href="{{ route('tombol.show', $item->id) }}">
+                                                            <i class="bx bxs-pencil"></i> Edit</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @empty
                                         @endforelse
@@ -68,7 +79,7 @@
 
         });
 
-        function deleteCurrency(id) {
+        function deleteButtonActor(id) {
             Swal.fire({
                 title: "Apakah anda yakin?",
                 text: "Aksi ini akan menghapus Currency!",
@@ -81,7 +92,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "delete",
-                        url: "{{ route('ConsoleDestroyCurrency', '') }}" + '/' + id,
+                        url: "{{ route('tombol.destroy', '') }}" + '/' + id,
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },

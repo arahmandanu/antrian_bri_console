@@ -71,9 +71,12 @@ class ButtonActorController extends Controller
      * @param  \App\Models\ButtonActor  $buttonActor
      * @return \Illuminate\Http\Response
      */
-    public function show(ButtonActor $buttonActor)
+    public function show(ButtonActor $tombol)
     {
-        //
+        return view('admin.button_actor.index', [
+            'buttonActors' => ButtonActor::all(),
+            'tombol' => $tombol
+        ]);
     }
 
     /**
@@ -105,8 +108,18 @@ class ButtonActorController extends Controller
      * @param  \App\Models\ButtonActor  $buttonActor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ButtonActor $buttonActor)
+    public function destroy(ButtonActor $tombol)
     {
-        //
+        if ($tombol->delete()) {
+            $code = 201;
+            $status = 'success';
+        } else {
+            $code = 422;
+            $status = 'Failed';
+        }
+
+        return response()->json([
+            'status' => $status,
+        ], $code);
     }
 }
