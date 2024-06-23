@@ -75,7 +75,6 @@ class ButtonActorController extends Controller
         $defaultNumber = range(1, 100);
         $all = ButtonActor
             ::where('id', '!=', $tombol->id)
-            ->where('unit_service', '=', $tombol->unit_service)
             ->pluck('counter_number')->toArray();
 
         return view('admin.button_actor.edit', [
@@ -148,7 +147,7 @@ class ButtonActorController extends Controller
 
         $defaultNumber = range(1, 100);
         if (empty($request->input('currentId'))) {
-            $usedNumber = ButtonActor::where('unit_service', '=', $unitService)->pluck('counter_number')->toArray();
+            $usedNumber = ButtonActor::all()->pluck('counter_number')->toArray();
         }
 
         $canUsed = [];
