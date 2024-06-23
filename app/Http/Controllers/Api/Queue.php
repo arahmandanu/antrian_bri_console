@@ -31,7 +31,6 @@ class Queue extends Controller
                 // check ada antrian tidak?
                 if ($codeservice->haveQueue() === true) {
                     $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)->Call()->limit(1)->get()->first();
-                    // dd($listQueue);
                     #ada antrian dipanggil
                     if ($listQueue) {
                         $this->createAntrian($listQueue, $buttonActor, $codeservice);
@@ -52,6 +51,14 @@ class Queue extends Controller
                     'Unit' => $codeservice->Initial,
                     'SeqNumber' => $listQueue->SeqNumber
                 ]);
+
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\nomor.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\antrian.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\a.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\satu.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\menuju.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\counter.wav").PlaySync();');
+                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\dua.wav").PlaySync();');
             }
 
             $status = 200;
@@ -62,6 +69,8 @@ class Queue extends Controller
                 'current_call_antrian' => $currentCall
             ];
         }
+
+
 
         return response($data, $status);
     }
@@ -87,7 +96,7 @@ class Queue extends Controller
         $currentTime = now();
         $createdTicket = $originCustomer->created_at;
         // with query Builder
-        $data = DB::table('originationcust')
+        DB::table('originationcust')
             ->where('UnitServe', $buttonActor->unit_service)
             ->where('SeqNumber', $originCustomer->SeqNumber)
             ->limit(1)
@@ -96,6 +105,14 @@ class Queue extends Controller
                 'Flag' => 'N',
                 'WaitDuration' => '00:00:00'
             ]);
+
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\nomor.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\antrian.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\a.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\satu.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\menuju.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\counter.wav").PlaySync();');
+        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\dua.wav").PlaySync();');
         return;
     }
 
