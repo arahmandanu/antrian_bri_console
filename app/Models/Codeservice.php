@@ -22,6 +22,16 @@ class Codeservice extends Model
         return $this->hasMany(ButtonActor::class, 'initial', 'unit_service');
     }
 
+    public function haveQueue()
+    {
+        return ($this->last_queue < $this->CurrentQNo);
+    }
+
+    public function sisaAntrian()
+    {
+        return ($this->CurrentQNo - $this->last_queue);
+    }
+
     protected $fillable = [
         'Name',
         'Initial',

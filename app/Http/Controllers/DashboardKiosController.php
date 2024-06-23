@@ -200,6 +200,7 @@ class DashboardKiosController extends Controller
                         // Use Online First
                         $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime);
                         if ($responseFromServer[0] == true) {
+                            # Todo adjust to get pure queue number
                             $nextNumber = $responseFromServer[1];
                             $myQueue = $responseFromServer[1];
                         } else {
@@ -217,6 +218,7 @@ class DashboardKiosController extends Controller
                             'TimeCall' => null,
                             'WaitDuration' => null,
                             'Flag' => 'P',
+                            'origin_queue_number' => $nextNumber,
                             'DescTransaksi' => $descTransaction,
                             'UnitCall' => $request['unit_service'],
                             'code_trx' => $request['trx_param'],

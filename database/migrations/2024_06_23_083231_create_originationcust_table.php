@@ -20,6 +20,7 @@ return new class extends Migration
                 $table->string('UnitServe');
                 $table->string('TimeTicket');
                 $table->string('TimeCall')->nullable(true);
+                $table->integer('origin_queue_number')->nullable(false);
                 $table->string('WaitDuration')->nullable(true);
                 $table->string('Flag');
                 $table->integer('SeqDt', true);

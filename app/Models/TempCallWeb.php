@@ -21,5 +21,8 @@ class TempCallWeb extends Model
 
     protected $fillable = [
         'Tampil',
+        'Counter',
+        'Unit',
+        'SeqNumber'
     ];
 }

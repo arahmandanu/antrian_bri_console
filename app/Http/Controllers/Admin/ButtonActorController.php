@@ -48,11 +48,7 @@ class ButtonActorController extends Controller
             'unit_service' => 'required|string|exists:codeservice,Initial',
             'counter_number' => 'required|integer',
             'user_button_code' => [
-                'required',
-                Rule::unique('button_actor')->where(
-                    fn ($query) => $query
-                        ->where('unit_service', $request->input('unit_service'))
-                )
+                'required', 'unique:button_actor,user_button_code'
             ]
         ])->validate();
 

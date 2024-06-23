@@ -4,14 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class OriginCustomer extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-
     protected $table = 'originationcust';
+    protected $primaryKey = null;
+    public $incrementing = false;
+
+    public function scopeCall(Builder $query): void
+    {
+        $query->where('Flag', 'P')->orderBy('origin_queue_number', 'asc');
+    }
 
     protected $fillable = [
         'SeqNumber',
@@ -27,5 +32,6 @@ class OriginCustomer extends Model
         'code_trx',
         'SLA_Trx',
         'is_queue_online',
+        'origin_queue_number'
     ];
 }
