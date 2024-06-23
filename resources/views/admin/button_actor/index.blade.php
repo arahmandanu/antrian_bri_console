@@ -30,8 +30,8 @@
                                 <table class="table table-striped" id="buttonActor">
                                     <thead>
                                         <tr>
-                                            <th width='11%'>Nomor Tombol</th>
                                             <th>Kode Unit</th>
+                                            <th width='11%'>Nomor Tombol</th>
                                             <th>Nama User</th>
                                             <th>Kode Tombol</th>
                                             <th width='13%'>Aksi</th>
@@ -41,8 +41,8 @@
                                     <tbody>
                                         @forelse ($buttonActors as $item)
                                             <tr>
-                                                <td>{{ $item->counter_number }}</td>
                                                 <td>{{ $item->codeService->Name }}</td>
+                                                <td>{{ $item->counter_number }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->user_button_code }}</td>
                                                 <td>
