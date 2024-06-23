@@ -91,9 +91,6 @@
                 },
                 dataType: "json",
                 success: function(data, textStatus, xhr) {
-                    console.log(data);
-                    console.log(data.display_number.constructor.name);
-                    console.log(data.display_number.length);
                     if (xhr.status == 200) {
                         html = ""
                         if (data.display_number.length > 0) {

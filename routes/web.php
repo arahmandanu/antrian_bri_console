@@ -110,7 +110,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
     });
 
     Route::resource('tombol', ButtonActorController::class);
-
+    Route::get('/tombol/getCounterNumber/{type}', [ButtonActorController::class, 'getCounterNumber'])->name('ConsoleTombolGetCounterNumber');
     Route::prefix('kios')->group(function () {
         Route::get('/index', [KiosController::class, 'index'])->name('ConsoleIndexKios');
         Route::get('/toogle/{transaction_param}/{status}', [KiosController::class, 'toogle'])->name('ConsoleToogleKios');

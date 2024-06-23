@@ -7,6 +7,7 @@ use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ButtonActorController extends Controller
 {
@@ -18,7 +19,7 @@ class ButtonActorController extends Controller
     public function index()
     {
         return view('admin.button_actor.index', [
-            'buttonActors' => ButtonActor::all()
+            'buttonActors' => ButtonActor::orderBy('unit_service', 'asc')->get()
         ]);
     }
 
@@ -29,12 +30,8 @@ class ButtonActorController extends Controller
      */
     public function create()
     {
-        $defaultNumber = range(1, 100);
-        $all = ButtonActor::all()->pluck('counter_number')->toArray();
-
         return view('admin.button_actor.create', [
-            'codeServices' => Codeservice::all(),
-            'listCounters' => array_diff($defaultNumber, $all)
+            'codeServices' => Codeservice::all()
         ]);
     }
 
@@ -49,8 +46,14 @@ class ButtonActorController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
             'unit_service' => 'required|string|exists:codeservice,Initial',
-            'counter_number' => 'required|integer|unique:button_actor,counter_number',
-            'user_button_code' => 'required|unique:button_actor,user_button_code'
+            'counter_number' => 'required|integer',
+            'user_button_code' => [
+                'required',
+                Rule::unique('button_actor')->where(
+                    fn ($query) => $query
+                        ->where('unit_service', $request->input('unit_service'))
+                )
+            ]
         ])->validate();
 
         $validated['last_queue_number'] = null;
@@ -73,8 +76,16 @@ class ButtonActorController extends Controller
      */
     public function show(ButtonActor $tombol)
     {
-        return view('admin.button_actor.index', [
+        $defaultNumber = range(1, 100);
+        $all = ButtonActor
+            ::where('id', '!=', $tombol->id)
+            ->where('unit_service', '=', $tombol->unit_service)
+            ->pluck('counter_number')->toArray();
+
+        return view('admin.button_actor.edit', [
             'buttonActors' => ButtonActor::all(),
+            'codeServices' => Codeservice::all(),
+            'listCounters' => array_diff($defaultNumber, $all),
             'tombol' => $tombol
         ]);
     }
@@ -97,9 +108,21 @@ class ButtonActorController extends Controller
      * @param  \App\Models\ButtonActor  $buttonActor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ButtonActor $buttonActor)
+    public function update(Request $request, ButtonActor $tombol)
     {
-        //
+        $validated = Validator::make($request->all(), [
+            'name' => 'required|string|max:200',
+            'counter_number' => "required|integer|unique:button_actor,counter_number,$tombol->id",
+            'user_button_code' => "required|unique:button_actor,user_button_code,$tombol->id"
+        ])->validate();
+
+        if ($tombol->update($validated)) {
+            flash('Sukses mengubah tombol!')->success();
+        } else {
+            flash('Gagal mengubah tombol!')->error();
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -121,5 +144,22 @@ class ButtonActorController extends Controller
         return response()->json([
             'status' => $status,
         ], $code);
+    }
+
+    public function getCounterNumber(Request $request, $unitService)
+    {
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+
+        $defaultNumber = range(1, 100);
+        if (empty($request->input('currentId'))) {
+            $usedNumber = ButtonActor::where('unit_service', '=', $unitService)->pluck('counter_number')->toArray();
+        }
+
+        $canUsed = [];
+        $canUsed = array_merge($canUsed, array_diff($defaultNumber, $usedNumber));
+
+        return response()->json([
+            'display_number' => $canUsed,
+        ], 200);
     }
 }

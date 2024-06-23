@@ -17,11 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('user_button_code')->nullable(false);
-            $table->integer('counter_number')->nullable(false)->unique(true);
+            $table->integer('counter_number')->nullable(false);
             $table->string('unit_service')->nullable(false);
             $table->string('last_queue_number')->nullable(true);
             $table->dateTime('last_queue_called')->nullable(true);
             $table->timestamps();
+
+            $table->unique(['user_button_code', 'counter_number', 'unit_service']);
         });
     }
 
