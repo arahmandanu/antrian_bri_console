@@ -173,80 +173,89 @@ class DashboardKiosController extends Controller
     {
         if ($request->wantsJson()) {
             $properties = Properties::first();
-            if (!$properties || $properties->printer_name == null) {
+            if (!$properties) {
                 $response = [
                     'message' => 'Pastikan printer siap digunakan!',
                     'error' => true,
                 ];
                 $code = 503;
             } else {
-                Validator::make($request->all(), [
-                    'trx_param' => 'required|exists:trxparam,TrxCode',
-                    'unit_service' => 'required|in:A,B',
-                ])->validate();
-
-                $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
-                $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
-                if ($currentQue) {
-                    $currentTime = now();
-                    // Use Online First
-                    $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime);
-                    if ($responseFromServer[0] == true) {
-                        $nextNumber = $responseFromServer[1];
-                        $myQueue = $responseFromServer[1];
-                    } else {
-                        $nextNumber = $currentQue->CurrentQNo + 1;
-                        $myQueue = self::formatQueue($nextNumber);
-                    }
-
-                    $unitNextNumber = $request['unit_service'] . $myQueue;
-                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
-                    $params = [
-                        'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-                        'SeqNumber' => $unitNextNumber,
-                        'UnitServe' => $request['unit_service'],
-                        'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
-                        'TimeCall' => null,
-                        'WaitDuration' => null,
-                        'Flag' => 'P',
-                        'DescTransaksi' => $descTransaction,
-                        'UnitCall' => $request['unit_service'],
-                        'code_trx' => $request['trx_param'],
-                        'SLA_Trx' => $trxParam->Tservice,
-                    ];
-                    $currentQue->CurrentQNo = $nextNumber;
-                    $recordQueue = OriginCustomer::create($params);
-                    if ($recordQueue && $currentQue->save()) {
-                        $response = [
-                            'message' => 'Sukses membuat antrian!',
-                            'error' => false,
-                        ];
-                        $code = 201;
-
-                        try {
-                            $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
-                        } catch (\Throwable $th) {
-                            $response = [
-                                'message' => 'Printer belum siap digunakan!',
-                                'error' => true,
-                            ];
-                            $code = 422;
-                        }
-
-                        $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
-                    } else {
-                        $response = [
-                            'message' => 'Gagal membuat antrian!',
-                            'error' => true,
-                        ];
-                        $code = 503;
-                    }
-                } else {
+                $usePrinter = env('PRINTER_ENABLED', true);
+                if ($properties->printer_name == null && !$usePrinter) {
                     $response = [
-                        'message' => 'Unit service not found!',
+                        'message' => 'Pastikan printer siap digunakan!',
                         'error' => true,
                     ];
-                    $code = 404;
+                    $code = 503;
+                } else {
+                    Validator::make($request->all(), [
+                        'trx_param' => 'required|exists:trxparam,TrxCode',
+                        'unit_service' => 'required|in:A,B',
+                    ])->validate();
+
+                    $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
+                    $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
+                    if ($currentQue) {
+                        $currentTime = now();
+                        // Use Online First
+                        $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime);
+                        if ($responseFromServer[0] == true) {
+                            $nextNumber = $responseFromServer[1];
+                            $myQueue = $responseFromServer[1];
+                        } else {
+                            $nextNumber = $currentQue->CurrentQNo + 1;
+                            $myQueue = self::formatQueue($nextNumber);
+                        }
+
+                        $unitNextNumber = $request['unit_service'] . $myQueue;
+                        $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                        $params = [
+                            'BaseDt' => $currentTime->isoFormat('OYMMDD'),
+                            'SeqNumber' => $unitNextNumber,
+                            'UnitServe' => $request['unit_service'],
+                            'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                            'TimeCall' => null,
+                            'WaitDuration' => null,
+                            'Flag' => 'P',
+                            'DescTransaksi' => $descTransaction,
+                            'UnitCall' => $request['unit_service'],
+                            'code_trx' => $request['trx_param'],
+                            'SLA_Trx' => $trxParam->Tservice,
+                        ];
+                        $currentQue->CurrentQNo = $nextNumber;
+                        $recordQueue = OriginCustomer::create($params);
+                        if ($recordQueue && $currentQue->save()) {
+                            $response = [
+                                'message' => 'Sukses membuat antrian!',
+                                'error' => false,
+                            ];
+                            $code = 201;
+
+                            try {
+                                $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
+                            } catch (\Throwable $th) {
+                                $response = [
+                                    'message' => 'Printer belum siap digunakan!',
+                                    'error' => true,
+                                ];
+                                $code = 422;
+                            }
+
+                            $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
+                        } else {
+                            $response = [
+                                'message' => 'Gagal membuat antrian!',
+                                'error' => true,
+                            ];
+                            $code = 503;
+                        }
+                    } else {
+                        $response = [
+                            'message' => 'Unit service not found!',
+                            'error' => true,
+                        ];
+                        $code = 404;
+                    }
                 }
             }
         } else {

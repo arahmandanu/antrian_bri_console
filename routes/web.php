@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])->name('ShowConsoleIndex');
+Route::get('/', [MainController::class, 'index'])->middleware('DashboardMainConsoleCheck')->name('ShowConsoleIndex');
 Route::get('/close_console', [MainController::class, 'closeConsole'])->name('CloseConsole');
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
 Route::group(['prefix' => 'queue'], function () {

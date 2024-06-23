@@ -10,4 +10,10 @@ class StatConsole extends Model
     use HasFactory;
 
     protected $table = 'stat_console';
+
+    protected $fillable = [
+        'tanggal',
+        'Status',
+        'ActiveDate'
+    ];
 }

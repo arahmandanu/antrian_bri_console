@@ -15,6 +15,9 @@ trait PrinterThermal
 {
     public function execPrint($currentTime, $descTransaction, $unitNextNumber, Properties $properties)
     {
+        $usePrinter = env('PRINTER_ENABLED', true);
+        if (!$usePrinter) return 'success';
+
         try {
             $connector = new WindowsPrintConnector($properties->printer_name);
             $printer = new Printer($connector);

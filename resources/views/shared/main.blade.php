@@ -322,11 +322,6 @@
                                     Melayani
                                     Dengan
                                     Sepenuh Hati</h1>
-
-                                {{-- <div class="text-center"> --}}
-                                {{-- <img src="{{ asset('images/logo_bri_2.png') }}" alt="Logo BRI" class="logo">
-                                    --}}
-                                {{-- </div> --}}
                             </div>
                         </div>
                     </div>
@@ -513,7 +508,7 @@
             setInterval(() => {
                 sync_reporting()
             }, interva_auto_sync_report);
-            call_console();
+            // call_console();
         });
 
         function sync_reporting() {
@@ -555,22 +550,22 @@
             }
         }
 
-        function call_console() {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('callConsoleApp') }}",
-                data: {},
-                dataType: "json",
-                success: function(data, status, xhr) {
-                    if (xhr.status == 200) {
-                        console.log(data);
-                    } else {
-                        console.log('error when calling console please contact your admin');
-                    }
-                },
-                timeout: timeoutAjax
-            });
-        }
+        // function call_console() {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{ route('callConsoleApp') }}",
+        //         data: {},
+        //         dataType: "json",
+        //         success: function(data, status, xhr) {
+        //             if (xhr.status == 200) {
+        //                 console.log(data);
+        //             } else {
+        //                 console.log('error when calling console please contact your admin');
+        //             }
+        //         },
+        //         timeout: timeoutAjax
+        //     });
+        // }
 
         function get_next_queue() {
             $.ajax({
