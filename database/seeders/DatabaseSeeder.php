@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSuperAdminSeeder::class,
             AddMasterProduct::class,
             FontColorSeeder::class,
+            CreateCodeServiceData::class,
+            SeedTrxParamsData::class
         ]);
     }
 }

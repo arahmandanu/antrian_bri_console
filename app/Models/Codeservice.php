@@ -13,8 +13,6 @@ class Codeservice extends Model
 
     protected $primaryKey = 'Initial';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'Name',
         'Initial',

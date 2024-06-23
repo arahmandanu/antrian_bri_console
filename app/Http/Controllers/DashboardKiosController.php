@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\CodeServiceEnum;
 use App\Models\Codeservice;
 use App\Models\FontColor;
 use App\Models\FooterText;
@@ -48,7 +49,7 @@ class DashboardKiosController extends Controller
 
     public function printOnlineQueue(Request $request)
     {
-        if (! $request->wantsJson() || empty($request->input('data'))) {
+        if (!$request->wantsJson() || empty($request->input('data'))) {
             $response = [
                 'message' => 'Failed request!',
                 'error' => true,
@@ -99,10 +100,10 @@ class DashboardKiosController extends Controller
                     }
 
                     $currentTime = now();
-                    $descTransaction = 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
                     $params = [
                         'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-                        'SeqNumber' => $unitService.$antrian,
+                        'SeqNumber' => $unitService . $antrian,
                         'UnitServe' => $unitService,
                         'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
                         'Flag' => 'P',
@@ -117,7 +118,7 @@ class DashboardKiosController extends Controller
                     if ($splitAntrian[0] != 0) {
                         $nextNumber = $antrian;
                     } elseif ($splitAntrian[1] != 0) {
-                        $nextNumber = $splitAntrian[1].$splitAntrian[2];
+                        $nextNumber = $splitAntrian[1] . $splitAntrian[2];
                     } elseif ($splitAntrian[2] != 0) {
                         $nextNumber = $splitAntrian[2];
                     } else {
@@ -137,7 +138,7 @@ class DashboardKiosController extends Controller
                             'error' => false,
                         ];
                         $code = 201;
-                        $this->execPrint($currentTime, $descTransaction, $unitService.$antrian);
+                        $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
                     } else {
                         $response = [
                             'message' => 'Gagal membuat antrian!',
@@ -162,7 +163,7 @@ class DashboardKiosController extends Controller
     {
         if ($request->wantsJson()) {
             $properties = Properties::first();
-            if (! $properties || $properties->printer_name == null) {
+            if (!$properties || $properties->printer_name == null) {
                 $response = [
                     'message' => 'Pastikan printer siap digunakan!',
                     'error' => true,
@@ -188,8 +189,8 @@ class DashboardKiosController extends Controller
                         $myQueue = self::formatQueue($nextNumber);
                     }
 
-                    $unitNextNumber = $request['unit_service'].$myQueue;
-                    $descTransaction = 'Antrian '.($request['unit_service'] == 'A' ? 'Teller' : 'CS');
+                    $unitNextNumber = $request['unit_service'] . $myQueue;
+                    $descTransaction = 'Antrian ' . ($request['unit_service'] == 'A' ? 'Teller' : 'CS');
                     $params = [
                         'BaseDt' => $currentTime->isoFormat('OYMMDD'),
                         'SeqNumber' => $unitNextNumber,
@@ -209,7 +210,17 @@ class DashboardKiosController extends Controller
                             'error' => false,
                         ];
                         $code = 201;
-                        $this->execPrint($currentTime, $descTransaction, $unitNextNumber);
+
+                        try {
+                            $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
+                        } catch (\Throwable $th) {
+                            $response = [
+                                'message' => $th->getMessage(),
+                                'error' => true,
+                            ];
+                            $code = 422;
+                        }
+
                         $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
                     } else {
                         $response = [
@@ -245,14 +256,14 @@ class DashboardKiosController extends Controller
     public function menuTeller()
     {
         return view('kios.teller', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', '01')->get(),
+            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::TELLER)->orderBy('TrxName', 'asc')->get(),
         ]);
     }
 
     public function menuCs()
     {
         return view('kios.cs', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', '02')->get(),
+            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
         ]);
     }
 }

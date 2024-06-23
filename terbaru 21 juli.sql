@@ -12,7 +12,7 @@ MySQL - 8.2.0 : Database - qbri_2_new
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`qbri_2_new` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+-- CREATE DATABASE /*!32312 IF NOT EXISTS*/`qbri_2_new` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `qbri_2_new`;
 
@@ -30,7 +30,7 @@ CREATE TABLE `codeservice` (
 
 /*Data for the table `codeservice` */
 
-insert  into `codeservice`(`Name`,`Initial`,`CurrentQNo`,`last_queue`) values 
+insert  into `codeservice`(`Name`,`Initial`,`CurrentQNo`,`last_queue`) values
 ('TlUmum','A',2,2),
 ('CSUmum','B',1,0),
 ('QService','C',0,0);
@@ -72,7 +72,7 @@ CREATE TABLE `deposito` (
 
 /*Data for the table `deposito` */
 
-insert  into `deposito`(`nomor`,`Tier`,`Tenor1`,`Tenor3`,`Tenor6`,`Tenor12`,`Tenor24`) values 
+insert  into `deposito`(`nomor`,`Tier`,`Tenor1`,`Tenor3`,`Tenor6`,`Tenor12`,`Tenor24`) values
 (1,'<50jt','4.5','4.5','5.0','5.25','5.25'),
 (2,'>=50 jt - <100jt','4.5','4.5','5.0','5.25','5.25'),
 (3,'>=100jt - <500jt','4.5','4.75','5.25','5.25','5.25'),
@@ -101,7 +101,7 @@ CREATE TABLE `exchange_rate` (
 
 /*Data for the table `exchange_rate` */
 
-insert  into `exchange_rate`(`Code`,`ShortName`,`FullName`,`Buy`,`Sell`,`TBuy`,`TSell`,`LastUpdate`,`Flag`,`Userid`) values 
+insert  into `exchange_rate`(`Code`,`ShortName`,`FullName`,`Buy`,`Sell`,`TBuy`,`TSell`,`LastUpdate`,`Flag`,`Userid`) values
 (1,'USD','Dollar Amerika',9015,9235,9025,9225,'2012-07-05 22:48:32','A','master'),
 (2,'SGD','Dollar Singapore',7016,7204,7036,7194,'2012-07-05 22:33:49','A','teller'),
 (3,'EUR','Euro',12155,12423,12185,12408,'2020-09-13 19:57:09','A','teller'),
@@ -141,7 +141,7 @@ CREATE TABLE `font_colors` (
 
 /*Data for the table `font_colors` */
 
-insert  into `font_colors`(`id`,`name`,`value`,`created_at`,`updated_at`) values 
+insert  into `font_colors`(`id`,`name`,`value`,`created_at`,`updated_at`) values
 (1,'unit_name',NULL,NULL,'2024-05-19 12:25:49'),
 (2,'current_queue',NULL,NULL,'2024-05-19 12:25:48'),
 (3,'first_log',NULL,NULL,'2024-05-19 12:25:47'),
@@ -168,7 +168,7 @@ CREATE TABLE `footer_texts` (
 
 /*Data for the table `footer_texts` */
 
-insert  into `footer_texts`(`id`,`text`,`show`,`display_number`,`created_at`,`updated_at`,`type`) values 
+insert  into `footer_texts`(`id`,`text`,`show`,`display_number`,`created_at`,`updated_at`,`type`) values
 (1,'Selamat datang ke BRI',1,1,'2024-05-12 11:25:40','2024-05-12 11:25:40','console'),
 (2,'Ini adalah aplikasi untuk antrian di BRI',1,2,'2024-05-12 11:25:53','2024-05-12 11:25:53','console'),
 (4,'ini dari ke dua ya',0,1,'2024-05-24 05:58:28','2024-05-24 06:02:56','kios'),
@@ -187,7 +187,7 @@ CREATE TABLE `grafik` (
 
 /*Data for the table `grafik` */
 
-insert  into `grafik`(`code`,`Desc`,`jumlah`) values 
+insert  into `grafik`(`code`,`Desc`,`jumlah`) values
 ('0','Achieved',23),
 ('1','Not Achieved',1);
 
@@ -205,7 +205,7 @@ CREATE TABLE `groupproduk` (
 
 /*Data for the table `groupproduk` */
 
-insert  into `groupproduk`(`IdGroup`,`DescGroup`,`status`,`updatetgl`) values 
+insert  into `groupproduk`(`IdGroup`,`DescGroup`,`status`,`updatetgl`) values
 (1,'BRITAMA (RP)','A','12-08-2018 00:17:23'),
 (2,'BRITAMA (USD)','N','12-08-2018 00:17:23'),
 (3,'GIRO (RP)','N','12-08-2018 00:17:23'),
@@ -232,7 +232,7 @@ CREATE TABLE `master_products` (
 
 /*Data for the table `master_products` */
 
-insert  into `master_products`(`id`,`name`,`display_number`,`show`,`created_at`,`updated_at`) values 
+insert  into `master_products`(`id`,`name`,`display_number`,`show`,`created_at`,`updated_at`) values
 (1,'BRITAMA (RP)',1,1,'2024-05-12 08:09:00','2024-05-12 08:09:00'),
 (2,'BRITAMA (USD)',2,0,'2024-05-12 08:09:00','2024-05-12 16:08:52'),
 (3,'GIRO (RP)',3,0,'2024-05-12 08:09:00','2024-05-12 16:08:56'),
@@ -255,7 +255,7 @@ CREATE TABLE `migrations` (
 
 /*Data for the table `migrations` */
 
-insert  into `migrations`(`id`,`migration`,`batch`) values 
+insert  into `migrations`(`id`,`migration`,`batch`) values
 (1,'2014_10_12_000000_create_users_table',1),
 (2,'2014_10_12_100000_create_password_resets_table',1),
 (3,'2019_08_19_000000_create_failed_jobs_table',1),
@@ -286,7 +286,7 @@ CREATE TABLE `mmedia` (
 
 /*Data for the table `mmedia` */
 
-insert  into `mmedia`(`Seq`,`FileName`,`FileExt`,`FileLocation`) values 
+insert  into `mmedia`(`Seq`,`FileName`,`FileExt`,`FileLocation`) values
 (1,'KPR','mpg','C:\\FilmQueing'),
 (2,'BII','mpg','C:\\FilmQueing');
 
@@ -313,7 +313,7 @@ CREATE TABLE `originationcust` (
 
 /*Data for the table `originationcust` */
 
-insert  into `originationcust`(`BaseDt`,`SeqNumber`,`UnitServe`,`TimeTicket`,`TimeCall`,`WaitDuration`,`Flag`,`SeqDt`,`DescTransaksi`,`UnitCall`,`code_trx`,`SLA_Trx`,`is_queue_online`) values 
+insert  into `originationcust`(`BaseDt`,`SeqNumber`,`UnitServe`,`TimeTicket`,`TimeCall`,`WaitDuration`,`Flag`,`SeqDt`,`DescTransaksi`,`UnitCall`,`code_trx`,`SLA_Trx`,`is_queue_online`) values
 ('20240621','A1','A','22:44:36','22:46:45','00:02:09','N',24,'Antrian Teller','A','1112','00:05:00',0),
 ('20240621','B1','B','22:45:05',NULL,NULL,'P',25,'Antrian CS','B','2226','00:59:00',0),
 ('20240621','A002','A','22:45:53','22:48:03','00:02:10','N',26,'Antrian Teller','A','1111','00:05:00',0),
@@ -343,7 +343,7 @@ CREATE TABLE `password` (
 
 /*Data for the table `password` */
 
-insert  into `password`(`branchcode`,`UserName`,`UserID`,`UsrLevel`,`Unit`,`Status`,`TRXCode`,`TRXStart`,`SLAtrx`,`TRXEnd`,`pasword`,`salah`,`locked`) values 
+insert  into `password`(`branchcode`,`UserName`,`UserID`,`UsrLevel`,`Unit`,`Status`,`TRXCode`,`TRXStart`,`SLAtrx`,`TRXEnd`,`pasword`,`salah`,`locked`) values
 ('000','ADMINISTRATOR','ADMIN','AD','00','N','0000','00:00:00','00:00:00','00:00:00','e10adc3949ba59abbe56e057f20f883e',0,'N'),
 ('000','CS1','CS1','OP','02','N','0000','00:00:00','00:00:00','00:00:00','e10adc3949ba59abbe56e057f20f883e',0,'N'),
 ('000','CS2','CS2','OP','02','N','0000','00:00:00','00:00:00','00:00:00','e10adc3949ba59abbe56e057f20f883e',0,'N'),
@@ -404,7 +404,7 @@ CREATE TABLE `picture` (
 
 /*Data for the table `picture` */
 
-insert  into `picture`(`seq`,`FileName`,`FileExt`,`Location`) values 
+insert  into `picture`(`seq`,`FileName`,`FileExt`,`Location`) values
 (1,'Britama','jpg','D:\\My Proyek\\BRI\\QTombol\\Images'),
 (2,'Top Brand bri','jpg','D:\\My Proyek\\BRI\\QTombol\\Hanya gambar saja\\Images');
 
@@ -428,7 +428,7 @@ CREATE TABLE `product_detail` (
 
 /*Data for the table `product_detail` */
 
-insert  into `product_detail`(`id`,`master_product_id`,`value`,`suku_bunga`,`display_number`,`created_at`,`updated_at`) values 
+insert  into `product_detail`(`id`,`master_product_id`,`value`,`suku_bunga`,`display_number`,`created_at`,`updated_at`) values
 (1,1,'1','3 %',1,'2024-05-12 16:06:44','2024-05-12 16:06:44'),
 (2,1,'500 ->2000','3 %',2,'2024-05-12 16:06:51','2024-05-12 16:06:51'),
 (3,1,'3','1000 %',3,'2024-05-12 16:07:00','2024-05-12 16:07:00'),
@@ -452,7 +452,7 @@ CREATE TABLE `produk` (
 
 /*Data for the table `produk` */
 
-insert  into `produk`(`GroupID`,`nourut`,`keterangan`,`rate`,`ID`) values 
+insert  into `produk`(`GroupID`,`nourut`,`keterangan`,`rate`,`ID`) values
 (1,1,'500 RIBU - 5 JUTA','3',1),
 (1,2,'> 5 JUTA - 50 JUTA','14',2),
 (1,3,'> 50 JUTA - 100 JUTA','15',3),
@@ -502,7 +502,7 @@ CREATE TABLE `properties` (
 
 /*Data for the table `properties` */
 
-insert  into `properties`(`id`,`company_name`,`company_code`,`show_product`,`show_currency`,`created_at`,`updated_at`,`footer_flow`,`footer_flow_kios`,`printer_name`) values 
+insert  into `properties`(`id`,`company_name`,`company_code`,`show_product`,`show_currency`,`created_at`,`updated_at`,`footer_flow`,`footer_flow_kios`,`printer_name`) values
 (1,'BRI UNIT COLOMADU','01972',1,1,'2024-05-12 11:26:22','2024-05-24 11:13:31','left','left','POS-76C');
 
 /*Table structure for table `setupparam` */
@@ -528,7 +528,7 @@ CREATE TABLE `setupparam` (
 
 /*Data for the table `setupparam` */
 
-insert  into `setupparam`(`Code`,`BranchName`,`SoundVolume`,`ValasTime`,`TvTime`,`Timetext`,`Speedtext`,`StaticMedia`,`MediaValas`,`MediaProduk`,`MediaTV`,`MediaTarif`,`TTarif`) values 
+insert  into `setupparam`(`Code`,`BranchName`,`SoundVolume`,`ValasTime`,`TvTime`,`Timetext`,`Speedtext`,`StaticMedia`,`MediaValas`,`MediaProduk`,`MediaTV`,`MediaTarif`,`TTarif`) values
 ('01','Cabang Padang','20','5','5','1000','1','N','Y','Y','N','Y','10');
 
 /*Table structure for table `stat_console` */
@@ -544,7 +544,7 @@ CREATE TABLE `stat_console` (
 
 /*Data for the table `stat_console` */
 
-insert  into `stat_console`(`tanggal`,`Status`,`ActiveDate`) values 
+insert  into `stat_console`(`tanggal`,`Status`,`ActiveDate`) values
 ('20240621','A','20240621');
 
 /*Table structure for table `stat_counter` */
@@ -586,7 +586,7 @@ CREATE TABLE `temp_call_web` (
 
 /*Data for the table `temp_call_web` */
 
-insert  into `temp_call_web`(`id`,`Counter`,`Unit`,`SeqNumber`,`Tampil`) values 
+insert  into `temp_call_web`(`id`,`Counter`,`Unit`,`SeqNumber`,`Tampil`) values
 (1,'02','A','A004','y'),
 (2,'02','A','A006','y'),
 (3,'02','A','A007','y'),
@@ -607,7 +607,7 @@ CREATE TABLE `textbanner` (
 
 /*Data for the table `textbanner` */
 
-insert  into `textbanner`(`Seq`,`Msg`,`Status`) values 
+insert  into `textbanner`(`Seq`,`Msg`,`Status`) values
 (2,'Hitung uang anda sebelum meninggalkan counter','A'),
 (3,'Terima kasih atas kunjungan anda','A'),
 (5,'Ini adalah text nomor 5','A');
@@ -638,7 +638,7 @@ CREATE TABLE `transactioncust` (
 
 /*Data for the table `transactioncust` */
 
-insert  into `transactioncust`(`BaseDt`,`SeqNumber`,`TrxDesc`,`TimeTicket`,`TimeCall`,`CustWaitDuration`,`UnitServe`,`CounterNo`,`Absent`,`UserId`,`Flag`,`TimeEnd`,`Tservice`,`TWservice`,`TSLAservice`,`TOverSLA`,`synced`) values 
+insert  into `transactioncust`(`BaseDt`,`SeqNumber`,`TrxDesc`,`TimeTicket`,`TimeCall`,`CustWaitDuration`,`UnitServe`,`CounterNo`,`Absent`,`UserId`,`Flag`,`TimeEnd`,`Tservice`,`TWservice`,`TSLAservice`,`TOverSLA`,`synced`) values
 ('20240525','A006','1111','19:24:44','19:24:50','00:00:06','A','02','N','teller1','N','19:24:58','00:00:03','00:00:01','00:05:00','00:00:00','Y'),
 ('20240525','A007','1111','19:33:36','19:33:43','00:00:07','A','02','N','teller1','N','19:33:50','00:00:05','00:00:00','00:05:00','00:00:00','Y'),
 ('20240621','A1','1112','22:44:36','22:46:45','00:02:09','A','02','N','teller1','N','22:47:57','00:00:00','00:01:10','00:05:00','00:00:00','Y'),
@@ -659,7 +659,7 @@ CREATE TABLE `trxparam` (
 
 /*Data for the table `trxparam` */
 
-insert  into `trxparam`(`TrxCode`,`TrxName`,`UnitService`,`Tservice`,`displayed`) values 
+insert  into `trxparam`(`TrxCode`,`TrxName`,`UnitService`,`Tservice`,`displayed`) values
 ('1111','SETOR TELLER','01','00:05:00',1),
 ('1112','PENGAMBILAN TELLER','01','00:05:00',1),
 ('1113','KLIRING','01','00:06:00',1),
@@ -693,7 +693,7 @@ CREATE TABLE `user_off` (
 
 /*Data for the table `user_off` */
 
-insert  into `user_off`(`BaseDt`,`UserId`,`Time_Off`,`Date_Off`,`Time_End`,`Date_End`,`Unit_Code`) values 
+insert  into `user_off`(`BaseDt`,`UserId`,`Time_Off`,`Date_Off`,`Time_End`,`Date_End`,`Unit_Code`) values
 ('20120704','teller','01:46:37','20120704','01:50:12','20120704','01'),
 ('20120704','teller','01:48:11','20120704','01:50:12','20120704','01'),
 ('20120704','teller','01:48:38','20120704','01:50:12','20120704','01'),
@@ -743,7 +743,7 @@ CREATE TABLE `userlog` (
 
 /*Data for the table `userlog` */
 
-insert  into `userlog`(`UserID`,`BaseDT`,`TimeDT`,`Activity`) values 
+insert  into `userlog`(`UserID`,`BaseDT`,`TimeDT`,`Activity`) values
 ('teller','2021-06-05','05:06:21','User Tdk Ada'),
 ('teller1','2021-06-05','05:06:08','Login berhasil'),
 ('teller1','2021-06-05','05:06:17','Login berhasil'),
@@ -829,7 +829,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`role`,`remember_token`,`created_at`,`updated_at`) values 
+insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`role`,`remember_token`,`created_at`,`updated_at`) values
 (1,'Super Admin','superadmin@mail.com',NULL,'$2y$10$N38IvtJiXT6hVpNk15UIi.c3EkSn3iks2xScBdITg30viLWYE9KEu','superadmin',NULL,'2024-05-12 08:09:00','2024-05-12 08:09:00');
 
 /*Table structure for table `work_time` */
@@ -848,7 +848,7 @@ CREATE TABLE `work_time` (
 
 /*Data for the table `work_time` */
 
-insert  into `work_time`(`kode`,`dayname`,`start_job`,`start_rest`,`end_rest`,`end_job`) values 
+insert  into `work_time`(`kode`,`dayname`,`start_job`,`start_rest`,`end_rest`,`end_job`) values
 (1,'SENIN','08:00:00','12:00:00','13:00:00','15:00:00'),
 (2,'SELASA','08:00:00','12:00:00','13:00:00','15:00:00'),
 (3,'RABU','08:00:00','12:00:00','13:00:00','15:00:00'),
