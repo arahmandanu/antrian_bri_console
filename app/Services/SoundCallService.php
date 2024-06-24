@@ -2,14 +2,16 @@
 
 namespace App\Services;
 
-use App\Enum\CodeServiceEnum;
 use App\Models\ButtonActor;
 use App\Models\OriginCustomer;
 use Illuminate\Support\Str;
 
 class SoundCallService
 {
-    public $originCustomer, $buttonActor;
+    public $originCustomer;
+
+    public $buttonActor;
+
     private $listSound = [
         '1' => 'satu',
         '2' => 'dua',
@@ -31,7 +33,7 @@ class SoundCallService
         'counter' => 'counter',
         'puluh' => 'puluh',
         'menuju' => 'menuju',
-        'ratus' => 'ratus'
+        'ratus' => 'ratus',
     ];
 
     public function __construct(OriginCustomer $originCustomer, ButtonActor $buttonActor)
@@ -52,11 +54,12 @@ class SoundCallService
 
     private function footerSound(ButtonActor $buttonActor)
     {
-        $counter = $this->listSound[(string)$buttonActor->counter_number] . '.wav';
+        $counter = $this->listSound[(string) $buttonActor->counter_number].'.wav';
+
         return [
             base_path('console\menuju.wav'),
             base_path('console\counter.wav'),
-            base_path("console/$counter")
+            base_path("console/$counter"),
         ];
     }
 
@@ -72,13 +75,13 @@ class SoundCallService
     {
         $splittedNumber = str_split($queueNumber);
         $sound = [];
-        array_push($sound, $this->listSound[Str::lower((string)$unitService)]);
-        if (sizeof($splittedNumber) == 1) {
-            array_push($sound, $this->listSound[(string)$queueNumber]);
-        } else if (sizeof($splittedNumber) == 2) {
+        array_push($sound, $this->listSound[Str::lower((string) $unitService)]);
+        if (count($splittedNumber) == 1) {
+            array_push($sound, $this->listSound[(string) $queueNumber]);
+        } elseif (count($splittedNumber) == 2) {
             $puluhan = $this->formatPuluhan($queueNumber, $splittedNumber);
             $sound = array_merge($sound, $puluhan);
-        } else if (sizeof($splittedNumber) == 3) {
+        } elseif (count($splittedNumber) == 3) {
             $ratusan = $this->formatRatusan($queueNumber, $splittedNumber);
             $sound = array_merge($sound, $ratusan);
         }
@@ -88,41 +91,43 @@ class SoundCallService
             $file = "console/$item.wav";
             array_push($soundPath, base_path($file));
         }
+
         return $soundPath;
     }
 
     private function formatRatusan($queueNumber, $splittedNumber)
     {
         $headSound = [];
-        if ((string)$splittedNumber[0] === '1') {
+        if ((string) $splittedNumber[0] === '1') {
             array_push($headSound, $this->listSound['seratus']);
         } else {
-            array_push($headSound, $this->listSound[(string)$splittedNumber[0]]);
+            array_push($headSound, $this->listSound[(string) $splittedNumber[0]]);
             array_push($headSound, $this->listSound['ratus']);
         }
         $bodySound = [];
         array_shift($splittedNumber);
         if (implode($splittedNumber) != '00') {
-            $bodySound = array_merge($bodySound, $this->formatPuluhan(implode($splittedNumber), str_split((int)implode($splittedNumber))));
+            $bodySound = array_merge($bodySound, $this->formatPuluhan(implode($splittedNumber), str_split((int) implode($splittedNumber))));
         }
+
         return array_merge($headSound, $bodySound);
     }
 
     private function formatPuluhan($queueNumber, $splittedNumber)
     {
         $puluhan = [];
-        if ((string)$queueNumber == '11' || (string)$queueNumber == '10') {
-            array_push($puluhan, $this->listSound[(string)$queueNumber]);
+        if ((string) $queueNumber == '11' || (string) $queueNumber == '10') {
+            array_push($puluhan, $this->listSound[(string) $queueNumber]);
         } else {
             foreach ($splittedNumber as $key => $value) {
-                # last number
-                if ($key + 1 === sizeof($splittedNumber) && (sizeof($splittedNumber) > 1)) {
+                // last number
+                if ($key + 1 === count($splittedNumber) && (count($splittedNumber) > 1)) {
                     array_push($puluhan, $this->listSound['puluh']);
                     if ($value !== '0') {
-                        array_push($puluhan, $this->listSound[(string)$value]);
+                        array_push($puluhan, $this->listSound[(string) $value]);
                     }
-                } else if ($value !== '0') {
-                    array_push($puluhan, $this->listSound[(string)$value]);
+                } elseif ($value !== '0') {
+                    array_push($puluhan, $this->listSound[(string) $value]);
                 }
             }
         }
@@ -133,7 +138,7 @@ class SoundCallService
     private function initiateSound($sounds)
     {
         foreach ($sounds as $key => $value) {
-            exec('powershell -c (New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
+            exec('powershell -c (New-Object Media.SoundPlayer "'.$value.'").PlaySync();');
         }
     }
 }

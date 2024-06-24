@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('trxparam')) {
+        if (! Schema::hasTable('trxparam')) {
             Schema::create('trxparam', function (Blueprint $table) {
                 $table->string('TrxCode')->primary();
                 $table->string('TrxName')->nullable(false);

@@ -15,7 +15,6 @@ class DashboardMainConsoleCheck
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -26,10 +25,13 @@ class DashboardMainConsoleCheck
             $this->initiateTable();
         } else {
             $today = now();
-            if ($data->tanggal != $today->format('Ymd')) $this->initiateTable();
+            if ($data->tanggal != $today->format('Ymd')) {
+                $this->initiateTable();
+            }
         }
 
         $this->fillTodayStat($data);
+
         return $next($request);
     }
 
@@ -39,7 +41,7 @@ class DashboardMainConsoleCheck
         $newData = [
             'tanggal' => $today->format('Ymd'),
             'Status' => 'active',
-            'ActiveDate' =>  $today->format('Ymd'),
+            'ActiveDate' => $today->format('Ymd'),
         ];
 
         if (empty($stat)) {

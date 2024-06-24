@@ -7,7 +7,6 @@ use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class ButtonActorController extends Controller
 {
@@ -19,7 +18,7 @@ class ButtonActorController extends Controller
     public function index()
     {
         return view('admin.button_actor.index', [
-            'buttonActors' => ButtonActor::orderBy('unit_service', 'asc')->get()
+            'buttonActors' => ButtonActor::orderBy('unit_service', 'asc')->get(),
         ]);
     }
 
@@ -31,14 +30,13 @@ class ButtonActorController extends Controller
     public function create()
     {
         return view('admin.button_actor.create', [
-            'codeServices' => Codeservice::all()
+            'codeServices' => Codeservice::all(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,8 +46,8 @@ class ButtonActorController extends Controller
             'unit_service' => 'required|string|exists:codeservice,Initial',
             'counter_number' => 'required|integer',
             'user_button_code' => [
-                'required', 'unique:button_actor,user_button_code'
-            ]
+                'required', 'unique:button_actor,user_button_code',
+            ],
         ])->validate();
 
         $validated['last_queue_number'] = null;
@@ -73,22 +71,20 @@ class ButtonActorController extends Controller
     public function show(ButtonActor $tombol)
     {
         $defaultNumber = range(1, 100);
-        $all = ButtonActor
-            ::where('id', '!=', $tombol->id)
+        $all = ButtonActor::where('id', '!=', $tombol->id)
             ->pluck('counter_number')->toArray();
 
         return view('admin.button_actor.edit', [
             'buttonActors' => ButtonActor::all(),
             'codeServices' => Codeservice::all(),
             'listCounters' => array_diff($defaultNumber, $all),
-            'tombol' => $tombol
+            'tombol' => $tombol,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ButtonActor  $buttonActor
      * @return \Illuminate\Http\Response
      */
     public function edit(ButtonActor $buttonActor)
@@ -99,7 +95,6 @@ class ButtonActorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\ButtonActor  $buttonActor
      * @return \Illuminate\Http\Response
      */
@@ -108,7 +103,7 @@ class ButtonActorController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
             'counter_number' => "required|integer|unique:button_actor,counter_number,$tombol->id",
-            'user_button_code' => "required|unique:button_actor,user_button_code,$tombol->id"
+            'user_button_code' => "required|unique:button_actor,user_button_code,$tombol->id",
         ])->validate();
 
         if ($tombol->update($validated)) {
@@ -143,7 +138,7 @@ class ButtonActorController extends Controller
 
     public function getCounterNumber(Request $request, $unitService)
     {
-        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
 
         $defaultNumber = range(1, 100);
         if (empty($request->input('currentId'))) {

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('originationcust')) {
+        if (! Schema::hasTable('originationcust')) {
             Schema::create('originationcust', function (Blueprint $table) {
                 $table->string('BaseDt');
                 $table->string('SeqNumber');

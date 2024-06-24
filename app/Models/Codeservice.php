@@ -24,12 +24,12 @@ class Codeservice extends Model
 
     public function haveQueue()
     {
-        return ($this->last_queue < $this->CurrentQNo);
+        return $this->last_queue < $this->CurrentQNo;
     }
 
     public function sisaAntrian()
     {
-        return ($this->CurrentQNo - $this->last_queue);
+        return $this->CurrentQNo - $this->last_queue;
     }
 
     protected $fillable = [

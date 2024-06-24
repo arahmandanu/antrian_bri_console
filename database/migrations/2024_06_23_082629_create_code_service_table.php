@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('codeservice')) {
+        if (! Schema::hasTable('codeservice')) {
             Schema::create('codeservice', function (Blueprint $table) {
                 $table->string('Initial')->nullable(false);
                 $table->string('Name')->nullable(false);

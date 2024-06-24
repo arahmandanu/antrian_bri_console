@@ -27,6 +27,7 @@ class KiosController extends Controller
         if ($status === false) {
             if (TransactionParam::where('UnitService', '=', $transaction_param->UnitService)->show()->count() == 1) {
                 flash('Gagal merubah menu kios! minimal 1 menu tertampil')->error();
+
                 return redirect()->back();
             }
         }
@@ -72,7 +73,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if ($transaction_param->update($validated)) {
@@ -98,7 +99,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if (TransactionParam::create($validated)) {

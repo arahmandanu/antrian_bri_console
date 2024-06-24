@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             AddMasterProduct::class,
             FontColorSeeder::class,
             CreateCodeServiceData::class,
-            SeedTrxParamsData::class
+            SeedTrxParamsData::class,
         ]);
     }
 }

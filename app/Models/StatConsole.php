@@ -14,6 +14,6 @@ class StatConsole extends Model
     protected $fillable = [
         'tanggal',
         'Status',
-        'ActiveDate'
+        'ActiveDate',
     ];
 }

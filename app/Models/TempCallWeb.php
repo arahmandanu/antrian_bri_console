@@ -23,6 +23,6 @@ class TempCallWeb extends Model
         'Tampil',
         'Counter',
         'Unit',
-        'SeqNumber'
+        'SeqNumber',
     ];
 }

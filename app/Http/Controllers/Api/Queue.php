@@ -8,20 +8,18 @@ use App\Models\Codeservice;
 use App\Models\OriginCustomer;
 use App\Models\TempCallWeb;
 use App\Services\SoundCallService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Queue extends Controller
 {
-
     public function getNextQueue(Request $request)
     {
         $status = 422;
         $data = [
             'error' => true,
-            'message' => 'request tidak sesuai'
+            'message' => 'request tidak sesuai',
         ];
         $playSound = false;
         if ($request->input('id') || $request->input('type')) {
@@ -31,26 +29,24 @@ class Queue extends Controller
                 $currentCall = $buttonActor->last_queue_number;
                 // check ada antrian tidak?
                 if ($codeservice->haveQueue() === true) {
-                    $listQueue = OriginCustomer
-                        ::where('UnitServe', '=', $buttonActor->unit_service)
+                    $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
                         ->Call()
                         ->limit(1)
                         ->get()
                         ->first();
 
-                    #ada antrian dipanggil
+                    //ada antrian dipanggil
                     if ($listQueue) {
                         $this->createAntrian($listQueue, $buttonActor, $codeservice);
                         $currentCall = $listQueue->SeqNumber;
                         $playSound = true;
                     }
                 }
-            } else if (Str::lower($request->input('type')) == 'recall' && $buttonActor) {
+            } elseif (Str::lower($request->input('type')) == 'recall' && $buttonActor) {
                 $codeservice = $buttonActor->codeService;
                 $currentCall = $buttonActor->last_queue_number;
 
-                $listQueue = OriginCustomer
-                    ::where('UnitServe', '=', $buttonActor->unit_service)
+                $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
                     ->where('SeqNumber', '=', $currentCall)
                     ->limit(1)
                     ->first();
@@ -58,7 +54,7 @@ class Queue extends Controller
                 TempCallWeb::create([
                     'Counter' => $buttonActor->counter_number,
                     'Unit' => $codeservice->Initial,
-                    'SeqNumber' => $listQueue->SeqNumber
+                    'SeqNumber' => $listQueue->SeqNumber,
                 ]);
                 $playSound = true;
             }
@@ -68,7 +64,7 @@ class Queue extends Controller
                 'nama' => $buttonActor->name,
                 'total_antrian' => $codeservice->CurrentQNo,
                 'sisa_antrian' => $codeservice->sisaAntrian(),
-                'current_call_antrian' => $currentCall
+                'current_call_antrian' => $currentCall,
             ];
 
             if ($playSound) {
@@ -84,7 +80,7 @@ class Queue extends Controller
         TempCallWeb::create([
             'Counter' => $buttonActor->counter_number,
             'Unit' => $codeservice->Initial,
-            'SeqNumber' => $originCustomer->SeqNumber
+            'SeqNumber' => $originCustomer->SeqNumber,
         ]);
 
         $buttonActor->update([
@@ -94,7 +90,7 @@ class Queue extends Controller
 
         $lastqueueNumber = $codeservice->last_queue;
         $codeservice->update([
-            'last_queue' => $lastqueueNumber + 1
+            'last_queue' => $lastqueueNumber + 1,
         ]);
 
         $currentTime = now();
@@ -107,9 +103,8 @@ class Queue extends Controller
             ->update([
                 'TimeCall' => gmdate('H:i:s', $currentTime->diffInSeconds($createdTicket)),
                 'Flag' => 'N',
-                'WaitDuration' => '00:00:00'
+                'WaitDuration' => '00:00:00',
             ]);
 
-        return;
     }
 }

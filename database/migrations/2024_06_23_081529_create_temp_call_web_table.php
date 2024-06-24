@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('temp_call_web')) {
+        if (! Schema::hasTable('temp_call_web')) {
             Schema::create('temp_call_web', function (Blueprint $table) {
                 $table->id();
                 $table->string('Counter')->nullable(false);

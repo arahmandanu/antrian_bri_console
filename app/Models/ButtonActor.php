@@ -22,6 +22,6 @@ class ButtonActor extends Model
         'unit_service',
         'last_queue_number',
         'last_queue_called',
-        'user_button_code'
+        'user_button_code',
     ];
 }

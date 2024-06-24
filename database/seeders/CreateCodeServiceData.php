@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enum\CodeServiceEnum;
 use App\Models\Codeservice;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CreateCodeServiceData extends Seeder
@@ -21,14 +20,14 @@ class CreateCodeServiceData extends Seeder
                 'Name' => 'Teller Umum',
                 'Initial' => CodeServiceEnum::TELLER,
                 'CurrentQNo' => 0,
-                'last_queue' => 0
+                'last_queue' => 0,
             ],
             [
                 'Name' => 'CS Umum',
                 'Initial' => CodeServiceEnum::CS,
                 'CurrentQNo' => 0,
-                'last_queue' => 0
-            ]
+                'last_queue' => 0,
+            ],
         ]);
     }
 }

@@ -3,20 +3,18 @@
 namespace App\Helper;
 
 use App\Models\Properties;
-use ErrorException;
-use Exception;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
-use Throwable;
-use TypeError;
 
 trait PrinterThermal
 {
     public function execPrint($currentTime, $descTransaction, $unitNextNumber, Properties $properties)
     {
         $usePrinter = env('PRINTER_ENABLED', true);
-        if (!$usePrinter) return 'success';
+        if (! $usePrinter) {
+            return 'success';
+        }
 
         try {
             $connector = new WindowsPrintConnector($properties->printer_name);
@@ -57,7 +55,7 @@ trait PrinterThermal
             $printer->cut();
             $printer->close();
             $status = 'success';
-        } catch (\Exception | \TypeError | \Throwable | \ErrorException $e) {
+        } catch (\Exception|\TypeError|\Throwable|\ErrorException $e) {
             $status = $e->getMessage();
         }
 
