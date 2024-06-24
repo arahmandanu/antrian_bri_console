@@ -30,7 +30,8 @@ class SoundCallService
         'cs' => 'cs',
         'counter' => 'counter',
         'puluh' => 'puluh',
-        'menuju' => 'menuju'
+        'menuju' => 'menuju',
+        'ratus' => 'ratus'
     ];
 
     public function __construct(OriginCustomer $originCustomer, ButtonActor $buttonActor)
@@ -45,6 +46,7 @@ class SoundCallService
         $listSoundKounter = $this->headerSound($this->buttonActor);
         $listSoundForQueueNumber = $this->listNumberSound($this->buttonActor->unit_service, $this->originCustomer->origin_queue_number);
         $listSoundFooter = $this->footerSound($this->buttonActor);
+
         $this->initiateSound(array_merge($listSoundKounter, $listSoundForQueueNumber, $listSoundFooter));
     }
 
@@ -69,25 +71,16 @@ class SoundCallService
     private function listNumberSound($unitService, $queueNumber)
     {
         $splittedNumber = str_split($queueNumber);
-        # ditambahkan a / b nya dlu
-
         $sound = [];
         array_push($sound, $this->listSound[Str::lower((string)$unitService)]);
         if (sizeof($splittedNumber) == 1) {
             array_push($sound, $this->listSound[(string)$queueNumber]);
         } else if (sizeof($splittedNumber) == 2) {
-            if ($queueNumber == 11 || $queueNumber == 10) {
-                array_push($sound, $this->listSound[(string)$queueNumber]);
-            } else {
-                foreach ($splittedNumber as $key => $value) {
-                    # last number
-                    if ($key + 1 === sizeof($splittedNumber)) {
-                        array_push($sound, $this->listSound['puluh']);
-                    } else if ($value !== '0') {
-                        array_push($sound, $this->listSound[(string)$value]);
-                    }
-                }
-            }
+            $puluhan = $this->formatPuluhan($queueNumber, $splittedNumber);
+            $sound = array_merge($sound, $puluhan);
+        } else if (sizeof($splittedNumber) == 3) {
+            $ratusan = $this->formatRatusan($queueNumber, $splittedNumber);
+            $sound = array_merge($sound, $ratusan);
         }
 
         $soundPath = [];
@@ -96,6 +89,45 @@ class SoundCallService
             array_push($soundPath, base_path($file));
         }
         return $soundPath;
+    }
+
+    private function formatRatusan($queueNumber, $splittedNumber)
+    {
+        $headSound = [];
+        if ((string)$splittedNumber[0] === '1') {
+            array_push($headSound, $this->listSound['seratus']);
+        } else {
+            array_push($headSound, $this->listSound[(string)$splittedNumber[0]]);
+            array_push($headSound, $this->listSound['ratus']);
+        }
+        $bodySound = [];
+        array_shift($splittedNumber);
+        if (implode($splittedNumber) != '00') {
+            $bodySound = array_merge($bodySound, $this->formatPuluhan(implode($splittedNumber), str_split((int)implode($splittedNumber))));
+        }
+        return array_merge($headSound, $bodySound);
+    }
+
+    private function formatPuluhan($queueNumber, $splittedNumber)
+    {
+        $puluhan = [];
+        if ((string)$queueNumber == '11' || (string)$queueNumber == '10') {
+            array_push($puluhan, $this->listSound[(string)$queueNumber]);
+        } else {
+            foreach ($splittedNumber as $key => $value) {
+                # last number
+                if ($key + 1 === sizeof($splittedNumber) && (sizeof($splittedNumber) > 1)) {
+                    array_push($puluhan, $this->listSound['puluh']);
+                    if ($value !== '0') {
+                        array_push($puluhan, $this->listSound[(string)$value]);
+                    }
+                } else if ($value !== '0') {
+                    array_push($puluhan, $this->listSound[(string)$value]);
+                }
+            }
+        }
+
+        return $puluhan;
     }
 
     private function initiateSound($sounds)
