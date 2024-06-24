@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        if (! Schema::hasTable('stat_console')) {
+        if (!Schema::hasTable('stat_console')) {
             Schema::create('stat_console', function (Blueprint $table) {
-                $table->string('tanggal')->primary();
+                $table->id();
+                $table->string('tanggal');
                 $table->string('Status');
                 $table->string('ActiveDate');
                 $table->timestamps();

@@ -16,6 +16,11 @@ class ButtonActor extends Model
         return $this->belongsTo(Codeservice::class, 'unit_service', 'initial');
     }
 
+    public function lastOriginCustomer()
+    {
+        return $this->hasOne(OriginCustomer::class, 'SeqDt', 'originationcust_SeqDt');
+    }
+
     protected $fillable = [
         'name',
         'counter_number',

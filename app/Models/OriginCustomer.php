@@ -19,6 +19,11 @@ class OriginCustomer extends Model
         $query->where('Flag', 'P')->orderBy('origin_queue_number', 'asc');
     }
 
+    public function transactionParam()
+    {
+        return $this->belongsTo(TransactionParam::class, 'code_trx', 'TrxCode');
+    }
+
     protected $fillable = [
         'SeqNumber',
         'BaseDt',

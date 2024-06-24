@@ -55,7 +55,7 @@ class DashboardMainConsoleCheck
     {
         OriginCustomer::truncate();
         TempCallWeb::truncate();
-        ButtonActor::query()->update(['last_queue_number' => null, 'last_queue_called' => null]);
+        ButtonActor::query()->update(['last_queue_number' => null, 'last_queue_called' => null, 'originationcust_SeqDt' => null]);
         Codeservice::query()->update(['CurrentQNo' => 0, 'last_queue' => 0]);
     }
 }

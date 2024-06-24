@@ -12,8 +12,6 @@ class TransactionCustomer extends Model
 
     protected $table = 'transactioncust';
 
-    public $timestamps = false;
-
     public function scopenotSynced(Builder $query): void
     {
         $query->where('synced', '=', 'N');
@@ -21,5 +19,21 @@ class TransactionCustomer extends Model
 
     protected $fillable = [
         'synced',
+        'BaseDt',
+        'SeqNumber',
+        'TrxDesc',
+        'TimeTicket',
+        'TimeCall',
+        'CustWaitDuration',
+        'UnitServe',
+        'CounterNo',
+        'Absent',
+        'UserId',
+        'Flag',
+        'TimeEnd',
+        'Tservice',
+        'TWservice',
+        'TSLAservice',
+        'TOverSLA'
     ];
 }
