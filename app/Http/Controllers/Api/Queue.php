@@ -7,6 +7,7 @@ use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use App\Models\OriginCustomer;
 use App\Models\TempCallWeb;
+use App\Services\SoundCallService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class Queue extends Controller
             'error' => true,
             'message' => 'request tidak sesuai'
         ];
-
+        $playSound = false;
         if ($request->input('id') || $request->input('type')) {
             $buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first();
             if (Str::lower($request->input('type')) == 'call' && $buttonActor) {
@@ -30,11 +31,18 @@ class Queue extends Controller
                 $currentCall = $buttonActor->last_queue_number;
                 // check ada antrian tidak?
                 if ($codeservice->haveQueue() === true) {
-                    $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)->Call()->limit(1)->get()->first();
+                    $listQueue = OriginCustomer
+                        ::where('UnitServe', '=', $buttonActor->unit_service)
+                        ->Call()
+                        ->limit(1)
+                        ->get()
+                        ->first();
+
                     #ada antrian dipanggil
                     if ($listQueue) {
                         $this->createAntrian($listQueue, $buttonActor, $codeservice);
                         $currentCall = $listQueue->SeqNumber;
+                        $playSound = true;
                     }
                 }
             } else if (Str::lower($request->input('type')) == 'recall' && $buttonActor) {
@@ -44,6 +52,7 @@ class Queue extends Controller
                 $listQueue = OriginCustomer
                     ::where('UnitServe', '=', $buttonActor->unit_service)
                     ->where('SeqNumber', '=', $currentCall)
+                    ->limit(1)
                     ->first();
 
                 TempCallWeb::create([
@@ -51,14 +60,7 @@ class Queue extends Controller
                     'Unit' => $codeservice->Initial,
                     'SeqNumber' => $listQueue->SeqNumber
                 ]);
-
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\nomor.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\antrian.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\a.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\satu.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\menuju.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\counter.wav").PlaySync();');
-                exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\dua.wav").PlaySync();');
+                $playSound = true;
             }
 
             $status = 200;
@@ -68,9 +70,11 @@ class Queue extends Controller
                 'sisa_antrian' => $codeservice->sisaAntrian(),
                 'current_call_antrian' => $currentCall
             ];
+
+            if ($playSound) {
+                (new SoundCallService($listQueue, $buttonActor))->playSound();
+            }
         }
-
-
 
         return response($data, $status);
     }
@@ -95,7 +99,7 @@ class Queue extends Controller
 
         $currentTime = now();
         $createdTicket = $originCustomer->created_at;
-        // with query Builder
+        // with query Builder karena gak punya primary(uniq key perlu query builder)
         DB::table('originationcust')
             ->where('UnitServe', $buttonActor->unit_service)
             ->where('SeqNumber', $originCustomer->SeqNumber)
@@ -106,89 +110,6 @@ class Queue extends Controller
                 'WaitDuration' => '00:00:00'
             ]);
 
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\nomor.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\antrian.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\a.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\satu.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\menuju.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\counter.wav").PlaySync();');
-        exec('powershell -c (New-Object Media.SoundPlayer "C:\xampp82\htdocs\antrian_bri_console\console\dua.wav").PlaySync();');
         return;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
