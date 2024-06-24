@@ -23,5 +23,6 @@ class ButtonActor extends Model
         'last_queue_number',
         'last_queue_called',
         'user_button_code',
+        'originationcust_SeqDt'
     ];
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('unit_service')->nullable(false);
             $table->string('last_queue_number')->nullable(true);
             $table->dateTime('last_queue_called')->nullable(true);
+            $table->integer('originationcust_SeqDt')->nullable(true);
             $table->timestamps();
 
             $table->unique(['user_button_code', 'counter_number', 'unit_service']);

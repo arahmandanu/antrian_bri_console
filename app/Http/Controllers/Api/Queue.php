@@ -77,6 +77,9 @@ class Queue extends Controller
 
     private function createAntrian(OriginCustomer $originCustomer, ButtonActor $buttonActor, Codeservice $codeservice)
     {
+        $currentTime = now();
+        $createdTicket = $originCustomer->created_at;
+
         TempCallWeb::create([
             'Counter' => $buttonActor->counter_number,
             'Unit' => $codeservice->Initial,
@@ -86,6 +89,7 @@ class Queue extends Controller
         $buttonActor->update([
             'last_queue_number' => $originCustomer->SeqNumber,
             'last_queue_called' => now(),
+            'originationcust_SeqDt' => $originCustomer->SeqDt
         ]);
 
         $lastqueueNumber = $codeservice->last_queue;
@@ -93,18 +97,10 @@ class Queue extends Controller
             'last_queue' => $lastqueueNumber + 1,
         ]);
 
-        $currentTime = now();
-        $createdTicket = $originCustomer->created_at;
-        // with query Builder karena gak punya primary(uniq key perlu query builder)
-        DB::table('originationcust')
-            ->where('UnitServe', $buttonActor->unit_service)
-            ->where('SeqNumber', $originCustomer->SeqNumber)
-            ->limit(1)
-            ->update([
-                'TimeCall' => gmdate('H:i:s', $currentTime->diffInSeconds($createdTicket)),
-                'Flag' => 'N',
-                'WaitDuration' => '00:00:00',
-            ]);
-
+        $originCustomer->update([
+            'TimeCall' => $currentTime->format('H:i:s'),
+            'Flag' => 'N',
+            'WaitDuration' => gmdate('H:i:s', $currentTime->diffInSeconds($createdTicket)),
+        ]);
     }
 }

@@ -138,7 +138,7 @@ class ButtonActorController extends Controller
 
     public function getCounterNumber(Request $request, $unitService)
     {
-        abort_if(! $request->wantsJson(), 403, 'Invalid request!');
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
         $defaultNumber = range(1, 100);
         if (empty($request->input('currentId'))) {

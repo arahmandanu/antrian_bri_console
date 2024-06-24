@@ -12,9 +12,7 @@ class OriginCustomer extends Model
 
     protected $table = 'originationcust';
 
-    protected $primaryKey = null;
-
-    public $incrementing = false;
+    protected $primaryKey = 'SeqDt';
 
     public function scopeCall(Builder $query): void
     {

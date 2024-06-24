@@ -54,7 +54,7 @@ class SoundCallService
 
     private function footerSound(ButtonActor $buttonActor)
     {
-        $counter = $this->listSound[(string) $buttonActor->counter_number].'.wav';
+        $counter = $this->listSound[(string) $buttonActor->counter_number] . '.wav';
 
         return [
             base_path('console\menuju.wav'),
@@ -138,7 +138,7 @@ class SoundCallService
     private function initiateSound($sounds)
     {
         foreach ($sounds as $key => $value) {
-            exec('powershell -c (New-Object Media.SoundPlayer "'.$value.'").PlaySync();');
+            exec('powershell -c (New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
         }
     }
 }
