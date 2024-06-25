@@ -25,37 +25,34 @@ class Queue extends Controller
 
         $currentTime = now();
         $playSound = false;
-        if ($request->input('id') && $request->input('type') && $buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first()) {
+        if ($request->input('id') && $request->input('type') && ($buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first())) {
             $codeservice = $buttonActor->codeService;
+            $currentCall = $buttonActor->last_queue_number;
 
-            if (Str::lower($request->input('type')) == 'call' && $buttonActor) {
-                $currentCall = $buttonActor->last_queue_number;
+            if (Str::lower($request->input('type')) == 'call') {
                 // check ada antrian tidak?
-                if ($codeservice->haveQueue() === true) {
+                if (
+                    $codeservice->haveQueue() === true &&
                     $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
-                        ->Call()
-                        ->limit(1)
-                        ->get()
-                        ->first();
-
+                    ->Call()
+                    ->limit(1)
+                    ->get()
+                    ->first()
+                ) {
                     //ada antrian dipanggil
-                    if ($listQueue) {
-                        $this->insertReport($buttonActor, $currentTime);
-                        $this->createAntrian($listQueue, $buttonActor, $codeservice, $currentTime);
-                        $currentCall = $listQueue->SeqNumber;
-                        $playSound = true;
-                    }
+                    $this->insertReport($buttonActor, $currentTime);
+                    $this->createAntrian($listQueue, $buttonActor, $codeservice, $currentTime);
+                    $currentCall = $listQueue->SeqNumber;
+                    $playSound = true;
                 } else {
                     $this->insertReport($buttonActor, $currentTime);
                 }
-            } elseif (Str::lower($request->input('type')) == 'recall' && $buttonActor) {
-                $currentCall = $buttonActor->last_queue_number;
-
-                $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
-                    ->where('SeqNumber', '=', $currentCall)
-                    ->limit(1)
-                    ->first();
-
+            } else if (
+                Str::lower($request->input('type')) == 'recall' && $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
+                ->where('SeqNumber', '=', $currentCall)
+                ->limit(1)
+                ->first()
+            ) {
                 TempCallWeb::create([
                     'Counter' => $buttonActor->counter_number,
                     'Unit' => $codeservice->Initial,
@@ -118,15 +115,12 @@ class Queue extends Controller
 
     private function insertReport(ButtonActor $buttonActor, $currentTime)
     {
-        if (empty($buttonActor->originationcust_SeqDt)) {
-            return;
-        }
+        if (empty($buttonActor->originationcust_SeqDt)) return;
 
         // check first karena gak ada relasi
         $exist = TransactionCustomer::where('BaseDt', $currentTime->format('Ymd'))
             ->where('SeqNumber', $buttonActor->last_queue_number)
             ->count();
-
         if ($exist > 0) return;
 
         $oldQueue = $buttonActor->lastOriginCustomer;
