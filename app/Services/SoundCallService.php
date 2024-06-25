@@ -46,16 +46,18 @@ class SoundCallService
 
     public function playSound()
     {
-        $listSoundKounter = $this->headerSound($this->buttonActor);
-        $listSoundForQueueNumber = $this->listNumberSound($this->buttonActor->unit_service, $this->originCustomer->origin_queue_number);
-        $listSoundFooter = $this->footerSound($this->buttonActor);
-
-        $this->initiateSound(array_merge($listSoundKounter, $listSoundForQueueNumber, $listSoundFooter));
+        $this->initiateSound(
+            array_merge(
+                $this->headerSound(),
+                $this->listNumberSound($this->buttonActor->unit_service, $this->originCustomer->origin_queue_number),
+                $this->footerSound($this->buttonActor)
+            )
+        );
     }
 
     private function footerSound(ButtonActor $buttonActor)
     {
-        $counter = $this->listSound[(string) $buttonActor->counter_number].'.wav';
+        $counter = $this->listSound[(string) $buttonActor->counter_number] . '.wav';
 
         return [
             base_path('console\menuju.wav'),
@@ -64,7 +66,7 @@ class SoundCallService
         ];
     }
 
-    private function headerSound(ButtonActor $buttonActor)
+    private function headerSound()
     {
         return [
             base_path('console\nomor.wav'),
@@ -83,7 +85,7 @@ class SoundCallService
             $puluhan = $this->formatPuluhan($queueNumber, $splittedNumber);
             $sound = array_merge($sound, $puluhan);
         } elseif (count($splittedNumber) == 3) {
-            $ratusan = $this->formatRatusan($queueNumber, $splittedNumber);
+            $ratusan = $this->formatRatusan($splittedNumber);
             $sound = array_merge($sound, $ratusan);
         }
 
@@ -96,7 +98,7 @@ class SoundCallService
         return $soundPath;
     }
 
-    private function formatRatusan($queueNumber, $splittedNumber)
+    private function formatRatusan($splittedNumber)
     {
         $headSound = [];
         if ((string) $splittedNumber[0] === '1') {
@@ -105,6 +107,7 @@ class SoundCallService
             array_push($headSound, $this->listSound[(string) $splittedNumber[0]]);
             array_push($headSound, $this->listSound['ratus']);
         }
+
         $bodySound = [];
         array_shift($splittedNumber);
         if (implode($splittedNumber) != '00') {
@@ -144,7 +147,7 @@ class SoundCallService
     private function initiateSound($sounds)
     {
         foreach ($sounds as $key => $value) {
-            exec('powershell -c (New-Object Media.SoundPlayer "'.$value.'").PlaySync();');
+            exec('powershell -c (New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
         }
     }
 }

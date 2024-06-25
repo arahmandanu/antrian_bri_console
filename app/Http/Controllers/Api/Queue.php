@@ -25,8 +25,7 @@ class Queue extends Controller
 
         $currentTime = now();
         $playSound = false;
-        $buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first();
-        if ($request->input('id') && $request->input('type') && ! empty($buttonActor)) {
+        if ($request->input('id') && $request->input('type') && $buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first()) {
             $codeservice = $buttonActor->codeService;
 
             if (Str::lower($request->input('type')) == 'call' && $buttonActor) {
@@ -41,7 +40,6 @@ class Queue extends Controller
 
                     //ada antrian dipanggil
                     if ($listQueue) {
-
                         $this->insertReport($buttonActor, $currentTime);
                         $this->createAntrian($listQueue, $buttonActor, $codeservice, $currentTime);
                         $currentCall = $listQueue->SeqNumber;
@@ -129,9 +127,7 @@ class Queue extends Controller
             ->where('SeqNumber', $buttonActor->last_queue_number)
             ->count();
 
-        if ($exist > 0) {
-            return;
-        }
+        if ($exist > 0) return;
 
         $oldQueue = $buttonActor->lastOriginCustomer;
         $timeCall = Carbon::createFromFormat('H:i:s', $oldQueue->TimeCall);
