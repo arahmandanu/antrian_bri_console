@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('stat_console')) {
+        if (! Schema::hasTable('stat_console')) {
             Schema::create('stat_console', function (Blueprint $table) {
                 $table->id();
                 $table->string('tanggal');

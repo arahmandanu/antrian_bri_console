@@ -11,7 +11,6 @@ use App\Models\TransactionCustomer;
 use App\Services\SoundCallService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Queue extends Controller
@@ -27,7 +26,7 @@ class Queue extends Controller
         $currentTime = now();
         $playSound = false;
         $buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first();
-        if ($request->input('id') && $request->input('type') && !empty($buttonActor)) {
+        if ($request->input('id') && $request->input('type') && ! empty($buttonActor)) {
             $codeservice = $buttonActor->codeService;
 
             if (Str::lower($request->input('type')) == 'call' && $buttonActor) {
@@ -98,7 +97,7 @@ class Queue extends Controller
         $buttonActor->update([
             'last_queue_number' => $originCustomer->SeqNumber,
             'last_queue_called' => now(),
-            'originationcust_SeqDt' => $originCustomer->SeqDt
+            'originationcust_SeqDt' => $originCustomer->SeqDt,
         ]);
 
         // code service di edit antriannya
@@ -121,22 +120,25 @@ class Queue extends Controller
 
     private function insertReport(ButtonActor $buttonActor, $currentTime)
     {
-        if (empty($buttonActor->originationcust_SeqDt)) return;
+        if (empty($buttonActor->originationcust_SeqDt)) {
+            return;
+        }
 
         // check first karena gak ada relasi
-        $exist = TransactionCustomer
-            ::where('BaseDt', $currentTime->format('Ymd'))
+        $exist = TransactionCustomer::where('BaseDt', $currentTime->format('Ymd'))
             ->where('SeqNumber', $buttonActor->last_queue_number)
             ->count();
 
-        if ($exist > 0) return;
+        if ($exist > 0) {
+            return;
+        }
 
         $oldQueue = $buttonActor->lastOriginCustomer;
         $timeCall = Carbon::createFromFormat('H:i:s', $oldQueue->TimeCall);
         $timeService = gmdate('H:i:s', $timeCall->diffInSeconds($currentTime));
         $timeOverSla = '00:00:00';
         if ($oldQueue->transactionParam->Tservice != '00:00:00') {
-            # mainkan secondnya selalu force beginning date
+            // mainkan secondnya selalu force beginning date
             $startDate = $currentTime->copy()->startOfDay();
             $slaTime = Carbon::createFromFormat('H:i:s', $oldQueue->transactionParam->Tservice);
             $expectedSla = $timeCall->copy()->addSeconds($startDate->diffInSeconds($slaTime));

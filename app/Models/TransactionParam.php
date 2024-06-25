@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enum\CodeServiceEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,6 @@ class TransactionParam extends Model
     protected $table = 'trxparam';
 
     protected $primaryKey = 'TrxCode';
-
 
     public function scopeshow(Builder $query): void
     {

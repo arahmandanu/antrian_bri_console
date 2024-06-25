@@ -45,13 +45,13 @@ class DashboardKiosController extends Controller
             'footerTexts' => $footerTexts,
             'footer_flow' => $footerFlow,
             'fotrColor' => $fotrColor,
-            'companyName' => $companyName
+            'companyName' => $companyName,
         ]);
     }
 
     public function printOnlineQueue(Request $request)
     {
-        if (!$request->wantsJson() || empty($request->input('data'))) {
+        if (! $request->wantsJson() || empty($request->input('data'))) {
             return response()->json([
                 'message' => 'Failed request!',
                 'error' => true,
@@ -67,7 +67,7 @@ class DashboardKiosController extends Controller
         $currentTime = now();
         $properties = Properties::first();
 
-        if ((int)$antrian == 0) {
+        if ((int) $antrian == 0) {
             return response()->json([
                 'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
                 'error' => true,
@@ -92,7 +92,7 @@ class DashboardKiosController extends Controller
         $lastCall = $codeService->last_queue;
         $validNumber = ((int) $antrian > $lastCall);
 
-        if ($exist || !$validNumber) {
+        if ($exist || ! $validNumber) {
             return response()->json([
                 'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
                 'error' => true,
@@ -120,16 +120,16 @@ class DashboardKiosController extends Controller
         }
 
         $currentTime = now();
-        $descTransaction = 'Antrian ' . $codeService->Name;
+        $descTransaction = 'Antrian '.$codeService->Name;
         $params = [
             'BaseDt' => $currentTime->isoFormat('OYMMDD'),
-            'SeqNumber' => $unitService . $antrian,
+            'SeqNumber' => $unitService.$antrian,
             'UnitServe' => $unitService,
             'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
             'TimeCall' => null,
             'WaitDuration' => null,
             'Flag' => 'P',
-            'origin_queue_number' => (int)$antrian,
+            'origin_queue_number' => (int) $antrian,
             'DescTransaksi' => $descTransaction,
             'UnitCall' => $unitService,
             'code_trx' => $trxParamCode,
@@ -137,9 +137,9 @@ class DashboardKiosController extends Controller
             'is_queue_online' => true,
         ];
 
-        $codeService->CurrentQNo = (int)$antrian;
+        $codeService->CurrentQNo = (int) $antrian;
         $updateCodeService = $codeService->save();
-        if (!OriginCustomer::create($params) && !$updateCodeService) {
+        if (! OriginCustomer::create($params) && ! $updateCodeService) {
             return response()->json([
                 'message' => 'Gagal membuat antrian!',
                 'error' => true,
@@ -147,7 +147,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
+            $this->execPrint($currentTime, $descTransaction, $unitService.$antrian, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
                 'error' => false,
@@ -166,7 +166,7 @@ class DashboardKiosController extends Controller
 
     public function createAntrian(Request $request)
     {
-        if (!$request->wantsJson()) {
+        if (! $request->wantsJson()) {
             return response()->json([
                 'message' => 'Pastikan printer siap digunakan!',
                 'error' => true,
@@ -179,7 +179,7 @@ class DashboardKiosController extends Controller
         ])->validate();
 
         $properties = Properties::first();
-        if (!$properties) {
+        if (! $properties) {
             return response()->json([
                 'message' => 'Pastikan printer siap digunakan!',
                 'error' => true,
@@ -217,8 +217,8 @@ class DashboardKiosController extends Controller
             $myQueue = self::formatQueue($nextNumber);
         }
 
-        $unitNextNumber = $request['unit_service'] . $myQueue;
-        $descTransaction = 'Antrian ' . $currentQue->Name;
+        $unitNextNumber = $request['unit_service'].$myQueue;
+        $descTransaction = 'Antrian '.$currentQue->Name;
         $params = [
             'BaseDt' => $currentTime->isoFormat('OYMMDD'),
             'SeqNumber' => $unitNextNumber,
@@ -236,7 +236,7 @@ class DashboardKiosController extends Controller
         ];
         $currentQue->CurrentQNo = $nextNumber;
         $updateCodeService = $currentQue->save();
-        if (!($recordQueue = OriginCustomer::create($params)) && !$updateCodeService) {
+        if (! ($recordQueue = OriginCustomer::create($params)) && ! $updateCodeService) {
             return response()->json([
                 'message' => 'Gagal membuat antrian!',
                 'error' => true,
@@ -258,7 +258,9 @@ class DashboardKiosController extends Controller
             $code = 422;
         }
 
-        if ($responseFromServer[0] == false) $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
+        if ($responseFromServer[0] == false) {
+            $this->execSyncOfflineToOnline($properties, $recordQueue, $currentTime);
+        }
 
         return response()->json($response, $code);
     }

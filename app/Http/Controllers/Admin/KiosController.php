@@ -59,7 +59,7 @@ class KiosController extends Controller
     public function create()
     {
         return view('admin.kios.create', [
-            'codeServices' => Codeservice::all()
+            'codeServices' => Codeservice::all(),
         ]);
     }
 
@@ -76,7 +76,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if ($transaction_param->update($validated)) {
@@ -102,7 +102,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if (TransactionParam::create($validated)) {

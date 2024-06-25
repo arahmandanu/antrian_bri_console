@@ -13,14 +13,16 @@ trait AutoSync
     {
         $onlineApp = env('ONLINE_APP', false);
         $url = env('ONLINE_APP_URL', '');
-        if (empty($url) || empty($properties->company_code) || !$onlineApp) return;
+        if (empty($url) || empty($properties->company_code) || ! $onlineApp) {
+            return;
+        }
 
         $formatedTime = $currentTime->format('Y-m-d H:i:s');
         $data = $record->toArray();
         $data['current_time'] = $formatedTime;
         $data['company_id'] = $properties->company_code;
 
-        $url2 = $url . '/api/sync_from_local';
+        $url2 = $url.'/api/sync_from_local';
         try {
             Http::connectTimeout(1)
                 ->timeout(3)
@@ -39,7 +41,9 @@ trait AutoSync
         $url = env('ONLINE_APP_URL', '');
         $nextNumber = null;
         $success = false;
-        if (empty($url) || empty($properties->company_code) || !$onlineApp) return [$success, $nextNumber];
+        if (empty($url) || empty($properties->company_code) || ! $onlineApp) {
+            return [$success, $nextNumber];
+        }
 
         $formatedTime = $currentTime->format('Y-m-d H:i:s');
         $data = [
@@ -49,7 +53,7 @@ trait AutoSync
             'currentTime' => $formatedTime,
         ];
 
-        $url2 = $url . '/api/get_number_queue';
+        $url2 = $url.'/api/get_number_queue';
         try {
             $response = Http::connectTimeout(1)
                 ->timeout(3)
@@ -76,13 +80,15 @@ trait AutoSync
         $url = env('ONLINE_APP_URL', '');
         $onlineApp = env('ONLINE_APP', false);
 
-        if (empty($url) || empty($properties->company_code) || !$onlineApp) return [$success, $message, $status];
+        if (empty($url) || empty($properties->company_code) || ! $onlineApp) {
+            return [$success, $message, $status];
+        }
         $currentTime = now()->format('Ymd');
         $reports = TransactionCustomer::where('BaseDt', '=', $currentTime)->notSynced()->limit(5);
         $result = $reports->get();
 
         if ($result->count() > 0) {
-            $url2 = $url . '/api/sync_report_from_local';
+            $url2 = $url.'/api/sync_report_from_local';
             try {
                 $response = Http::connectTimeout(1)
                     ->timeout(3)

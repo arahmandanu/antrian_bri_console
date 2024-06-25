@@ -34,6 +34,6 @@ class TransactionCustomer extends Model
         'Tservice',
         'TWservice',
         'TSLAservice',
-        'TOverSLA'
+        'TOverSLA',
     ];
 }
