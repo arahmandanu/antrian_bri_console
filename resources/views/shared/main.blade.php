@@ -494,6 +494,7 @@
         var all = $('div#corousel-parent');
         var currencyTable = $('div.table-currency');
         var currencyTableST = currencyTable.scrollTop();
+        var appIsOnline = "{{ env('ONLINE_APP', false) }}";
 
         $(document).ready(function() {
             init_iklan_video(0);
@@ -504,10 +505,11 @@
             setInterval(() => {
                 get_next_queue()
             }, intervalNextQueue);
-
-            setInterval(() => {
-                sync_reporting()
-            }, interva_auto_sync_report);
+            if (appIsOnline !== '') {
+                setInterval(() => {
+                    sync_reporting()
+                }, interva_auto_sync_report);
+            }
             // call_console();
         });
 
