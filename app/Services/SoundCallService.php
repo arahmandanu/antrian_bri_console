@@ -34,6 +34,7 @@ class SoundCallService
         'puluh' => 'puluh',
         'menuju' => 'menuju',
         'ratus' => 'ratus',
+        'belas' => 'belas'
     ];
 
     public function __construct(OriginCustomer $originCustomer, ButtonActor $buttonActor)
@@ -119,15 +120,20 @@ class SoundCallService
         if ((string) $queueNumber == '11' || (string) $queueNumber == '10') {
             array_push($puluhan, $this->listSound[(string) $queueNumber]);
         } else {
-            foreach ($splittedNumber as $key => $value) {
-                // last number
-                if ($key + 1 === count($splittedNumber) && (count($splittedNumber) > 1)) {
-                    array_push($puluhan, $this->listSound['puluh']);
-                    if ($value !== '0') {
+            if ($queueNumber < 20) {
+                array_push($puluhan, $this->listSound[$splittedNumber[1]]);
+                array_push($puluhan, $this->listSound['belas']);
+            } else {
+                foreach ($splittedNumber as $key => $value) {
+                    // last number
+                    if ($key + 1 === count($splittedNumber) && (count($splittedNumber) > 1)) {
+                        array_push($puluhan, $this->listSound['puluh']);
+                        if ($value !== '0') {
+                            array_push($puluhan, $this->listSound[(string) $value]);
+                        }
+                    } elseif ($value !== '0') {
                         array_push($puluhan, $this->listSound[(string) $value]);
                     }
-                } elseif ($value !== '0') {
-                    array_push($puluhan, $this->listSound[(string) $value]);
                 }
             }
         }
