@@ -17,7 +17,7 @@ class KiosController extends Controller
     public function index()
     {
         return view('admin.kios.index', [
-            'Services' => TransactionParam::enabled()->get(),
+            'Services' => TransactionParam::all(),
         ]);
     }
 
@@ -73,7 +73,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if ($transaction_param->update($validated)) {
@@ -99,7 +99,7 @@ class KiosController extends Controller
             'Tservice' => 'required|integer',
         ])->validate();
 
-        $sla = (strlen($validated['Tservice']) == 1 ? '0'.$validated['Tservice'] : $validated['Tservice']);
+        $sla = (strlen($validated['Tservice']) == 1 ? '0' . $validated['Tservice'] : $validated['Tservice']);
         $validated['Tservice'] = "00:$sla:00";
 
         if (TransactionParam::create($validated)) {

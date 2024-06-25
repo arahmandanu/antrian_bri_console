@@ -21,7 +21,7 @@ trait AutoSync
         $data['current_time'] = $formatedTime;
         $data['company_id'] = $properties->company_code;
 
-        $url2 = $url.'/api/sync_from_local';
+        $url2 = $url . '/api/sync_from_local';
         try {
             Http::timeout(3)
                 ->connectTimeout(3)
@@ -50,7 +50,7 @@ trait AutoSync
                 'currentTime' => $formatedTime,
             ];
 
-            $url2 = $url.'/api/get_number_queue';
+            $url2 = $url . '/api/get_number_queue';
             try {
                 $response = Http::timeout(3)
                     ->connectTimeout(3)
@@ -84,7 +84,7 @@ trait AutoSync
             $result = $reports->get();
 
             if ($result->count() > 0) {
-                $url2 = $url.'/api/sync_report_from_local';
+                $url2 = $url . '/api/sync_report_from_local';
                 try {
                     $response = Http::timeout(3)
                         ->connectTimeout(3)

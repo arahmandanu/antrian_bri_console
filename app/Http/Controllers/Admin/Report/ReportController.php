@@ -43,7 +43,7 @@ class ReportController extends Controller
 
         return view('admin.report.index', [
             'transactions' => $transactions,
-            'transactionType' => TransactionParam::enabled()->get(),
+            'transactionType' => TransactionParam::all(),
         ]);
     }
 
