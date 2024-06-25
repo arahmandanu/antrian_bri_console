@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ButtonActorController;
 use App\Http\Controllers\Api\Queue;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/console/get_antrian', [Queue::class, 'getNextQueue']);
+Route::get('/button_actor/sync', [ButtonActorController::class, 'syncButtonActor']);

@@ -67,6 +67,13 @@ class DashboardKiosController extends Controller
         $currentTime = now();
         $properties = Properties::first();
 
+        if ((int)$antrian == 0) {
+            return response()->json([
+                'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
+                'error' => true,
+            ], 422);
+        }
+
         // // validate Date or online to local company
         if (empty($properties) || $properties->company_code != $companyId || $currentTime->format('dmY') !== $date) {
             return response()->json([
@@ -130,21 +137,7 @@ class DashboardKiosController extends Controller
             'is_queue_online' => true,
         ];
 
-        $splitAntrian = str_split($antrian);
-        if ($splitAntrian[0] != 0) {
-            $nextNumber = $antrian;
-        } elseif ($splitAntrian[1] != 0) {
-            $nextNumber = $splitAntrian[1] . $splitAntrian[2];
-        } elseif ($splitAntrian[2] != 0) {
-            $nextNumber = $splitAntrian[2];
-        } else {
-            return response()->json([
-                'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
-                'error' => true,
-            ], 422);
-        }
-
-        $codeService->CurrentQNo = $nextNumber;
+        $codeService->CurrentQNo = (int)$antrian;
         $updateCodeService = $codeService->save();
         if (!OriginCustomer::create($params) && !$updateCodeService) {
             return response()->json([
