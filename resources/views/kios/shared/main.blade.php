@@ -18,6 +18,7 @@
 
     <link href="{{ asset('css/kios.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/my-font.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
@@ -66,15 +67,15 @@
                             <div class="row">
                                 <div class="card-body">
                                     <div class="col-12 text-center pt-4">
-                                        <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
-                                            alt="Logo BRI"
+                                        <img onclick="reloadPage()" src="{{ asset('images/logo_white.png') }}"
+                                            class="object-fit-contain" alt="Logo BRI"
                                             style="max-width: 100%;
                                                 max-height: 100%;">
-
-                                        <h1 class="text-white" style="font-family: kapakana;">
+                                        <h2 class="text-white"> {{ $companyName }} </h2>
+                                        <h2 class="text-white" style="font-family: kapakana;">
                                             Melayani
                                             Dengan
-                                            Sepenuh Hati</h1>
+                                            Sepenuh Hati</h2>
                                         <hr style="color: #faa901; opacity: 100 !important">
                                         <h3 class="text-white">Silahkan Ambil Antrian</h3>
                                     </div>
@@ -82,7 +83,7 @@
                             </div>
 
                             <div class="h-100 scrollbar2"
-                                style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important; overflow: auto !important"
+                                style="padding-left: 20px !important; padding-right: 20px !important ; padding-bottom: 30px !important; height: 50vh !important; overflow: auto;"
                                 id="list_buttons">
                             </div>
                         </div>
@@ -145,6 +146,10 @@
             })
         });
 
+        function reloadPage() {
+            location.reload();
+        }
+
         function getBarcodeQueue(e) {
             console.log(e.value);
             $.ajax({
@@ -194,7 +199,7 @@
             if (listTextFooter.length == 0) return;
             if (listTextFooter[index] === undefined) return animate();
 
-            $('h1#animate_footer').text(listTextFooter[index].text);
+            $('h1#animate_footer').text(listTextFooter[index].text.toUpperCase());
             let elementWidth = element.offsetWidth;
             let parentWidth = element.parentElement.offsetWidth;
 

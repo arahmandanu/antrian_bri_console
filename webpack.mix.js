@@ -16,4 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/kios.scss', 'public/css')
     .postCss('resources/css/app.css', 'public/css', [
         //
+    ])
+    .postCss('resources/css/my-font.css', 'public/css', [
+        //
     ]).sourceMaps();
