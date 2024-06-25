@@ -223,6 +223,7 @@ class DashboardKiosController extends Controller
                             'UnitCall' => $request['unit_service'],
                             'code_trx' => $request['trx_param'],
                             'SLA_Trx' => $trxParam->Tservice,
+                            'is_queue_online' => false,
                         ];
                         $currentQue->CurrentQNo = $nextNumber;
                         $recordQueue = OriginCustomer::create($params);

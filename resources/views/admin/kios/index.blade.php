@@ -57,7 +57,7 @@
                                         @forelse ($Services as $item)
                                             <tr>
                                                 <td>{{ $item->TrxCode }}</td>
-                                                <td>{{ $item->UnitService == '01' ? 'Teller' : 'cs' }}</td>
+                                                <td>{{ $item->codeService->Name }}</td>
                                                 <td>{{ $item->TrxName }}</td>
                                                 <td>{{ $item->Tservice }}</td>
                                                 <td style="text-align: center">

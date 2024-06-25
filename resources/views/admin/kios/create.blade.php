@@ -45,8 +45,12 @@
                                         <div class="col-12">
                                             <label for="inputNanme4" class="form-label">Nama Unit</label>
                                             <select name="UnitService" class="form-select" required>
-                                                <option value="01">Teller</option>
-                                                <option value="02">CS</option>
+                                                @forelse ($codeServices as $item)
+                                                    <option value="{{ $item->Initial }}">{{ $item->Name }}</option>
+                                                @empty
+                                                    <option value="">Data Code kosong silahkan hubungi developer anda!
+                                                    </option>
+                                                @endforelse
                                             </select>
                                         </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Codeservice;
 use App\Models\TransactionParam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +58,9 @@ class KiosController extends Controller
      */
     public function create()
     {
-        return view('admin.kios.create');
+        return view('admin.kios.create', [
+            'codeServices' => Codeservice::all()
+        ]);
     }
 
     /**
@@ -95,7 +98,7 @@ class KiosController extends Controller
         $validated = Validator::make($request->all(), [
             'TrxCode' => 'required|string|max:4|unique:trxparam,TrxCode',
             'TrxName' => 'required|max:200',
-            'UnitService' => 'required|in:01,02',
+            'UnitService' => 'required|exists:codeservice,Initial',
             'Tservice' => 'required|integer',
         ])->validate();
 

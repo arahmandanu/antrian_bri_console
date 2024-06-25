@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\CodeServiceEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,18 +15,15 @@ class TransactionParam extends Model
 
     protected $primaryKey = 'TrxCode';
 
-    public $timestamps = false;
-
-    public const ENABLED_TRX = ['01', '02'];
 
     public function scopeshow(Builder $query): void
     {
         $query->where('displayed', true);
     }
 
-    public function scopeenabled(Builder $query): void
+    public function codeService()
     {
-        $query->WhereIn('UnitService', self::ENABLED_TRX);
+        return $this->belongsTo(Codeservice::class, 'UnitService', 'Initial');
     }
 
     protected $fillable = [
