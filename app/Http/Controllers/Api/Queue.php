@@ -24,41 +24,39 @@ class Queue extends Controller
         ];
 
         $currentTime = now();
-        $playSound = false;
         if ($request->input('id') && $request->input('type') && ($buttonActor = ButtonActor::where('user_button_code', '=', $request->input('id'))->first())) {
             $codeservice = $buttonActor->codeService;
             $currentCall = $buttonActor->last_queue_number;
 
             if (Str::lower($request->input('type')) == 'call') {
                 // check ada antrian tidak?
-                if (
-                    $codeservice->haveQueue() === true &&
-                    $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
-                    ->Call()
-                    ->limit(1)
-                    ->get()
-                    ->first()
+                if (($codeservice->haveQueue() === true) &&
+                    ($listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
+                        ->Call()
+                        ->limit(1)
+                        ->get()
+                        ->first())
                 ) {
                     //ada antrian dipanggil
                     $this->insertReport($buttonActor, $currentTime);
                     $this->createAntrian($listQueue, $buttonActor, $codeservice, $currentTime);
                     $currentCall = $listQueue->SeqNumber;
-                    $playSound = true;
+                    (new SoundCallService($listQueue, $buttonActor))->playSound();
                 } else {
                     $this->insertReport($buttonActor, $currentTime);
                 }
-            } else if (
-                Str::lower($request->input('type')) == 'recall' && $listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
-                ->where('SeqNumber', '=', $currentCall)
-                ->limit(1)
-                ->first()
+            } else if ((Str::lower($request->input('type')) == 'recall') &&
+                ($listQueue = OriginCustomer::where('UnitServe', '=', $buttonActor->unit_service)
+                    ->where('SeqNumber', '=', $currentCall)
+                    ->limit(1)
+                    ->first())
             ) {
                 TempCallWeb::create([
                     'Counter' => $buttonActor->counter_number,
                     'Unit' => $codeservice->Initial,
                     'SeqNumber' => $listQueue->SeqNumber,
                 ]);
-                $playSound = true;
+                (new SoundCallService($listQueue, $buttonActor))->playSound();
             }
 
             $status = 200;
@@ -68,10 +66,6 @@ class Queue extends Controller
                 'sisa_antrian' => $codeservice->sisaAntrian(),
                 'current_call_antrian' => $currentCall,
             ];
-
-            if ($playSound) {
-                (new SoundCallService($listQueue, $buttonActor))->playSound();
-            }
         }
 
         return response($data, $status);
