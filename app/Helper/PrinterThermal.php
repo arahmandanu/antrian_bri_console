@@ -12,12 +12,12 @@ trait PrinterThermal
     public function execPrint($currentTime, $descTransaction, $unitNextNumber, Properties $properties)
     {
         $usePrinter = env('PRINTER_ENABLED', true);
-        if (! $usePrinter) {
+        if (!$usePrinter) {
             return 'success';
         }
 
         try {
-            $connector = new WindowsPrintConnector($properties->printer_name);
+            $connector = new WindowsPrintConnector('POS-76C');
             $printer = new Printer($connector);
 
             $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
@@ -54,8 +54,10 @@ trait PrinterThermal
 
             $printer->cut();
             $printer->close();
+
             $status = 'success';
-        } catch (\Exception|\TypeError|\Throwable|\ErrorException $e) {
+        } catch (\Exception | \TypeError | \Throwable | \ErrorException $e) {
+            dd($e);
             $status = $e->getMessage();
         }
 

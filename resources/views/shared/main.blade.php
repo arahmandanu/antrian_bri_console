@@ -73,7 +73,7 @@
                                         <div class="col-md-12" id="parent-container-video" data_type="image">
                                             <div
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <img class="object-fit-contain" id="myImage"
+                                                <img class="d-block w-100 img-fluid object-fit-fill" id="myImage"
                                                     src="{{ asset("iklan_image/$item") }}">
 
                                                 unsupported video! {{ $item }}
@@ -86,7 +86,7 @@
                                         <div class="col-md-12" id="parent-container-video" data_type="image">
                                             <div
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
-                                                <img class="object-fit-contain" id="myImage"
+                                                <img class="d-block w-100 img-fluid object-fit-fill" id="myImage"
                                                     src="{{ asset("iklan_image/$item") }}">
 
                                                 unsupported video! {{ $item }}
@@ -474,6 +474,7 @@
     ])
 
     <script>
+        var onCallQueue = false;
         var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};
         var interva_auto_sync_report = {{ env('INTERVAL_AUTO_SYNC_REPORT', 100000) }};
         var timeoutAjax = {{ env('TIMEOUT_AJAX', 100000) }};
@@ -520,7 +521,7 @@
                 data: {},
                 dataType: "json",
                 success: function(data, status, xhr) {
-                    console.log(xhr.status, data)
+                    // console.log(xhr.status, data)
                 },
                 timeout: timeoutAjax
             });
@@ -578,6 +579,7 @@
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
                         if (data.queue === null) {} else {
+                            onCallQueue = true;
                             show_next_queue(data.queue);
                         }
                     } else {
@@ -589,6 +591,33 @@
         }
 
         function show_next_queue(record) {
+            var iklan = $('div#corousel_iklan_parent').find('div.active');
+            if (iklan) {
+                var a = iklan.children(":first");
+                if (a.attr('data_type') === 'video') {
+                    video = a.find('video');
+                    if (video) {
+                        video.prop("volume", 0.0);
+
+                        setTimeout(() => {
+                            var afterIklan = $('div#corousel_iklan_parent').find('div.active');
+                            if (afterIklan) {
+                                var b = afterIklan.children(":first");
+                                if (b.attr('data_type') === 'video') {
+                                    afterIklanVideo = b.find('video');
+                                    if (afterIklanVideo) {
+                                        afterIklanVideo.prop("volume", 0.2);
+                                    }
+                                }
+                            }
+
+                            onCallQueue = false;
+                        }, 10000)
+                    }
+
+                }
+            }
+
             function change(elem, value) {
                 elem.fadeOut(function() {
                     if (value.trim() == '-') {
@@ -627,11 +656,14 @@
             function play_videos($el) {
                 local_video = $el.getElementsByTagName('video');
                 local_video[0].muted = false;
+
+                if (onCallQueue === true) {
+                    local_video[0].volume = 0.0;
+                } else {
+                    local_video[0].volume = 0.2;
+                }
                 local_video[0].play();
 
-                setTimeout(() => {
-                    local_video[0].volume = 0.5;
-                }, 1000)
 
                 local_video[0].addEventListener('ended', function handler(e) {
                     setTimeout(() => {
@@ -645,7 +677,7 @@
             function play_images($el) {
                 setTimeout(() => {
                     init_iklan_video(index + 1, true);
-                }, 5000)
+                }, 20000)
             }
 
             if (next) carouselExampleControlsIklan.carousel('next');

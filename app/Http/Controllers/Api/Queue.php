@@ -122,7 +122,8 @@ class Queue extends Controller
         $timeCall = Carbon::createFromFormat('H:i:s', $oldQueue->TimeCall);
         $timeService = gmdate('H:i:s', $timeCall->diffInSeconds($currentTime));
         $timeOverSla = '00:00:00';
-        if ($oldQueue->transactionParam->Tservice != '00:00:00') {
+        $Tservice = $oldQueue->transactionParam ? $oldQueue->transactionParam->Tservice : '00:00:00';
+        if ($Tservice != '00:00:00') {
             // mainkan secondnya selalu force beginning date
             $startDate = $currentTime->copy()->startOfDay();
             $slaTime = Carbon::createFromFormat('H:i:s', $oldQueue->transactionParam->Tservice);
@@ -148,7 +149,7 @@ class Queue extends Controller
             'TimeEnd' => $currentTime->format('H:i:s'),
             'Tservice' => $timeService,
             'TWservice' => '00:00:00',
-            'TSLAservice' => $oldQueue->transactionParam->Tservice,
+            'TSLAservice' => $Tservice,
             'TOverSLA' => $timeOverSla,
         ];
 
