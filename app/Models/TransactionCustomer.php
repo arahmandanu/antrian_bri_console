@@ -35,5 +35,6 @@ class TransactionCustomer extends Model
         'TWservice',
         'TSLAservice',
         'TOverSLA',
+        'is_queue_online'
     ];
 }

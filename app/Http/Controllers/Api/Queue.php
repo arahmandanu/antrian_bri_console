@@ -151,6 +151,7 @@ class Queue extends Controller
             'TWservice' => '00:00:00',
             'TSLAservice' => $Tservice,
             'TOverSLA' => $timeOverSla,
+            'is_queue_online' => $oldQueue->is_queue_online
         ];
 
         TransactionCustomer::create($params);

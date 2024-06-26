@@ -53,7 +53,7 @@ trait AutoSync
             'currentTime' => $formatedTime,
             'last_queue_number' => $lastQueueNumber
         ];
-
+        dd($data);
         $url2 = $url . '/api/get_number_queue';
         try {
             $response = Http::connectTimeout(1)

@@ -208,6 +208,7 @@ class DashboardKiosController extends Controller
         $currentTime = now();
         // Use Online First
         $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime, $currentQue->last_queue);
+
         if ($responseFromServer[0] == true) {
             // Todo adjust to get pure queue number
             $nextNumber = $responseFromServer[1];
