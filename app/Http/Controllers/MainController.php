@@ -120,7 +120,6 @@ class MainController extends Controller
         // if ($enabler == true) {
         //     $path = base_path('call_console.php');
         //     // exec("php $path", $test);
-        //     // dd($test);
         //     pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
         //     $message = 'Console berhasil di jalankan!';
         // }

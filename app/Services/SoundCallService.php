@@ -146,8 +146,11 @@ class SoundCallService
 
     private function initiateSound($sounds)
     {
-        foreach ($sounds as $key => $value) {
-            exec('powershell -c (New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
+        $newCommanLine = [];
+        foreach ($sounds as $value) {
+            array_push($newCommanLine, '(New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
         }
+
+        exec('powershell -c ' . join(' ', $newCommanLine));
     }
 }

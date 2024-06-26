@@ -57,7 +57,6 @@ trait PrinterThermal
 
             $status = 'success';
         } catch (\Exception | \TypeError | \Throwable | \ErrorException $e) {
-            dd($e);
             $status = $e->getMessage();
         }
 
