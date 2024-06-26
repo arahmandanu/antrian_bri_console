@@ -21,8 +21,9 @@ class ReportController extends Controller
             return redirect()->route('ConsoleIndexReport');
         }
 
-        $transactions = TransactionCustomer::select('transactioncust.*', 'trxparam.*')
+        $transactions = TransactionCustomer::select('transactioncust.*', 'trxparam.*', 'codeservice.Name as unit_service_name')
             ->leftJoin('trxparam', 'transactioncust.TrxDesc', '=', 'trxparam.TrxCode')
+            ->leftJoin('codeservice', 'transactioncust.UnitServe', '=', 'codeservice.Initial')
             ->when($queryDate, function ($query, $queryDate) {
                 $query->whereBetween('BaseDt', [$queryDate[0]->isoFormat('OYMMDD'), $queryDate[1]->isoFormat('OYMMDD')]);
             })
@@ -43,7 +44,7 @@ class ReportController extends Controller
 
         return view('admin.report.index', [
             'transactions' => $transactions,
-            'transactionType' => TransactionParam::all(),
+            'transactionType' => TransactionParam::orderBy('UnitService', 'asc')->get(),
         ]);
     }
 

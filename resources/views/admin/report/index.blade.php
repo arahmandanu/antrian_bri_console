@@ -36,7 +36,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Reports</h5>
+                                <h5 class="card-title">Reports <span>/ Antrian</span></h5>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,8 @@
                     <!-- Welcome -->
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body p-1">
+
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Filter</h5>
@@ -59,14 +60,14 @@
                                                     id="dateRange" value="{{ old('datetimes') }}">
                                             </div>
 
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="inputState" class="form-label">Tipe Transaksi</label>
                                                 <select id="inputState" class="form-select" name="trx_param">
                                                     <option></option>
                                                     @forelse ($transactionType as $item)
                                                         <option value="{{ $item->TrxCode }}"
                                                             @if (old('trx_param') == $item->TrxCode) selected @endif>
-                                                            {{ Str::upper($item->TrxName) }}
+                                                            {{ $item->codeService->Name . ' | ' . Str::upper($item->TrxName) }}
                                                         </option>
                                                     @empty
                                                         <option selected>KOSONG</option>
@@ -93,53 +94,55 @@
                                         <!-- End Multi Columns Form -->
                                     </div>
                                 </div>
-                                <hr>
-                                <table class="table table-hover" id="report-admin">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>No Antrian</th>
-                                            <th>Unit</th>
-                                            <th>No Counter</th>
-                                            <th>Tipe Antrian</th>
-                                            <th>User</th>
-                                            <th>Jam Antrian Masuk</th>
-                                            <th>Jam Antrian Dipanggil</th>
-                                            <th>Lama Customer Menunggu</th>
-                                            <th>Over SLA</th>
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        @forelse ($transactions as $transaction)
+                                <hr>
+
+                                <div class="card">
+                                    <table class="table table-hover table-striped" id="report-admin"
+                                        style="overflow-x: auto !important">
+                                        <thead>
                                             <tr>
-                                                <td> {{ $transaction->BaseDt ?? '-' }}</td>
-                                                <td> {{ $transaction->SeqNumber ?? '-' }}</td>
-                                                <td> {{ $transaction->UnitServe ?? '-' }}</td>
-                                                <td> {{ $transaction->CounterNo ?? '-' }}</td>
-                                                <td> {{ $transaction->TrxName ?? '-' }}</td>
-                                                <td> {{ $transaction->UserId ?? '-' }}</td>
-                                                <td> {{ $transaction->TimeTicket ?? '-' }}</td>
-                                                <td> {{ $transaction->TimeCall ?? '-' }}</td>
-                                                <td> {{ $transaction->CustWaitDuration ?? '-' }}</td>
-                                                <td>
-                                                    <?php
-                                                    $data = $transaction->TOverSLA ?? '00:00:00';
-                                                    if ($data == '00:00:00') {
-                                                        echo "<span class='badge bg-success'>$data</span>";
-                                                    } else {
-                                                        echo "<span class='badge bg-danger'>$data</span>";
-                                                    }
-                                                    ?>
-                                                </td>
+                                                <th>Tanggal</th>
+                                                <th>No Antrian</th>
+                                                <th>Unit</th>
+                                                <th>Konter</th>
+                                                <th>Tipe Antrian</th>
+                                                <th>User</th>
+                                                <th>Antrian Masuk</th>
+                                                <th>Antrian Dipanggil</th>
+                                                <th>Lama Customer Menunggu</th>
+                                                <th>SLA</th>
                                             </tr>
-                                        @empty
-                                            {{-- <tr>
-                                                <td>No Data Available</td>
-                                            </tr> --}}
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                            @forelse ($transactions as $transaction)
+                                                <tr>
+                                                    <td> {{ $transaction->BaseDt ?? '-' }}</td>
+                                                    <td> {{ $transaction->SeqNumber ?? '-' }}</td>
+                                                    <td> {{ $transaction->unit_service_name ?? '-' }}</td>
+                                                    <td> {{ $transaction->CounterNo ?? '-' }}</td>
+                                                    <td> {{ $transaction->TrxName ?? '-' }}</td>
+                                                    <td> {{ $transaction->UserId ?? '-' }}</td>
+                                                    <td> {{ $transaction->TimeTicket ?? '-' }}</td>
+                                                    <td> {{ $transaction->TimeCall ?? '-' }}</td>
+                                                    <td> {{ $transaction->CustWaitDuration ?? '-' }}</td>
+                                                    <td>
+                                                        <?php
+                                                        $data = $transaction->TOverSLA ?? '00:00:00';
+                                                        if ($data == '00:00:00') {
+                                                            echo "<span class='badge bg-success'>$data</span>";
+                                                        } else {
+                                                            echo "<span class='badge bg-danger'>$data</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>

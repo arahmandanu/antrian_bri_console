@@ -25,6 +25,7 @@ class ButtonActorController extends Controller
                 'total_antrian' => $codeservice->CurrentQNo,
                 'sisa_antrian' => $codeservice->sisaAntrian(),
                 'current_call_antrian' => $currentCall,
+                'konter' => $buttonActor->counter_number
             ];
         }
 

@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex h-100">
     <div id="showLoading"
         style="width: 100%; height: 100%; text-align: center; align-content: space-around; display: none !important"
         class="text-center">
