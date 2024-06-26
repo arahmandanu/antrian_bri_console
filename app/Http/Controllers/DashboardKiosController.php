@@ -136,7 +136,6 @@ class DashboardKiosController extends Controller
             'SLA_Trx' => $trxParamService,
             'is_queue_online' => true,
         ];
-
         $codeService->CurrentQNo = (int) $antrian;
         $updateCodeService = $codeService->save();
         if (!OriginCustomer::create($params) && !$updateCodeService) {
