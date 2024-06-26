@@ -207,7 +207,7 @@ class DashboardKiosController extends Controller
         $trxParam = TransactionParam::where('TrxCode', '=', $request['trx_param'])->first();
         $currentTime = now();
         // Use Online First
-        $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime);
+        $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime, $currentQue->last_queue);
         if ($responseFromServer[0] == true) {
             // Todo adjust to get pure queue number
             $nextNumber = $responseFromServer[1];
