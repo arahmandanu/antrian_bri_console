@@ -664,7 +664,6 @@
                 }
                 local_video[0].play();
 
-
                 local_video[0].addEventListener('ended', function handler(e) {
                     setTimeout(() => {
                         local_video[0].removeEventListener(e.type, handler);

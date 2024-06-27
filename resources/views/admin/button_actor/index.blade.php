@@ -31,7 +31,7 @@
                                     <thead>
                                         <tr>
                                             <th>Kode Unit</th>
-                                            <th width='11%'>Nomor Tombol</th>
+                                            <th width='11%'>Nomor Konter</th>
                                             <th>Nama User</th>
                                             <th>Kode Tombol</th>
                                             <th width='13%'>Aksi</th>
