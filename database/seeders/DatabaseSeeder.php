@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             FontColorSeeder::class,
             CreateCodeServiceData::class,
             SeedTrxParamsData::class,
+            AddCurrency::class
         ]);
     }
 }
