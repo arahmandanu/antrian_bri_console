@@ -74,10 +74,17 @@ class DashboardKiosController extends Controller
             ], 422);
         }
 
-        // // validate Date or online to local company
-        if (empty($properties) || $properties->company_code != $companyId || $currentTime->format('dmY') !== $date) {
+        if (empty($properties) || $properties->company_code != $companyId) {
             return response()->json([
-                'message' => 'Cabang unit / tanggal tidak sesuai, silahkan ambil antrian baru!',
+                'message' => 'Cabang unit tidak sesuai, silahkan ambil antrian baru!',
+                'error' => true,
+            ], 422);
+        }
+
+        // validate Date or online to local company
+        if ($currentTime->format('dmY') !== $date) {
+            return response()->json([
+                'message' => 'Tanggal antrian sudah terlewati, silahkan ambil antrian baru!',
                 'error' => true,
             ], 422);
         }
