@@ -109,7 +109,7 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/tombol*') ? '' : 'collapsed' }}" data-bs-target="#tombol-nav"
                 data-bs-toggle="collapse" href="#">
-                <i class="bx bxs-keyboard"></i><span>Master Tombol</span><i class="bi menu-button-fill"></i>
+                <i class="bx bxs-keyboard"></i><span>Master Tombol</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
             <ul id="tombol-nav" class="nav-content collapse {{ request()->is('admin/tombol*') ? 'show' : '' }}"

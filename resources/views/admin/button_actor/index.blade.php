@@ -31,8 +31,8 @@
                                     <thead>
                                         <tr>
                                             <th>Kode Unit</th>
-                                            <th width='11%'>Nomor Konter</th>
                                             <th>Nama User</th>
+                                            <th width='11%'>Nomor Konter</th>
                                             <th>Kode Tombol</th>
                                             <th width='13%'>Aksi</th>
                                         </tr>
@@ -42,8 +42,8 @@
                                         @forelse ($buttonActors as $item)
                                             <tr>
                                                 <td>{{ $item->codeService->Name }}</td>
-                                                <td>{{ $item->counter_number }}</td>
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->counter_number }}</td>
                                                 <td>{{ $item->user_button_code }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group"
