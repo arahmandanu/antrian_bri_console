@@ -77,6 +77,8 @@ class DashboardMainConsoleCheck
             } else {
                 if ($properties->company_name != $data['company_name'] || $properties->company_code != $data['company_code']) return false;
             }
+        } else {
+            return false;
         }
 
         return true;
