@@ -46,7 +46,7 @@ Route::prefix('/kios')->group(function () {
     Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->name('DashboardKiosPrintOnlineQueue');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:web']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainConsoleCheck']], function () {
     Route::group(['middleware' => ['islogin?']], function () {
         Route::get('/login', [AuthController::class, 'index'])->withoutMiddleware('auth:web')->name('ShowAdminLoginPage');
         Route::post('/verify', [AuthController::class, 'verify'])->withoutMiddleware('auth:web')->name('VerifyLoginAccount');

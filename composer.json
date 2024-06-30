@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "mike42/escpos-php": "^4.0",
-        "rawilk/laravel-printing": "^3.0"
+        "rawilk/laravel-printing": "^3.0",
+        "starekrow/lockbox": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

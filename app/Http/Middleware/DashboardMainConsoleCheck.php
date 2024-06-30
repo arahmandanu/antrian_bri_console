@@ -5,10 +5,14 @@ namespace App\Http\Middleware;
 use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use App\Models\OriginCustomer;
+use App\Models\Properties;
 use App\Models\StatConsole;
 use App\Models\TempCallWeb;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use starekrow\Lockbox\CryptoKey;
 
 class DashboardMainConsoleCheck
 {
@@ -20,6 +24,23 @@ class DashboardMainConsoleCheck
      */
     public function handle(Request $request, Closure $next)
     {
+        try {
+            $key = CryptoKey::Import(file_get_contents("key.txt"));
+            $ciphertext = file_get_contents("cipher.txt");
+            $message = $key->Unlock($ciphertext);
+            $registered = json_decode($message, true);
+            if (empty($registered['company_name']) || empty($registered['company_code'])) return $this->out();
+
+            $configuration = config("site.valid");
+            config(['site' => $configuration]);
+            $validated = $this->isCompanyValid($registered);
+        } catch (\Throwable | \Exception | \ErrorException  $th) {
+            $configuration = config("site.invalid");
+            config(['site' => $configuration]);
+            $validated = $this->isCompanyValid(null);
+        }
+        if (!$validated) return $this->out();
+
         $data = StatConsole::first();
         if (empty($data)) {
             $this->initiateTable();
@@ -33,6 +54,32 @@ class DashboardMainConsoleCheck
         $this->fillTodayStat($data);
 
         return $next($request);
+    }
+
+    private function out()
+    {
+        return response()->view('errors.subscribe');
+    }
+
+    private function isCompanyValid($data)
+    {
+        if (config('site.allowed')) {
+            if (empty($properties = Properties::first())) {
+                Properties::create([
+                    'company_name' => $data['company_name'],
+                    'company_code' => $data['company_code'],
+                    'show_product' => true,
+                    'show_currency' => true,
+                    'footer_flow' => 'left',
+                    'footer_flow_kios' => 'left',
+                    'printer_name' => null,
+                ]);
+            } else {
+                if ($properties->company_name != $data['company_name'] || $properties->company_code != $data['company_code']) return false;
+            }
+        }
+
+        return true;
     }
 
     private function fillTodayStat($stat)
