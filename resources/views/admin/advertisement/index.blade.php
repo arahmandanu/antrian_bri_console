@@ -25,22 +25,22 @@
                             <div class="card-body">
                                 <h5 class="card-title">Daftar <span>Iklan Gambar</span></h5>
                                 <a type="button" class="btn btn-success btn-lg"
-                                   href="{{ route('ConsoleCreateCurrency') }}">
+                                    href="{{ route('ConsoleCreateCurrency') }}">
                                     <i class="bx bx-list-plus"></i> Tambah Iklan</a>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
                                     <thead>
-                                    <tr>
-                                        <th width='5%'>Bendera</th>
-                                        <th width='15%'>Kurs</th>
-                                        <th width='15%'>Jual</th>
-                                        <th width='15%'>Beli</th>
-                                        <th width='15%'>Jual</th>
-                                        <th width='15%'>Beli</th>
-                                        <th width='10%'>Show</th>
-                                        <th width='10%'>Aksi</th>
-                                    </tr>
+                                        <tr>
+                                            <th width='5%'>Bendera</th>
+                                            <th width='15%'>Kurs</th>
+                                            <th width='15%'>Jual</th>
+                                            <th width='15%'>Beli</th>
+                                            <th width='15%'>Jual</th>
+                                            <th width='15%'>Beli</th>
+                                            <th width='10%'>Show</th>
+                                            <th width='10%'>Aksi</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -55,6 +55,5 @@
         </div>
     </section>
 
-    <script>
-    </script>
+    <script></script>
 @endsection

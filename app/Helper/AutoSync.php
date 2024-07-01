@@ -74,15 +74,13 @@ trait AutoSync
 
     public function syncReportToServer(Properties $properties)
     {
-        $message = 'failed to sync';
-        $success = false;
-        $status = 422;
-        $url = env('ONLINE_APP_URL', '');
-        $onlineApp = env('ONLINE_APP', false);
+        $message = 'Synced Disabled!';
+        $success = true;
+        $status = 200;
+        $url = config('site.urlOnlineApp', '');
+        $onlineApp = config('site.onlineApp', false);
+        if (empty($url) || empty($properties->company_code) || !$onlineApp) return [$success, ['message' => $message, 'url' => $url, 'statusOnline' => $onlineApp], $status];
 
-        if (empty($url) || empty($properties->company_code) || !$onlineApp) {
-            return [$success, $message, $status];
-        }
         $currentTime = now()->format('Ymd');
         $reports = TransactionCustomer::where('BaseDt', '=', $currentTime)->notSynced()->limit(5);
         $result = $reports->get();
@@ -102,6 +100,9 @@ trait AutoSync
                     $reports->update(['synced' => 'Y']);
                 }
             } catch (\Throwable $th) {
+                $success = true;
+                $message = $th->getMessage();
+                $status = 422;
             }
         } else {
             $success = true;

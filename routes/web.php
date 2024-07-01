@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\DashboardKiosController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TempCallWebController;
+use App\Models\Properties;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/tes', function () {
+    dd($_ENV);
+});
 Route::get('/', [MainController::class, 'index'])->middleware('DashboardMainConsoleCheck')->name('ShowConsoleIndex');
 Route::get('/close_console', [MainController::class, 'closeConsole'])->name('CloseConsole');
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
@@ -86,12 +90,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainCo
     Route::prefix('properties')->group(function () {
         Route::get('/index', [PropertiesController::class, 'index'])->name('ConsoleIndexProperties');
         Route::post('/store', [PropertiesController::class, 'store'])->name('ConsoleStoreProperties');
-
-        Route::get('/create', [CurrencyController::class, 'create'])->name('ConsoleCreateCurrency');
-        Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
-        Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
-        Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');
-
         Route::prefix('footer_text')->group(function () {
             Route::get('/index', [FooterTextController::class, 'index'])->name('ConsoleIndexFooterText');
             Route::get('/create', [FooterTextController::class, 'create'])->name('ConsoleCreateFooterText');

@@ -49,7 +49,7 @@ class CurrencyController extends Controller
         ])->validate();
 
         $images = $request->flag;
-        $imageName = time().'.'.$images->extension();
+        $imageName = time() . '.' . $images->extension();
 
         try {
             $url_path = $images->move(Currency::FLAG_PATH, $imageName);
