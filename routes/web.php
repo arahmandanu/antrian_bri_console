@@ -46,8 +46,8 @@ Route::prefix('/kios')->group(function () {
     Route::get('/menu_main_index', [DashboardKiosController::class, 'menuMainIndex'])->name('DashboardKiosMenuMainIndex');
     Route::get('/teller', [DashboardKiosController::class, 'menuTeller'])->name('DashboardKiosTeller');
     Route::get('/cs', [DashboardKiosController::class, 'menucs'])->name('DashboardKiosCs');
-    Route::post('/create_antrian', [DashboardKiosController::class, 'createAntrian'])->name('DashboardKiosCreateAntrianTeller');
-    Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->name('DashboardKiosPrintOnlineQueue');
+    Route::post('/create_antrian', [DashboardKiosController::class, 'createAntrian'])->middleware('json.only')->name('DashboardKiosCreateAntrianTeller');
+    Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->middleware('json.only')->name('DashboardKiosPrintOnlineQueue');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainConsoleCheck']], function () {

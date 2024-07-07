@@ -23,7 +23,12 @@ class DashboardKiosController extends Controller
      */
     public function index()
     {
-        $listKios = scandir(public_path('/iklan_kios'));
+        $dirIklan = public_path('/iklan_kios');
+        if (!is_dir($dirIklan)) {
+            mkdir($dirIklan, 0777, true);
+        }
+
+        $listKios = scandir($dirIklan);
         $gambar = [];
         foreach ($listKios as $key => $value) {
             $title = explode('.', $value);
@@ -51,28 +56,28 @@ class DashboardKiosController extends Controller
 
     public function printOnlineQueue(Request $request)
     {
-        if (!$request->wantsJson() || empty($request->input('data'))) {
+        if (empty($barcode = $request->input('data'))) {
             return response()->json([
                 'message' => 'Failed request!',
                 'error' => true,
             ], 405);
         }
 
-        $barcode = $request->input('data');
         $date = substr($barcode, 0, 8);
         $companyId = substr($barcode, 8, 5);
         $unitService = substr($barcode, 13, 1);
         $antrian = substr($barcode, 14, 3);
         $barcodeUnit = substr($barcode, 17, 4);
-        $currentTime = now();
-        $properties = Properties::first();
 
         if ((int) $antrian == 0) {
             return response()->json([
-                'message' => 'Nomor antrian sudah expired, silahkan ambil nomor antrian baru!',
+                'message' => 'Nomor antrian tidak valid, silahkan ambil nomor antrian baru!',
                 'error' => true,
             ], 422);
         }
+
+        $currentTime = now();
+        $properties = Properties::first();
 
         if (empty($properties) || $properties->company_code != $companyId) {
             return response()->json([
@@ -84,7 +89,7 @@ class DashboardKiosController extends Controller
         // validate Date or online to local company
         if ($currentTime->format('dmY') !== $date) {
             return response()->json([
-                'message' => 'Tanggal antrian sudah terlewati, silahkan ambil antrian baru!',
+                'message' => 'Tanggal antrian sudah terlewati atau tidak sesuai, silahkan ambil antrian baru!',
                 'error' => true,
             ], 422);
         }
@@ -106,23 +111,14 @@ class DashboardKiosController extends Controller
             ], 422);
         }
 
-        $trxParam = null;
         if (empty($barcodeUnit)) {
-            $trxParam = TransactionParam::where('UnitService', '=', $unitService)->first();
-            if ($trxParam) {
-                $trxParamCode = $trxParam->TrxCode;
-                $trxParamService = $trxParam->Tservice;
-            }
-        }
-
-        if (empty($trxParam)) {
-            $trxParam = TransactionParam::where('TrxCode', '=', $barcodeUnit)->first();
+            $trxParam = TransactionParam::where('UnitService', '=', $unitService)->first() ?? TransactionParam::where('TrxCode', '=', $barcodeUnit)->first();
             if (empty($trxParam)) {
                 $trxParamCode = $barcodeUnit;
                 $trxParamService = '00:00:00';
             } else {
                 $trxParamCode = $trxParam->TrxCode;
-                $trxParamService = $trxParam->Tservice;
+                $trxParamService = $trxParam->Tservice ?? '00:00:00';
             }
         }
 
@@ -172,38 +168,26 @@ class DashboardKiosController extends Controller
 
     public function createAntrian(Request $request)
     {
-        if (!$request->wantsJson()) {
-            return response()->json([
-                'message' => 'Pastikan printer siap digunakan!',
-                'error' => true,
-            ], 503);
-        }
-
         Validator::make($request->all(), [
             'trx_param' => 'required|exists:trxparam,TrxCode',
             'unit_service' => 'required|in:A,B',
         ])->validate();
 
-        $properties = Properties::first();
-        if (!$properties) {
+        if (empty($properties = Properties::first())) {
             return response()->json([
                 'message' => 'Pastikan printer siap digunakan!',
                 'error' => true,
             ], 503);
         }
 
-        $usePrinter = env('PRINTER_ENABLED', true);
-        if ($usePrinter) {
-            if ($properties->printer_name == null) {
-                return response()->json([
-                    'message' => 'Pastikan printer siap digunakan!',
-                    'error' => true,
-                ], 503);
-            }
+        if (env('PRINTER_ENABLED', true) && $properties->printer_name == null) {
+            return response()->json([
+                'message' => 'Pastikan printer siap digunakan!',
+                'error' => true,
+            ], 503);
         }
 
-        $currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first();
-        if (empty($currentQue)) {
+        if (empty($currentQue = Codeservice::where('Initial', '=', $request['unit_service'])->first())) {
             return response()->json([
                 'message' => 'Unit service not found!',
                 'error' => true,
@@ -214,7 +198,6 @@ class DashboardKiosController extends Controller
         $currentTime = now();
         // Use Online First
         $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime, $currentQue->last_queue);
-
         if ($responseFromServer[0] == true) {
             // Todo adjust to get pure queue number
             $nextNumber = $responseFromServer[1];

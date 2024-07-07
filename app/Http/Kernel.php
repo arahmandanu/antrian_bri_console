@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\DashboardMainConsoleCheck;
 use App\Http\Middleware\IsAlreadyLogin;
+use App\Http\Middleware\OnlyJson;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'islogin?' => IsAlreadyLogin::class,
         'DashboardMainConsoleCheck' => DashboardMainConsoleCheck::class,
+        'json.only' => OnlyJson::class
     ];
 }
