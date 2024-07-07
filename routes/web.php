@@ -28,9 +28,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/tes', function () {
-    dd($_ENV);
-});
 Route::get('/', [MainController::class, 'index'])->middleware('DashboardMainConsoleCheck')->name('ShowConsoleIndex');
 Route::get('/close_console', [MainController::class, 'closeConsole'])->name('CloseConsole');
 Route::get('/videos_list', [MainController::class, 'videosList'])->name('ShowListVideoConsole');
