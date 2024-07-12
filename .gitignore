@@ -19,3 +19,7 @@ yarn-error.log
 
 /public/cipher.txt
 /public/key.txt
+
+
+cipher.txt
+key.txt

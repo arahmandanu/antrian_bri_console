@@ -20,3 +20,7 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/my-font.css', 'public/css', [
         //
     ]).sourceMaps();
+// copy custom font
+mix.copyDirectory('resources/my_font', 'public/my_font');
+mix.setPublicPath('public');
+mix.setResourceRoot('../');
