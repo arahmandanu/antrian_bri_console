@@ -75,7 +75,10 @@ class DashboardMainConsoleCheck
                     'printer_name' => null,
                 ]);
             } else {
-                if ($properties->company_name != $data['company_name'] || $properties->company_code != $data['company_code']) return false;
+                $properties->update([
+                    'company_name' => $data['company_name'],
+                    'company_code' => $data['company_code']
+                ]);
             }
         } else {
             return false;

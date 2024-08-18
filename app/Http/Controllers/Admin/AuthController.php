@@ -41,7 +41,7 @@ class AuthController extends Controller
     {
         return view('admin.dashboard.index', [
             'current' => Codeservice::whereIn('Initial', ['A', 'B'])->get(),
-            'onQueue' => OriginCustomer::where('Flag', '=', 'P')->count(),
+            'onQueue' => OriginCustomer::where('Flag', '=', 'P')->whereDate('created_at', now())->count(),
         ]);
     }
 

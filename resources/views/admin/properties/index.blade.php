@@ -37,7 +37,7 @@
                                         <div class="form-floating">
                                             <input required type="text" class="form-control" id="floatingName"
                                                 placeholder="Nama Perusahaan" value="{{ $settings->company_name ?? '' }}"
-                                                name="company_name">
+                                                name="company_name" disabled>
                                             <label for="floatingName">Nama Cabang / Unit</label>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                         <div class="form-floating">
                                             <input required type="text" class="form-control" id="floatingEmail"
                                                 placeholder="Kode Perusahaan" value="{{ $settings->company_code ?? '' }}"
-                                                name="company_code">
+                                                name="company_code" disabled>
                                             <label for="floatingEmail">Kode Cabang / Unit</label>
                                         </div>
                                     </div>
