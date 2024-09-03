@@ -574,7 +574,12 @@
             $.ajax({
                 type: "GET",
                 url: "{{ route('GetNextQueueTempCallWeb') }}",
-                data: {},
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
                 dataType: "json",
                 success: function(data, status, xhr) {
                     if (xhr.status == 200) {
@@ -585,8 +590,7 @@
                     } else {
                         console.log('error please contact your admin');
                     }
-                },
-                timeout: timeoutAjax
+                }
             });
         }
 
@@ -597,7 +601,7 @@
                 if (a.attr('data_type') === 'video') {
                     video = a.find('video');
                     if (video) {
-                        video.prop("volume", 0.0);
+                        video.prop("volume", 0.1);
 
                         setTimeout(() => {
                             var afterIklan = $('div#corousel_iklan_parent').find('div.active');
@@ -606,7 +610,7 @@
                                 if (b.attr('data_type') === 'video') {
                                     afterIklanVideo = b.find('video');
                                     if (afterIklanVideo) {
-                                        afterIklanVideo.prop("volume", 0.2);
+                                        afterIklanVideo.prop("volume", 0.1);
                                     }
                                 }
                             }
@@ -660,7 +664,7 @@
                 if (onCallQueue === true) {
                     local_video[0].volume = 0.0;
                 } else {
-                    local_video[0].volume = 0.2;
+                    local_video[0].volume = 0.1;
                 }
                 local_video[0].play();
 

@@ -60,7 +60,7 @@ class MainController extends Controller
             $data['currencies'] = Currency::show()->get();
         }
 
-        $listQueues = TempCallWeb::listNewest()->take(3)->get();
+        $listQueues = TempCallWeb::doneCalled()->listNewest()->take(3)->get();
         $datalistQueues = [];
         foreach ($listQueues as $key => $queue) {
             array_push($datalistQueues, $queue);

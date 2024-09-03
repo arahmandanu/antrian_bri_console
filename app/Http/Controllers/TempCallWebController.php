@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ButtonActor;
 use App\Models\Codeservice;
+use App\Models\OriginCustomer;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
+use App\Services\SoundCallService;
 
 class TempCallWebController extends Controller
 {
@@ -21,16 +24,33 @@ class TempCallWebController extends Controller
     public function nextQueue()
     {
         $data = null;
-        $queue = TempCallWeb::listNewest()->take(1)->get()->first();
-        if ($queue) {
-            if ($queue->Tampil == 'n') {
-                $data = $queue;
-                $queue->update(['Tampil' => 'y']);
+        $queue = null;
+        if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {
+            if ($lastCalled = TempCallWeb::doneCalled()->listNewest()->first()) {
+                if ($needToCall->updated_at->diffInSeconds($lastCalled->updated_at) > 15) {
+                    $queue = $needToCall;
+                } else {
+                    $needToCall->touch();
+                }
+            } else {
+                $queue = $needToCall;
+            }
 
-                $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
-                $number = substr($data->SeqNumber, 1, 3);
-                $codeService->last_queue = $number;
-                $codeService->save();
+            if ($queue) {
+                if ($queue->Tampil == 'n') {
+                    $data = $queue;
+                    $queue->update(['Tampil' => 'y']);
+
+                    $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
+                    $number = substr($data->SeqNumber, 1, 3);
+                    $codeService->last_queue = $number;
+                    $codeService->save();
+
+                    $buttonActor = ButtonActor::find($queue->button_actor_id);
+                    $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
+
+                    (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                }
             }
         }
 

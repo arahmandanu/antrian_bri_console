@@ -41,7 +41,6 @@ class Queue extends Controller
                     $this->insertReport($buttonActor, $currentTime);
                     $this->createAntrian($listQueue, $buttonActor, $codeservice, $currentTime);
                     $currentCall = $listQueue->SeqNumber;
-                    (new SoundCallService($listQueue, $buttonActor))->playSound();
                 } else {
                     $this->insertReport($buttonActor, $currentTime);
                 }
@@ -51,12 +50,7 @@ class Queue extends Controller
                     ->limit(1)
                     ->first())
             ) {
-                TempCallWeb::create([
-                    'Counter' => $buttonActor->counter_number,
-                    'Unit' => $codeservice->Initial,
-                    'SeqNumber' => $listQueue->SeqNumber,
-                ]);
-                (new SoundCallService($listQueue, $buttonActor))->playSound();
+                $this->createTempCallData($buttonActor, $buttonActor->counter_number, $codeservice->Initial, $listQueue->SeqNumber);
             }
 
             $status = 200;
@@ -77,11 +71,7 @@ class Queue extends Controller
         $createdTicket = $originCustomer->created_at;
 
         // Tampilan web antrian
-        TempCallWeb::create([
-            'Counter' => $buttonActor->counter_number,
-            'Unit' => $codeservice->Initial,
-            'SeqNumber' => $originCustomer->SeqNumber,
-        ]);
+        $this->createTempCallData($buttonActor, $buttonActor->counter_number, $codeservice->Initial, $originCustomer->SeqNumber);
 
         // button actor dapat antrian terbaru
         $buttonActor->update([
@@ -105,6 +95,16 @@ class Queue extends Controller
             'TimeCall' => $currentTime->format('H:i:s'),
             'Flag' => 'N',
             'WaitDuration' => gmdate('H:i:s', $currentTime->diffInSeconds($createdTicket)),
+        ]);
+    }
+
+    private function createTempCallData(ButtonActor $buttonActor, $counter, $codeService, $seqNumber)
+    {
+        TempCallWeb::create([
+            'Counter' => $counter,
+            'Unit' => $codeService,
+            'SeqNumber' => $seqNumber,
+            'button_actor_id' => $buttonActor->id
         ]);
     }
 

@@ -16,7 +16,7 @@ class OriginCustomer extends Model
 
     public function scopeCall(Builder $query): void
     {
-        $query->where('Flag', 'P')->orderBy('origin_queue_number', 'asc');
+        $query->whereDate('created_at', now())->where('Flag', 'P')->orderBy('origin_queue_number', 'asc');
     }
 
     public function transactionParam()

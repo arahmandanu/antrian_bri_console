@@ -41,7 +41,6 @@ class SoundCallService
     {
         $this->originCustomer = $originCustomer;
         $this->buttonActor = $buttonActor;
-        $this->buttonActor = $buttonActor;
     }
 
     public function playSound()
@@ -151,6 +150,6 @@ class SoundCallService
             array_push($newCommanLine, '(New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
         }
 
-        exec('powershell -c ' . join(' ', $newCommanLine));
+        exec('powershell -c ' . join(' ', $newCommanLine) . ' > NUL 2> NUL');
     }
 }
