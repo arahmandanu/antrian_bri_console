@@ -25,11 +25,13 @@ class TempCallWebController extends Controller
     {
         $data = null;
         $queue = null;
+        $marginTime = 0;
         if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {
             if ($lastCalled = TempCallWeb::doneCalled()->listNewest()->first()) {
                 if ($needToCall->updated_at->diffInSeconds($lastCalled->updated_at) > 15) {
                     $queue = $needToCall;
                 } else {
+                    // dd($needToCall);
                     $needToCall->touch();
                 }
             } else {
@@ -39,7 +41,8 @@ class TempCallWebController extends Controller
             if ($queue) {
                 if ($queue->Tampil == 'n') {
                     $data = $queue;
-                    $queue->update(['Tampil' => 'y']);
+                    $queue->Tampil = 'y';
+                    $queue->save();
 
                     $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
                     $number = substr($data->SeqNumber, 1, 3);
@@ -48,7 +51,7 @@ class TempCallWebController extends Controller
 
                     $buttonActor = ButtonActor::find($queue->button_actor_id);
                     $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
-
+                    $marginTime = $needToCall->updated_at->diffInSeconds($lastCalled->updated_at);
                     (new SoundCallService($callQeueue, $buttonActor))->playSound();
                 }
             }
@@ -56,6 +59,7 @@ class TempCallWebController extends Controller
 
         return response()->json([
             'queue' => $data,
+            'margin_time' => $marginTime
         ], 200);
     }
 

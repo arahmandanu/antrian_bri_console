@@ -496,14 +496,14 @@
         var currencyTable = $('div.table-currency');
         var currencyTableST = currencyTable.scrollTop();
         var appIsOnline = "{{ env('ONLINE_APP', false) }}";
-
+        var callQueueId = null;
         $(document).ready(function() {
             init_iklan_video(0);
             product_corousel(true);
             showTime();
             updateDate();
             currency_table_auto_scroll();
-            setInterval(() => {
+            callQueueId = setInterval(() => {
                 get_next_queue()
             }, intervalNextQueue);
             if (appIsOnline !== '') {
@@ -552,23 +552,6 @@
                 });
             }
         }
-
-        // function call_console() {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "{{ route('callConsoleApp') }}",
-        //         data: {},
-        //         dataType: "json",
-        //         success: function(data, status, xhr) {
-        //             if (xhr.status == 200) {
-        //                 console.log(data);
-        //             } else {
-        //                 console.log('error when calling console please contact your admin');
-        //             }
-        //         },
-        //         timeout: timeoutAjax
-        //     });
-        // }
 
         function get_next_queue() {
             $.ajax({
