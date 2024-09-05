@@ -497,15 +497,15 @@
         var currencyTable = $('div.table-currency');
         var currencyTableST = currencyTable.scrollTop();
         var appIsOnline = "{{ env('ONLINE_APP', false) }}";
-        var callQueueId = null;
         $(document).ready(function() {
             init_iklan_video(0);
             product_corousel(true);
             showTime();
             updateDate();
             currency_table_auto_scroll();
-            callQueueId = setInterval(() => {
-                get_next_queue()
+            setInterval(() => {
+                console.log(intervalNextQueue);
+                get_next_queue();
             }, intervalNextQueue);
             if (appIsOnline !== '') {
                 setInterval(() => {
@@ -585,7 +585,7 @@
                 if (a.attr('data_type') === 'video') {
                     video = a.find('video');
                     if (video) {
-                        video.prop("volume", volumeIklan);
+                        video.prop("volume", 0.0);
 
                         setTimeout(() => {
                             var afterIklan = $('div#corousel_iklan_parent').find('div.active');
@@ -600,7 +600,7 @@
                             }
 
                             onCallQueue = false;
-                        }, 10000)
+                        }, 5000)
                     }
 
                 }

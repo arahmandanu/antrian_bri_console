@@ -149,7 +149,17 @@ class SoundCallService
         foreach ($sounds as $value) {
             array_push($newCommanLine, '(New-Object Media.SoundPlayer "' . $value . '").PlaySync();');
         }
+        $list = join(' ', $newCommanLine);
+        $method = getcwd() . '\soundcaller.bat';
 
-        exec('powershell -c ' . join(' ', $newCommanLine) . ' > NUL 2> NUL');
+        // old
+        // please use new command
+        // exec("start /B cmd /C $method $list", $output);
+
+        // old 2
+        // exec('powershell -c ' . join(' ', $newCommanLine) . ' > NUL 2> NUL');
+
+        // NEW FLOW SOUND CALLER
+        pclose(popen('start /B cmd /C " ' . $method . $list . ' >NUL 2>NUL"', 'r'));
     }
 }

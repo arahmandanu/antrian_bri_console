@@ -26,11 +26,14 @@ class TempCallWebController extends Controller
         $data = null;
         $queue = null;
         $marginTime = 0;
+        $delay = (int)(env('DELAY_SOUND', 8));
+        $haveMargin = false;
+        $before = null;
         if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {
             if ($lastCalled = TempCallWeb::doneCalled()->listNewest()->first()) {
-                $delay = env('DELAY_SOUND', 8);
-                if ($needToCall->updated_at->diffInSeconds($lastCalled->updated_at) > $delay) {
+                if (($needToCall->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp()) >= $delay) {
                     $queue = $needToCall;
+                    $haveMargin = true;
                 } else {
                     $needToCall->touch();
                 }
@@ -40,26 +43,46 @@ class TempCallWebController extends Controller
 
             if ($queue) {
                 if ($queue->Tampil == 'n') {
-                    $data = $queue;
-                    $queue->Tampil = 'y';
-                    $queue->save();
+                    if ($haveMargin === true) {
+                        if (($queue->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp()) >= $delay) {
+                            $before = $lastCalled;
+                            $marginTime =  $queue->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp();
+                            $data = $queue;
+                            $queue->Tampil = 'y';
+                            $queue->save();
 
-                    $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
-                    $number = substr($data->SeqNumber, 1, 3);
-                    $codeService->last_queue = $number;
-                    $codeService->save();
+                            $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
+                            $number = substr($data->SeqNumber, 1, 3);
+                            $codeService->last_queue = $number;
+                            $codeService->save();
 
-                    $buttonActor = ButtonActor::find($queue->button_actor_id);
-                    $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
-                    $marginTime = $needToCall->updated_at->diffInSeconds($lastCalled->updated_at);
-                    (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                            $buttonActor = ButtonActor::find($queue->button_actor_id);
+                            $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
+                            (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                        }
+                    } else {
+                        $data = $queue;
+                        $queue->Tampil = 'y';
+                        $queue->save();
+
+                        $codeService = Codeservice::where('Initial', '=', $queue->Unit)->first();
+                        $number = substr($data->SeqNumber, 1, 3);
+                        $codeService->last_queue = $number;
+                        $codeService->save();
+
+                        $buttonActor = ButtonActor::find($queue->button_actor_id);
+                        $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
+                        (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                    }
                 }
             }
         }
 
         return response()->json([
             'queue' => $data,
-            'margin_time' => $marginTime
+            'before' => $before,
+            'margin_time' => $marginTime,
+            'settings' => $delay
         ], 200);
     }
 
