@@ -28,10 +28,10 @@ class TempCallWebController extends Controller
         $marginTime = 0;
         if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {
             if ($lastCalled = TempCallWeb::doneCalled()->listNewest()->first()) {
-                if ($needToCall->updated_at->diffInSeconds($lastCalled->updated_at) > 15) {
+                $delay = env('DELAY_SOUND', 8);
+                if ($needToCall->updated_at->diffInSeconds($lastCalled->updated_at) > $delay) {
                     $queue = $needToCall;
                 } else {
-                    // dd($needToCall);
                     $needToCall->touch();
                 }
             } else {

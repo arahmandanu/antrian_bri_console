@@ -478,6 +478,7 @@
         var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};
         var interva_auto_sync_report = {{ env('INTERVAL_AUTO_SYNC_REPORT', 100000) }};
         var timeoutAjax = {{ env('TIMEOUT_AJAX', 100000) }};
+        var volumeIklan = {{ env('VOLUME_IKLAN', 0.1) }};
         var left1 = $("#history_1_left");
         var right1 = $("#history_1_right");
         var left2 = $("#history_2_left");
@@ -584,7 +585,7 @@
                 if (a.attr('data_type') === 'video') {
                     video = a.find('video');
                     if (video) {
-                        video.prop("volume", 0.1);
+                        video.prop("volume", volumeIklan);
 
                         setTimeout(() => {
                             var afterIklan = $('div#corousel_iklan_parent').find('div.active');
@@ -593,7 +594,7 @@
                                 if (b.attr('data_type') === 'video') {
                                     afterIklanVideo = b.find('video');
                                     if (afterIklanVideo) {
-                                        afterIklanVideo.prop("volume", 0.1);
+                                        afterIklanVideo.prop("volume", volumeIklan);
                                     }
                                 }
                             }
@@ -647,7 +648,7 @@
                 if (onCallQueue === true) {
                     local_video[0].volume = 0.0;
                 } else {
-                    local_video[0].volume = 0.1;
+                    local_video[0].volume = volumeIklan;
                 }
                 local_video[0].play();
 

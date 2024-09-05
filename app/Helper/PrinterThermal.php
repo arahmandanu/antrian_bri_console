@@ -17,12 +17,12 @@ trait PrinterThermal
         }
 
         try {
-            $connector = new WindowsPrintConnector('POS-76C');
+            $connector = new WindowsPrintConnector($properties->printer_name);
             $printer = new Printer($connector);
 
             $date = $currentTime->isoFormat('OY-MM-DD HH:mm:ss');
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $logo = EscposImage::load('images/logo_bri_black.png', false);
+            $logo = EscposImage::load(public_path('images/logo_bri_black.png'), false);
             $printer->bitImage($logo);
             $printer->feed(1);
 
