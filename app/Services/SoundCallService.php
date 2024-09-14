@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\CodeServiceEnum;
 use App\Models\ButtonActor;
 use App\Models\OriginCustomer;
 use Illuminate\Support\Str;
@@ -57,10 +58,15 @@ class SoundCallService
     private function footerSound(ButtonActor $buttonActor)
     {
         $counter = $this->listSound[(string) $buttonActor->counter_number] . '.wav';
+        if (CodeServiceEnum::TELLER->value == $buttonActor->unit_service) {
+            $byCounterName = base_path('console\teller.wav');
+        } else {
+            $byCounterName =  base_path('console\customer_service.wav');
+        }
 
         return [
             base_path('console\menuju.wav'),
-            base_path('console\counter.wav'),
+            $byCounterName,
             base_path("console/$counter"),
         ];
     }
