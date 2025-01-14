@@ -28,6 +28,7 @@
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
 <body>
@@ -53,7 +54,6 @@
     <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>
