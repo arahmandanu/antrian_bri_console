@@ -209,8 +209,9 @@ class DashboardKiosController extends Controller
 
         $unitNextNumber = $request['unit_service'] . $myQueue;
         $descTransaction = 'Antrian ' . $currentQue->Name;
+        $baseDate = $currentTime->isoFormat('OYMMDD');
         $params = [
-            'BaseDt' => $currentTime->isoFormat('OYMMDD'),
+            'BaseDt' => $baseDate,
             'SeqNumber' => $unitNextNumber,
             'UnitServe' => $request['unit_service'],
             'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
@@ -237,6 +238,8 @@ class DashboardKiosController extends Controller
             $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
+                'ticket_id' => $recordQueue->SeqDt,
+                'base_date' => $baseDate,
                 'error' => false,
             ];
             $code = 201;
@@ -275,5 +278,76 @@ class DashboardKiosController extends Controller
         return view('kios.cs', [
             'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
         ]);
+    }
+
+    public function showDigitalTicket($baseDate, $ticketID)
+    {
+        $currentDate = now();
+        $currentTicket = OriginCustomer::where('BaseDt', '=', $baseDate)
+            ->where('SeqDt', '=', $ticketID)
+            ->first();
+
+        return view("kios.ticket.index", [
+            "status" => ($currentDate->isoFormat('OYMMDD') != $baseDate || $currentTicket),
+            "properties" => Properties::first(),
+            "ticket" => $currentTicket
+        ]);
+    }
+
+    public function manualPrintTicket(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'id' => 'required|exists:originationcust,SeqDt',
+            'base_date' => 'required|string',
+        ])->validate();
+        $currentTime = now();
+        if ($currentTime->isoFormat('OYMMDD') != $validated['base_date']) {
+            return response()->json([
+                'message' => 'Tanggal Antrian tidak sesuai!',
+                'error' => true,
+            ], 503);
+        }
+
+        if (empty($properties = Properties::first())) {
+            return response()->json([
+                'message' => 'Pastikan printer siap digunakan!',
+                'error' => true,
+            ], 503);
+        }
+
+        if (env('PRINTER_ENABLED', true) && $properties->printer_name == null) {
+            return response()->json([
+                'message' => 'Nama printer belum di set!',
+                'error' => true,
+            ], 503);
+        }
+
+        $currentTicket = OriginCustomer::where('BaseDt', '=', $validated['base_date'])
+            ->where('SeqDt', '=', $validated['id'])
+            ->first();
+
+        if (!$currentTicket) {
+            return response()->json([
+                'message' => 'Ticket tidak ditemukan!',
+                'error' => true,
+            ], 503);
+        }
+
+        try {
+            $this->execPrint($currentTime, $currentTicket->DescTransaksi, $currentTicket->SeqNumber, $properties);
+            $response = [
+                'message' => 'Sukses Cetak antrian!',
+                'error' => false,
+            ];
+            $code = 201;
+        } catch (\Throwable $th) {
+            $response = [
+                'message' => 'Printer belum siap digunakan!',
+                'error' => true,
+            ];
+            $code = 422;
+        }
+
+        return response()->json($response, $code);
     }
 }

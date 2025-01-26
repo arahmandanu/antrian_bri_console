@@ -19,6 +19,9 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .postCss('resources/css/my-font.css', 'public/css', [
         //
+    ]).sourceMaps()
+    .postCss('resources/css/ticket-style.css', 'public/css', [
+        //
     ]).sourceMaps();
 // copy custom font
 mix.copyDirectory('resources/my_font', 'public/my_font');

@@ -45,6 +45,9 @@ Route::prefix('/kios')->group(function () {
     Route::get('/cs', [DashboardKiosController::class, 'menucs'])->name('DashboardKiosCs');
     Route::post('/create_antrian', [DashboardKiosController::class, 'createAntrian'])->middleware('json.only')->name('DashboardKiosCreateAntrianTeller');
     Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->middleware('json.only')->name('DashboardKiosPrintOnlineQueue');
+
+    Route::get('/show_ticket/{base_date}/{ticket_id}', [DashboardKiosController::class, 'showDigitalTicket'])->name('DashboardShowDigitalTicket');
+    Route::get('/manual_print', [DashboardKiosController::class, 'manualPrintTicket'])->name('DashboardManualPrintTicket');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainConsoleCheck']], function () {

@@ -44,6 +44,7 @@
                     alertDevice(data.responseJSON.message);
                 } else {
                     console.log(data.responseJSON);
+                    loadTicketPopup(data.responseJSON.ticket_id, data.responseJSON.base_date)
                 }
 
                 getMainMenu()

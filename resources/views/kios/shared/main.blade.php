@@ -124,7 +124,30 @@
                 </div>
             </div>
         </div>
-    </div><!-- End Vertically centered Modal-->
+    </div>
+    <!-- End Vertically centered Modal-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="ticketModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const listTextFooter = {!! json_encode($footerTexts) !!};
@@ -151,7 +174,6 @@
         }
 
         function getBarcodeQueue(e) {
-            console.log(e.value);
             $.ajax({
                 type: "GET",
                 url: "{{ route('DashboardKiosPrintOnlineQueue') }}" + '?data=' + e.value,
@@ -233,6 +255,13 @@
                 }, 10);
             }
 
+        }
+
+        function loadTicketPopup(ticket_id = null, base_date = null) {
+            if (ticket_id === null || base_date === null) {
+                return
+            }
+            window.location.href = "/kios/show_ticket/" + base_date + "/" + ticket_id;
         }
     </script>
 </body>
