@@ -77,7 +77,7 @@
                 function() {
                     console.log(window.location.hostname);
 
-                    window.location.href = '/kios';
+                    window.location.href = "{{ route('DashboardKios') }}";
                 }, 10000);
         });
 

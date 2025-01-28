@@ -261,7 +261,8 @@
             if (ticket_id === null || base_date === null) {
                 return
             }
-            window.location.href = "/kios/show_ticket/" + base_date + "/" + ticket_id;
+            console.log(window.location.href);
+            window.location.href = "kios/show_ticket/" + base_date + "/" + ticket_id;
         }
     </script>
 </body>

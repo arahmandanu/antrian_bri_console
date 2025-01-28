@@ -149,7 +149,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
+            // $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
                 'error' => false,
@@ -235,7 +235,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
+            // $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
                 'ticket_id' => $recordQueue->SeqDt,
