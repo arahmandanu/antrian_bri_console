@@ -326,6 +326,12 @@ class DashboardKiosController extends Controller
             ->where('SeqDt', '=', $validated['id'])
             ->first();
 
+        if ($transactionParam = TransactionParam::where('TrxCode', $currentTicket->code_trx)->first()) {
+            $description = $transactionParam->TrxName;
+        } else {
+            $description = $transactionParam->DescTransaksi;
+        }
+
         if (!$currentTicket) {
             return response()->json([
                 'message' => 'Ticket tidak ditemukan!',
@@ -334,7 +340,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            $this->execPrint($currentTime, $currentTicket->DescTransaksi, $currentTicket->SeqNumber, $properties);
+            $this->execPrint($currentTime, $description, $currentTicket->SeqNumber, $properties);
             $response = [
                 'message' => 'Sukses Cetak antrian!',
                 'error' => false,
