@@ -105,36 +105,39 @@ class MainController extends Controller
 
     public function consoleApp(Request $request)
     {
-        // $task_list = [];
-        // exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
-        // $message = null;
-        // $enabler = true;
-        // foreach ($task_list as $key => $value) {
-        //     if ($value !== '') {
-        //         if (str_contains($value, 'Console.exe')) {
-        //             $enabler = false;
-        //             $message = 'Console sudah aktif sebelumnya!';
-        //         }
-        //     }
-        // }
+        $task_list = [];
+        exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
+        dd($task_list);
+        $message = null;
+        $enabler = true;
+        foreach ($task_list as $key => $value) {
+            if ($value !== '') {
+                if (str_contains($value, 'Console.exe')) {
+                    $enabler = false;
+                    $message = 'Console sudah aktif sebelumnya!';
+                }
+            }
+        }
 
-        // if ($enabler == true) {
-        //     $path = base_path('call_console.php');
-        //     // exec("php $path", $test);
-        //     pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
-        //     $message = 'Console berhasil di jalankan!';
-        // }
+        if ($enabler == true) {
+            $path = base_path('call_console.php');
+            // exec("php $path", $test);
+            pclose(popen('start /B cmd /C "php ' . $path . ' >NUL 2>NUL"', 'r'));
+            $message = 'Console berhasil di jalankan!';
+        }
 
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => $message,
-        // ], 200);
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ], 200);
     }
 
     public function closeConsole(Request $request)
     {
         $task_list = [];
-        exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
+        // exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
+        exec('start /B taskkill /IM msedge.exe /F', $task_list);
+        dd($task_list);
         $message = null;
         $alreadyRun = false;
         $data = [];

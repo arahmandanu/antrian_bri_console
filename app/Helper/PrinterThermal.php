@@ -28,27 +28,35 @@ trait PrinterThermal
 
             /* HEADER */
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->setTextSize(1, 2);
-            $printer->setUnderline(2);
-            $printer->text('Selamat datang!');
-            $printer->feed(2);
+            $printer->setTextSize(1, 1);
+            $printer->setUnderline(0);
+            $printer->text('Selamat datang');
+            $printer->feed(1);
+
+            $printer->setTextSize(2, 2);
+            $printer->setUnderline(0);
+            $printer->text($properties->company_name);
+            $printer->feed(1);
+
             $printer->setUnderline(0);
             $printer->setTextSize(1, 1);
             $printer->text($date);
-            $printer->feed(2);
+            $printer->feed(1);
 
             // BODY
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setUnderline(0);
+            $printer->setTextSize(1, 1);
             $printer->text($descTransaction);
             $printer->feed(1);
-            $printer->setTextSize(6, 6);
+
+            $printer->setTextSize(4, 4);
             $printer->setUnderline(0);
             $printer->text($unitNextNumber);
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->setTextSize(1, 1);
             $printer->feed();
             $printer->text("Terima kasih atas kedatangan anda.\n");
-            $printer->feed(4);
+            $printer->feed(2);
             $printer->text('');
             // END BODY
 

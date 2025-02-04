@@ -71,7 +71,7 @@
                                             class="object-fit-contain" alt="Logo BRI"
                                             style="max-width: 100%;
                                                 max-height: 100%;">
-                                        <h2 class="text-white"> {{ $companyName }} </h2>
+                                        <h2 class="text-white" onclick="exitButton()"> {{ $companyName }} </h2>
                                         <h2 class="text-white" style="font-family: kapakana;">
                                             Melayani
                                             Dengan
@@ -168,6 +168,18 @@
                 $('div#modal_scan_barcode').html('');
             })
         });
+
+        function exitButton() {
+            if (confirm('Apakah anda ingin keluar dari aplikasi antrian?')) {
+                $.get("{{ route('CloseConsole') }}", {},
+                    function(data, textStatus, jqXHR) {
+
+                    },
+                    "json"
+                );
+            }
+
+        }
 
         function reloadPage() {
             location.reload();
