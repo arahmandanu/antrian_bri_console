@@ -1,4 +1,4 @@
-<div class="d-flex h-100">
+<div class="d-flex" style="height: 90%%; weight: 100%">
     <div id="showLoading"
         style="width: 100%; height: 100%; text-align: center; align-content: space-around; display: none !important"
         class="text-center">
@@ -7,16 +7,16 @@
         </div>
     </div>
 
-    <div class="d-grid gap-2 col-12 mx-auto" id="menuList">
+    <div class="d-grid gap-1 col-12 mx-auto" id="menuList">
         @forelse ($buttons as $button)
             <button class="btn btn-primary" type="button" onclick="createAntrianTeller('A',{{ $button->TrxCode }})">
-                <h1>{{ Str::upper($button->TrxName) }}</h1>
+                <span style="font-size: 1.5rem">{{ Str::upper($button->TrxName) }}</span>
             </button>
         @empty
         @endforelse
 
         <button class="btn btn-danger" type="button" onclick="getMainMenu()">
-            <h1>KEMBALI KE MENU UTAMA</h1>
+            <span style="font-size: 1.5rem">KEMBALI KE MENU UTAMA</span>
         </button>
     </div>
 </div>
