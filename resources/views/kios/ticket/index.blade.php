@@ -74,12 +74,12 @@
 
     <script>
         $(document).ready(function() {
-            // setTimeout(
-            //     function() {
-            //         console.log(window.location.hostname);
+            setTimeout(
+                function() {
+                    console.log(window.location.hostname);
 
-            //         window.location.href = "{{ route('DashboardKios') }}";
-            //     }, 10000);
+                    window.location.href = "{{ route('DashboardKios') }}";
+                }, 10000);
         });
 
         function cetakAntrian(id, base_date) {
