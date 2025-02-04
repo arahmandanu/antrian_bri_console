@@ -34,6 +34,7 @@
                         <div class="row-1">
                             <span class="top-ticket" style="letter-spacing: -1px;font-weight: 500;">Nomor Layanan</span>
                             <h1 style="font-size: 60px;">{{ $ticket->SeqNumber }}</h1>
+                            <span>{{ $description }}</span>
                         </div>
                         <div class="row-2">
                             <p>
@@ -44,7 +45,7 @@
 
                         <div class="row-3" style="text-align: center">
                             <button onclick="cetakAntrian({{ $ticket->SeqDt }}, {{ $ticket->BaseDt }})" type="button"
-                                class="btn btn-link">Cetak Antrian</button>
+                                class="btn btn-outline-secondary">Cetak Antrian</button>
                         </div>
                     </div>
                 @else
@@ -73,12 +74,12 @@
 
     <script>
         $(document).ready(function() {
-            setTimeout(
-                function() {
-                    console.log(window.location.hostname);
+            // setTimeout(
+            //     function() {
+            //         console.log(window.location.hostname);
 
-                    window.location.href = "{{ route('DashboardKios') }}";
-                }, 10000);
+            //         window.location.href = "{{ route('DashboardKios') }}";
+            //     }, 10000);
         });
 
         function cetakAntrian(id, base_date) {

@@ -149,7 +149,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            // $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
+            $this->execPrint($currentTime, $descTransaction, $unitService . $antrian, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
                 'error' => false,
@@ -287,10 +287,17 @@ class DashboardKiosController extends Controller
             ->where('SeqDt', '=', $ticketID)
             ->first();
 
+        if ($transactionParam = TransactionParam::where('TrxCode', $currentTicket->code_trx)->first()) {
+            $description = $transactionParam->TrxName;
+        } else {
+            $description = $transactionParam->DescTransaksi;
+        }
+
         return view("kios.ticket.index", [
             "status" => ($currentDate->isoFormat('OYMMDD') != $baseDate || $currentTicket),
             "properties" => Properties::first(),
-            "ticket" => $currentTicket
+            "ticket" => $currentTicket,
+            "description" => $description
         ]);
     }
 
