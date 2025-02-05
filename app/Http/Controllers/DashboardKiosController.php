@@ -235,7 +235,7 @@ class DashboardKiosController extends Controller
         }
 
         try {
-            // $this->execPrint($currentTime, $descTransaction, $unitNextNumber, $properties);
+            $this->execPrint($currentTime, $trxParam->TrxName, $unitNextNumber, $properties);
             $response = [
                 'message' => 'Sukses membuat antrian!',
                 'ticket_id' => $recordQueue->SeqDt,

@@ -42,8 +42,7 @@
                 if (data.status == 503 || data.status == 422) {
                     alertDevice(data.responseJSON.message);
                 } else {
-                    console.log(data.responseJSON);
-                    loadTicketPopup(data.responseJSON.ticket_id, data.responseJSON.base_date)
+                    // loadTicketPopup(data.responseJSON.ticket_id, data.responseJSON.base_date)
                 }
 
                 getMainMenu()
