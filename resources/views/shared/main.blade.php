@@ -504,7 +504,6 @@
             updateDate();
             currency_table_auto_scroll();
             setInterval(() => {
-                console.log(intervalNextQueue);
                 get_next_queue();
             }, intervalNextQueue);
             if (appIsOnline !== '') {
@@ -555,27 +554,29 @@
         }
 
         function get_next_queue() {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('GetNextQueueTempCallWeb') }}",
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
-                data: {
-                    "_token": "{{ csrf_token() }}"
-                },
-                dataType: "json",
-                success: function(data, status, xhr) {
-                    if (xhr.status == 200) {
-                        if (data.queue === null) {} else {
-                            onCallQueue = true;
-                            show_next_queue(data.queue);
+            if (onCallQueue != true) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('GetNextQueueTempCallWeb') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    dataType: "json",
+                    success: function(data, status, xhr) {
+                        if (xhr.status == 200) {
+                            if (data.queue === null) {} else {
+                                onCallQueue = true;
+                                show_next_queue(data.queue);
+                            }
+                        } else {
+                            console.log('error please contact your admin');
                         }
-                    } else {
-                        console.log('error please contact your admin');
                     }
-                }
-            });
+                });
+            }
         }
 
         function show_next_queue(record) {
@@ -598,12 +599,14 @@
                                     }
                                 }
                             }
-
                             onCallQueue = false;
-                        }, 5000)
+                        }, 2000)
                     }
-
                 }
+            } else {
+                setTimeout(() => {
+                    onCallQueue = false;
+                }, 2000);
             }
 
             function change(elem, value) {

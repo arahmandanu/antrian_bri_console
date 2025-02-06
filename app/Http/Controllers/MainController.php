@@ -107,7 +107,6 @@ class MainController extends Controller
     {
         $task_list = [];
         exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
-        dd($task_list);
         $message = null;
         $enabler = true;
         foreach ($task_list as $key => $value) {

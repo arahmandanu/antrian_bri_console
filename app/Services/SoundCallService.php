@@ -46,13 +46,21 @@ class SoundCallService
 
     public function playSound()
     {
-        $this->initiateSound(
-            array_merge(
-                $this->headerSound(),
-                $this->listNumberSound($this->buttonActor->unit_service, $this->originCustomer->origin_queue_number),
-                $this->footerSound($this->buttonActor)
-            )
-        );
+        if (env('VERSION_CALLER', 'v1') == 'v1') {
+            $this->initiateSound(
+                array_merge(
+                    $this->headerSound(),
+                    $this->listNumberSound($this->buttonActor->unit_service, $this->originCustomer->origin_queue_number),
+                    $this->footerSound($this->buttonActor)
+                )
+            );
+            sleep(1);
+        } else {
+            $noAntri = $this->originCustomer->origin_queue_number;
+            $codeService = $this->buttonActor->unit_service;
+            $deskNo = $this->buttonActor->counter_number;
+            exec('D:\projekan\tes\antrianterbaru\antrianpreview\caller.exe ' . "$noAntri $codeService $deskNo");
+        }
     }
 
     private function footerSound(ButtonActor $buttonActor)
