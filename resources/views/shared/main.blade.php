@@ -600,13 +600,13 @@
                                 }
                             }
                             onCallQueue = false;
-                        }, 2000)
+                        }, 500)
                     }
                 }
             } else {
                 setTimeout(() => {
                     onCallQueue = false;
-                }, 2000);
+                }, 500);
             }
 
             function change(elem, value) {

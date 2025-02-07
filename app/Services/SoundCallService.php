@@ -46,7 +46,7 @@ class SoundCallService
 
     public function playSound()
     {
-        if (env('VERSION_CALLER', 'v1') == 'v1') {
+        if (config('site.versionCaller', 'v1') == 'v1') {
             $this->initiateSound(
                 array_merge(
                     $this->headerSound(),
@@ -59,7 +59,8 @@ class SoundCallService
             $noAntri = $this->originCustomer->origin_queue_number;
             $codeService = $this->buttonActor->unit_service;
             $deskNo = $this->buttonActor->counter_number;
-            exec('D:\projekan\tes\antrianterbaru\antrianpreview\caller.exe ' . "$noAntri $codeService $deskNo");
+            $path = base_path('caller.exe');
+            exec($path . " $noAntri $codeService $deskNo");
         }
     }
 

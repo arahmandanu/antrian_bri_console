@@ -10,5 +10,6 @@ return [
         'allowed' => true
     ],
     'onlineApp' => env('ONLINE_APP', false),
-    'urlOnlineApp' => env('ONLINE_APP_URL', '')
+    'urlOnlineApp' => env('ONLINE_APP_URL', ''),
+    'versionCaller' => env('VERSION_CALLER', 'v2')
 ];
