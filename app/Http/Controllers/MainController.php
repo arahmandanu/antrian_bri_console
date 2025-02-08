@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Codeservice;
 use App\Models\Currency;
 use App\Models\FontColor;
 use App\Models\FooterText;
@@ -83,6 +84,20 @@ class MainController extends Controller
         }
 
         return view('shared.main', $data);
+    }
+
+    public function refreshCounter(Request $request)
+    {
+        abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+
+        $codeServices = Codeservice::all();
+        foreach ($codeServices as $key => $value) {
+            $value->CurrentQNo = $value->last_queue;
+            $value->is_reset_counter = true;
+            $value->save();
+        }
+
+        return response()->json(['message' => 'succes reset'], 200);
     }
 
     public function videosList(Request $request)

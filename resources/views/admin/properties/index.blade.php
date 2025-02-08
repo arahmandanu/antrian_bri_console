@@ -191,6 +191,20 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Catatan Refresh Counter</h5>
+                                                <p>
+                                                    Refresh counter antrian ke terakhir yang di panggil
+                                                </p>
+
+                                                <button type="button" class="btn btn-danger"
+                                                    onclick="refreshCounter()">Refresh Counter</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                         <button type="reset" class="btn btn-secondary">Reset</button>
@@ -209,5 +223,21 @@
         $(document).ready(function() {
 
         });
+
+        function refreshCounter() {
+            if (confirm("Lanjutkan Refresh Counter?")) {
+                $.get("{{ route('refreshCounterKios') }}", {},
+                    function(data, textStatus, jqXHR) {
+                        if (jqXHR.status == 200) {
+                            message = 'Berhasil reset counter ke terakhir terpanggil!';
+                        } else {
+                            message = 'Gagal reset counter ke terakhir terpanggil!';
+                        }
+                        alert(message);
+                    },
+                    "json"
+                );
+            }
+        }
     </script>
 @endsection

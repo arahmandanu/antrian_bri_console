@@ -198,7 +198,7 @@ class DashboardKiosController extends Controller
         $currentTime = now();
         // Use Online First
         $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime, $currentQue->last_queue);
-        if ($responseFromServer[0] == true) {
+        if ($responseFromServer[0] == true && $currentQue->is_reset_counter) {
             // Todo adjust to get pure queue number
             $nextNumber = $responseFromServer[1];
             $myQueue = $responseFromServer[1];
@@ -207,31 +207,52 @@ class DashboardKiosController extends Controller
             $myQueue = self::formatQueue($nextNumber);
         }
 
+        $recordQueue = null;
         $unitNextNumber = $request['unit_service'] . $myQueue;
-        $descTransaction = 'Antrian ' . $currentQue->Name;
         $baseDate = $currentTime->isoFormat('OYMMDD');
-        $params = [
-            'BaseDt' => $baseDate,
-            'SeqNumber' => $unitNextNumber,
-            'UnitServe' => $request['unit_service'],
-            'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
-            'TimeCall' => null,
-            'WaitDuration' => null,
-            'Flag' => 'P',
-            'origin_queue_number' => $nextNumber,
-            'DescTransaksi' => $descTransaction,
-            'UnitCall' => $request['unit_service'],
-            'code_trx' => $request['trx_param'],
-            'SLA_Trx' => $trxParam->Tservice,
-            'is_queue_online' => false,
-        ];
-        $currentQue->CurrentQNo = $nextNumber;
-        $updateCodeService = $currentQue->save();
-        if (!($recordQueue = OriginCustomer::create($params)) && !$updateCodeService) {
-            return response()->json([
-                'message' => 'Gagal membuat antrian!',
-                'error' => true,
-            ], 503);
+        if ($currentQue->is_reset_counter) {
+            $recordQueue = OriginCustomer::where("BaseDt", $baseDate)->where("SeqNumber", $unitNextNumber)->whereNull('TimeCall')->get()->first();
+            if ($recordQueue) {
+                $currentQue->CurrentQNo = $nextNumber;
+                $updateCodeService = $currentQue->save();
+                if (!$updateCodeService) {
+                    return response()->json([
+                        'message' => 'Gagal membuat antrian!',
+                        'error' => true,
+                    ], 503);
+                }
+            } else {
+                $currentQue->is_reset_counter = false;
+                $currentQue->save();
+            }
+        }
+
+        if (!$recordQueue) {
+            $descTransaction = 'Antrian ' . $currentQue->Name;
+            $params = [
+                'BaseDt' => $baseDate,
+                'SeqNumber' => $unitNextNumber,
+                'UnitServe' => $request['unit_service'],
+                'TimeTicket' => $currentTime->isoFormat('HH:mm:ss'),
+                'TimeCall' => null,
+                'WaitDuration' => null,
+                'Flag' => 'P',
+                'origin_queue_number' => $nextNumber,
+                'DescTransaksi' => $descTransaction,
+                'UnitCall' => $request['unit_service'],
+                'code_trx' => $request['trx_param'],
+                'SLA_Trx' => $trxParam->Tservice,
+                'is_queue_online' => false,
+            ];
+
+            $currentQue->CurrentQNo = $nextNumber;
+            $updateCodeService = $currentQue->save();
+            if (!($recordQueue = OriginCustomer::create($params)) && !$updateCodeService) {
+                return response()->json([
+                    'message' => 'Gagal membuat antrian!',
+                    'error' => true,
+                ], 503);
+            }
         }
 
         try {

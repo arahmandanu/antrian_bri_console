@@ -37,5 +37,10 @@ class Codeservice extends Model
         'Initial',
         'CurrentQNo',
         'last_queue',
+        'is_reset_counter'
+    ];
+
+    protected $casts = [
+        'is_reset_counter' => 'boolean',
     ];
 }
