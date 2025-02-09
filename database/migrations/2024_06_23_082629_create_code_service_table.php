@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,6 +22,8 @@ return new class extends Migration
                 $table->integer('last_queue')->default(0)->nullable(false);
                 $table->timestamps();
             });
+
+            DB::statement('ALTER TABLE codeservice ENGINE = MyISAM');
         }
     }
 

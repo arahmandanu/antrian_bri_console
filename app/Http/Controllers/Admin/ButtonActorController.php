@@ -7,6 +7,7 @@ use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ButtonActorController extends Controller
 {
@@ -46,7 +47,8 @@ class ButtonActorController extends Controller
             'unit_service' => 'required|string|exists:codeservice,Initial',
             'counter_number' => 'required|integer',
             'user_button_code' => [
-                'required', 'unique:button_actor,user_button_code',
+                'required',
+                'unique:button_actor,user_button_code',
             ],
         ])->validate();
 
@@ -70,7 +72,7 @@ class ButtonActorController extends Controller
      */
     public function show(ButtonActor $tombol)
     {
-        $defaultNumber = range(1, 100);
+        $defaultNumber = range(1, 10);
         $all = ButtonActor::where('id', '!=', $tombol->id)
             ->pluck('counter_number')->toArray();
 
@@ -140,7 +142,7 @@ class ButtonActorController extends Controller
     {
         abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
-        $defaultNumber = range(1, 100);
+        $defaultNumber = range(1, 10);
         if (empty($request->input('currentId'))) {
             $usedNumber = ButtonActor::all()->pluck('counter_number')->toArray();
         }
