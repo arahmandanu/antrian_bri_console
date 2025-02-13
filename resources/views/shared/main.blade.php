@@ -475,7 +475,7 @@
 
     <script>
         var onCallQueue = false;
-        var intervalNextQueue = {{ env('INTERVAL_CALL_NEXT_QUEUE', 10000) }};
+        var intervalNextQueue = 2000;
         var interva_auto_sync_report = {{ env('INTERVAL_AUTO_SYNC_REPORT', 100000) }};
         var timeoutAjax = {{ env('TIMEOUT_AJAX', 100000) }};
         var volumeIklan = {{ env('VOLUME_IKLAN', 0.1) }};
