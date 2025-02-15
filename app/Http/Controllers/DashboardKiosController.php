@@ -246,7 +246,14 @@ class DashboardKiosController extends Controller
             ];
 
             $currentQue->CurrentQNo = $nextNumber;
-            $updateCodeService = $currentQue->save();
+
+            if (!$currentQue->save()) {
+                return response()->json([
+                    'message' => 'Gagal membuat antrian!',
+                    'error' => true,
+                ], 503);
+            }
+
             if (!($recordQueue = OriginCustomer::create($params)) && !$updateCodeService) {
                 return response()->json([
                     'message' => 'Gagal membuat antrian!',

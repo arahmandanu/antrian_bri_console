@@ -149,6 +149,7 @@ class MainController extends Controller
     {
         $task_list = [];
         // exec('start /B tasklist /nh /fi "ImageName eq Console.exe"', $task_list);
+        exec('start /B taskkill /IM firefox.exe /F', $task_list);
         exec('start /B taskkill /IM msedge.exe /F', $task_list);
         $message = null;
         $alreadyRun = false;
