@@ -11,7 +11,7 @@ trait PrinterThermal
 {
     public function execPrint($currentTime, $descTransaction, $unitNextNumber, Properties $properties)
     {
-        $usePrinter = env('PRINTER_ENABLED', true);
+        $usePrinter = config('site.printerEnabled');
         if (!$usePrinter) {
             return 'success';
         }

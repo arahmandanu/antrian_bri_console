@@ -18,7 +18,7 @@
 
 <body class="d-flex flex-column min-vh-100 bg-primary-app">
     <div class="container-fluid ps-3 pe-3 pt-3">
-        <div class="row ">
+        <div class="row">
             <div class="col-md-7 container-fluid">
                 <div class="row">
                     <div id="carouselExampleControlsIklan" class="carousel slide carousel-fade">
@@ -475,10 +475,10 @@
 
     <script>
         var onCallQueue = false;
-        var intervalNextQueue = 2000;
-        var interva_auto_sync_report = {{ env('INTERVAL_AUTO_SYNC_REPORT', 100000) }};
-        var timeoutAjax = {{ env('TIMEOUT_AJAX', 100000) }};
-        var volumeIklan = {{ env('VOLUME_IKLAN', 0.1) }};
+        var intervalNextQueue = {{ config('site.intervalCallNextQueue') }};
+        var interva_auto_sync_report = {{ config('site.intervalAutoSyncReport') }};
+        var timeoutAjax = {{ config('site.ajaxTimeOut') }};
+        var volumeIklan = {{ config('site.volumeIklan') }};
         var left1 = $("#history_1_left");
         var right1 = $("#history_1_right");
         var left2 = $("#history_2_left");
@@ -496,7 +496,7 @@
         var all = $('div#corousel-parent');
         var currencyTable = $('div.table-currency');
         var currencyTableST = currencyTable.scrollTop();
-        var appIsOnline = "{{ env('ONLINE_APP', false) }}";
+        var appIsOnline = {{ config('site.onlineApp') }};
         $(document).ready(function() {
             init_iklan_video(0);
             product_corousel(true);

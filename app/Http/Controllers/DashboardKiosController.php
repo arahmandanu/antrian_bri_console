@@ -180,7 +180,7 @@ class DashboardKiosController extends Controller
             ], 503);
         }
 
-        if (env('PRINTER_ENABLED', true) && $properties->printer_name == null) {
+        if (config('site.printerEnabled') && $properties->printer_name == null) {
             return response()->json([
                 'message' => 'Pastikan printer siap digunakan!',
                 'error' => true,
@@ -343,7 +343,7 @@ class DashboardKiosController extends Controller
             ], 503);
         }
 
-        if (env('PRINTER_ENABLED', true) && $properties->printer_name == null) {
+        if (config('site.printerEnabled') && $properties->printer_name == null) {
             return response()->json([
                 'message' => 'Nama printer belum di set!',
                 'error' => true,

@@ -11,8 +11,8 @@ trait AutoSync
 {
     public function execSyncOfflineToOnline(Properties $properties, OriginCustomer $record, $currentTime)
     {
-        $onlineApp = env('ONLINE_APP', false);
-        $url = env('ONLINE_APP_URL', '');
+        $onlineApp = config('site.onlineApp');
+        $url = config('site.urlOnlineApp');
         if (empty($url) || empty($properties->company_code) || !$onlineApp) {
             return;
         }
@@ -37,8 +37,8 @@ trait AutoSync
 
     public function generateNumberQueueOnlineOffline(Properties $properties, $trx_param, $unitService, $currentTime, $lastQueueNumber)
     {
-        $onlineApp = env('ONLINE_APP', false);
-        $url = env('ONLINE_APP_URL', '');
+        $onlineApp = config('site.onlineApp');
+        $url = config('site.urlOnlineApp');
         $nextNumber = null;
         $success = false;
         if (empty($url) || empty($properties->company_code) || !$onlineApp) {
@@ -77,8 +77,8 @@ trait AutoSync
         $message = 'Synced Disabled!';
         $success = true;
         $status = 200;
-        $url = config('site.urlOnlineApp', '');
-        $onlineApp = config('site.onlineApp', false);
+        $url = config('site.urlOnlineApp');
+        $onlineApp = config('site.onlineApp');
         if (empty($url) || empty($properties->company_code) || !$onlineApp) return [$success, ['message' => $message, 'url' => $url, 'statusOnline' => $onlineApp], $status];
 
         $currentTime = now()->format('Ymd');

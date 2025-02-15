@@ -77,7 +77,6 @@ class MainController extends Controller
         $data['images'] = $images;
         $data['company_name'] = $properties->company_name ?? null;
         $data['historyQueues'] = $datalistQueues;
-
         $colors = FontColor::where('value', '!=', null)->get();
         foreach ($colors as $key => $value) {
             $data[$value->name] = $value->value;

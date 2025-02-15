@@ -32,12 +32,10 @@ class DashboardMainConsoleCheck
             if (empty($registered['company_name']) || empty($registered['company_code'])) return $this->out();
 
             $configuration = config("site.valid");
-            config(['site' => $configuration]);
-            $validated = $this->isCompanyValid($registered);
+            $validated = $this->isCompanyValid($registered, $configuration['allowed']);
         } catch (\Throwable | \Exception | \ErrorException  $th) {
             $configuration = config("site.invalid");
-            config(['site' => $configuration]);
-            $validated = $this->isCompanyValid(null);
+            $validated = $this->isCompanyValid(null, $configuration['allowed']);
         }
         if (!$validated) return $this->out();
 
@@ -61,9 +59,9 @@ class DashboardMainConsoleCheck
         return response()->view('errors.subscribe');
     }
 
-    private function isCompanyValid($data)
+    private function isCompanyValid($data, $valid)
     {
-        if (config('site.allowed')) {
+        if ($valid) {
             if (empty($properties = Properties::first())) {
                 Properties::create([
                     'company_name' => $data['company_name'],

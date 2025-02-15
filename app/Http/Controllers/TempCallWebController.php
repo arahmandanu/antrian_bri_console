@@ -27,7 +27,7 @@ class TempCallWebController extends Controller
         $data = null;
         $queue = null;
         $marginTime = 0;
-        $delay = (int)(env('DELAY_SOUND', 8));
+        $delay = (int)(config('site.delaySound'));
         $haveMargin = false;
         $before = null;
         if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {

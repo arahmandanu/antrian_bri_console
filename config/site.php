@@ -9,7 +9,14 @@ return [
     'valid' => [
         'allowed' => true
     ],
-    'onlineApp' => env('ONLINE_APP', false),
-    'urlOnlineApp' => env('ONLINE_APP_URL', ''),
-    'versionCaller' => env('VERSION_CALLER', 'v2')
+    'onlineApp' => true,
+    'urlOnlineApp' => 'https://bri-antrian.online',
+    // Yang bisa disetting di bawah ini
+    'versionCaller' => 'v2',
+    'printerEnabled' => false,
+    'intervalCallNextQueue' => 2000,
+    'intervalAutoSyncReport' => 5000,
+    'ajaxTimeOut' => 2000,
+    'volumeIklan' => 0.2,
+    'delaySound' => 6
 ];
