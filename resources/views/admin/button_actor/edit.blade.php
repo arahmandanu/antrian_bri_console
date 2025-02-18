@@ -46,11 +46,26 @@
                                                 placeholder="Silahkan inputkan nama user">
                                         </div>
 
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <label for="inputNanme4" class="form-label">Kode Tombol User</label>
                                             <input type="text" required class="form-control" id="inputNanme4"
                                                 value="{{ $tombol->user_button_code }}" name="user_button_code"
                                                 placeholder="Silahkan inputkan nama user">
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                            <label for="inputEmail4" class="form-label">Kode Tombol User</label>
+                                            <select class="form-select" required aria-label="Default select example"
+                                                name="user_button_code" id="user_button_code">
+                                                <option value="">-- Silahkan pilih Kode Unit dahulu --</option>
+                                                @forelse ($buttonCodes as $item)
+                                                    <option @if ($tombol->user_button_code == $item) selected @endif
+                                                        value="{{ $item }}">{{ $item }}</option>
+                                                @empty
+                                                    <option value="">-- Data Kosong, Silahkan hubungi admin anda --
+                                                    </option>
+                                                @endforelse
+                                            </select>
                                         </div>
 
                                         <div class="col-12">

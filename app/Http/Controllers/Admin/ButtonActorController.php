@@ -19,7 +19,7 @@ class ButtonActorController extends Controller
     public function index()
     {
         return view('admin.button_actor.index', [
-            'buttonActors' => ButtonActor::orderBy('unit_service', 'asc')->get(),
+            'buttonActors' => ButtonActor::orderBy('unit_service', 'asc')->orderBy('counter_number', 'ASC')->get(),
         ]);
     }
 
@@ -30,8 +30,13 @@ class ButtonActorController extends Controller
      */
     public function create()
     {
+        $listCode = (new ButtonActor)->UsedListCounterCode();
+        $canUsedCode = [];
+        $canUsedCode = array_merge($canUsedCode, array_diff(ButtonActor::LISTCOUNTERCODE, $listCode));
+
         return view('admin.button_actor.create', [
             'codeServices' => Codeservice::all(),
+            'buttonCodes' => $canUsedCode
         ]);
     }
 
@@ -72,14 +77,19 @@ class ButtonActorController extends Controller
      */
     public function show(ButtonActor $tombol)
     {
-        $defaultNumber = range(1, 10);
-        $all = ButtonActor::where('id', '!=', $tombol->id)
-            ->pluck('counter_number')->toArray();
+        $listCode = (new ButtonActor)->UsedListCounterCode();
+        $canUsedCode = [];
+        $canUsedCode = array_merge($canUsedCode, array_diff(ButtonActor::LISTCOUNTERCODE, $listCode));
+        array_unshift($canUsedCode, $tombol->user_button_code);
 
+        $list = (new ButtonActor)->UsedListCounterNumber($tombol->unit_service);
+        $canUsed = [];
+        $canUsed = array_merge($canUsed, array_diff(ButtonActor::LISTNUMBERCOUNTER, $list));
+        array_unshift($canUsed, $tombol->counter_number);
         return view('admin.button_actor.edit', [
-            'buttonActors' => ButtonActor::all(),
             'codeServices' => Codeservice::all(),
-            'listCounters' => array_diff($defaultNumber, $all),
+            'listCounters' => $canUsed,
+            'buttonCodes' => $canUsedCode,
             'tombol' => $tombol,
         ]);
     }
@@ -104,8 +114,23 @@ class ButtonActorController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
-            'counter_number' => "required|integer|unique:button_actor,counter_number,$tombol->id",
-            'user_button_code' => "required|unique:button_actor,user_button_code,$tombol->id",
+            'counter_number' => [
+                "required",
+                "integer",
+                Rule::unique('button_actor')->where(
+                    fn($query) => $query
+                        ->where('id', '==', $tombol->id)
+                        ->orWhere('unit_service', '==', $tombol->user_button_code)
+                )
+            ],
+            'user_button_code' => [
+                "required",
+                Rule::unique('button_actor')->where(
+                    fn($query) => $query
+                        ->where('id', '==', $tombol->id)
+                        ->orWhere('unit_service', '==', $tombol->user_button_code)
+                )
+            ],
         ])->validate();
 
         if ($tombol->update($validated)) {
@@ -142,16 +167,12 @@ class ButtonActorController extends Controller
     {
         abort_if(!$request->wantsJson(), 403, 'Invalid request!');
 
-        $defaultNumber = range(1, 10);
-        if (empty($request->input('currentId'))) {
-            $usedNumber = ButtonActor::all()->pluck('counter_number')->toArray();
-        }
-
+        $list = (new ButtonActor)->UsedListCounterNumber($unitService);
         $canUsed = [];
-        $canUsed = array_merge($canUsed, array_diff($defaultNumber, $usedNumber));
+        $canUsed = array_merge($canUsed, array_diff(ButtonActor::LISTNUMBERCOUNTER, $list));
 
         return response()->json([
-            'display_number' => $canUsed,
+            'display_number' => $canUsed
         ], 200);
     }
 }

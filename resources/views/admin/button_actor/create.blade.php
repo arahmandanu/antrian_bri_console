@@ -30,7 +30,7 @@
 
                                     <div class="col-12">
                                         <label for="inputEmail4" class="form-label">Kode Unit</label>
-                                        <select class="form-select" onchange="getCounterNumber(this)" required
+                                        <select class="form-select" onchange="getResourceButton(this)" required
                                             aria-label="Default select example" name="unit_service">
                                             <option selected value="">Open this select menu</option>
                                             @forelse ($codeServices as $codeService)
@@ -50,10 +50,24 @@
                                             placeholder="Silahkan inputkan nama user">
                                     </div>
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <label for="inputNanme4" class="form-label">Kode Tombol User</label>
                                         <input type="text" required class="form-control" id="inputNanme4"
                                             name="user_button_code" placeholder="Silahkan inputkan nama user">
+                                    </div> --}}
+
+                                    <div class="col-12">
+                                        <label for="inputEmail4" class="form-label">Kode Tombol User</label>
+                                        <select class="form-select" required aria-label="Default select example"
+                                            name="user_button_code" id="user_button_code">
+                                            <option value="">-- Silahkan pilih Kode Unit dahulu --</option>
+                                            @forelse ($buttonCodes as $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @empty
+                                                <option value="">-- Data Kosong, Silahkan hubungi admin anda --
+                                                </option>
+                                            @endforelse
+                                        </select>
                                     </div>
 
                                     <div class="col-12">
@@ -80,7 +94,7 @@
     </section>
 
     <script>
-        function getCounterNumber(object) {
+        function getResourceButton(object) {
             var value = object.value;
             $.ajax({
                 type: "GET",
