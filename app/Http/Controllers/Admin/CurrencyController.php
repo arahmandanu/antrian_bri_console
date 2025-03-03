@@ -43,8 +43,6 @@ class CurrencyController extends Controller
             'name' => 'required',
             'jual_a' => 'required',
             'beli_a' => 'required',
-            'jual_b' => 'required',
-            'beli_b' => 'required',
             'show' => 'required',
         ])->validate();
 
@@ -105,8 +103,6 @@ class CurrencyController extends Controller
             'name' => 'required',
             'jual_a' => 'required',
             'beli_a' => 'required',
-            'jual_b' => 'required',
-            'beli_b' => 'required',
             'show' => 'required',
         ])->validate();
 

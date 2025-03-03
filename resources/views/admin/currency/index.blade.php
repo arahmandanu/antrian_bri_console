@@ -35,8 +35,6 @@
                                             <th width='15%'>Kurs</th>
                                             <th width='15%'>Jual</th>
                                             <th width='15%'>Beli</th>
-                                            <th width='15%'>Jual</th>
-                                            <th width='15%'>Beli</th>
                                             <th width='10%'>Show</th>
                                             <th width='10%'>Aksi</th>
                                         </tr>
@@ -51,8 +49,6 @@
                                                 <td>{{ Str::upper($currency->name) }}</td>
                                                 <td>{{ $currency->jual_a }}</td>
                                                 <td>{{ $currency->beli_a }}</td>
-                                                <td>{{ $currency->jual_b }}</td>
-                                                <td>{{ $currency->beli_b }}</td>
                                                 <td>
                                                     @if ($currency->show == '1')
                                                         <span class='badge bg-success'>yes</span>

@@ -56,18 +56,6 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="inputNanme4" class="form-label">Jual b</label>
-                                        <input type="text" required class="form-control" id="inputNanme4" name="jual_b"
-                                            placeholder="Silahkan inputkan Jual b">
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label for="inputNanme4" class="form-label">Beli b</label>
-                                        <input type="text" required class="form-control" id="inputNanme4" name="beli_b"
-                                            placeholder="Silahkan inputkan Beli b">
-                                    </div>
-
-                                    <div class="col-12">
                                         <fieldset class="row mb-3">
                                             <legend class="col-form-label col-sm-2 pt-0">Ditampilkan?</legend>
                                             <div class="col-sm-10">

@@ -236,16 +236,10 @@
                                                             <th width="20%">
                                                                 <h2 class="fw-bolder text-white">KURS</h2>
                                                             </th>
-                                                            <th width="20%">
+                                                            <th width="40%">
                                                                 <h2 class="fw-bolder text-white">JUAL</h2>
                                                             </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">BELI</h2>
-                                                            </th>
-                                                            <th width="20%">
-                                                                <h2 class="fw-bolder text-white">JUAL</h2>
-                                                            </th>
-                                                            <th width="20%">
+                                                            <th width="40%">
                                                                 <h2 class="fw-bolder text-white">BELI</h2>
                                                             </th>
                                                         </tr>
@@ -273,12 +267,6 @@
                                                                 </td>
                                                                 <td>
                                                                     <h3>{{ $currency->beli_a }}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3>{{ $currency->jual_b }}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3>{{ $currency->beli_b }}</h3>
                                                                 </td>
                                                             </tr>
                                                         @empty
