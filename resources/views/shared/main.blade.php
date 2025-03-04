@@ -499,7 +499,9 @@
                     sync_reporting()
                 }, interva_auto_sync_report);
             }
-            // call_console();
+            setInterval(() => {
+                autoSyncCurrencies()
+            }, 600000);
         });
 
         function sync_reporting() {
@@ -676,9 +678,9 @@
             function scroolUp() {
                 var sb = currencyTable.prop("scrollHeight") - currencyTable.innerHeight();
                 currencyTable.animate({
-                    scrollTop: currencyTableST < sb / 2 ? sb : 0
+                    scrollTop: currencyTableST > sb / 2 ? sb : 0
                 }, {
-                    duration: 15000,
+                    duration: 100000,
                     complete: function() {
                         if (productContainer) {
                             productContainer.classList.remove("invisible");
@@ -696,14 +698,17 @@
                     }
                 });
             }
+
             if (!currencyContainerClassList.includes('invisible')) {
                 var sb = currencyTable.prop("scrollHeight") - currencyTable.innerHeight();
                 currencyTable.animate({
                     scrollTop: currencyTableST < sb / 2 ? sb : 0
                 }, {
-                    duration: 15000,
+                    duration: 100000,
                     complete: function() {
-                        scroolUp()
+                        setTimeout(() => {
+                            scroolUp()
+                        }, 2000);
                         sb = undefined;
                     }
                 });
@@ -846,6 +851,16 @@
                     }
                 });
             }
+        }
+
+        function autoSyncCurrencies() {
+            $.ajax({
+                type: "get",
+                url: "{{ route('ConsoleSyncCurrency') }}",
+                data: {},
+                dataType: "json",
+                success: function(response) {}
+            });
         }
     </script>
 </body>
