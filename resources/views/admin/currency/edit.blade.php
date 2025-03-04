@@ -34,7 +34,7 @@
                                         <label for="inputNumber" class="col-sm-2 col-form-label">Gambar Bendera</label>
                                         <div class="col-sm-12">
                                             <img style='height:3vh;width:6vh' src="{{ asset($currency->flag_url) }}"
-                                                class="rounded-circle" </div>
+                                                class="rounded-circle">
                                         </div>
 
                                         <div class="col-12">
@@ -56,20 +56,6 @@
                                             <input type="text" required class="form-control" id="inputNanme4"
                                                 name="beli_a" value="{{ $currency->beli_a }}"
                                                 placeholder="Silahkan inputkan Beli a">
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="inputNanme4" class="form-label">Jual b</label>
-                                            <input type="text" required class="form-control" id="inputNanme4"
-                                                name="jual_b" value="{{ $currency->jual_b }}"
-                                                placeholder="Silahkan inputkan Jual b">
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="inputNanme4" class="form-label">Beli b</label>
-                                            <input type="text" required class="form-control" id="inputNanme4"
-                                                name="beli_b" value="{{ $currency->beli_b }}"
-                                                placeholder="Silahkan inputkan Beli b">
                                         </div>
 
                                         <div class="col-12">
