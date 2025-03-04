@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Models\Currency;
 use App\Models\OriginCustomer;
 use App\Models\Properties;
 use App\Models\TransactionCustomer;
@@ -133,20 +134,50 @@ trait AutoSync
             if ($response->successful()) {
                 if (!empty($response->collect('data'))) {
                     foreach ($response->collect('data') as $key => $value) {
+
+
                         $record = [];
                         $record['name'] = $value['name'];
                         $record['jual_a'] = $value['jual'];
                         $record['beli_a'] = $value['beli'];
+                        $record['jual_b'] = "0";
+                        $record['beli_b'] = "0";
                         $record['show'] = true;
 
-                        $contents = file_get_contents($value['url_flag']);
-                        Storage::disk('local')->put($value['url_flag'], $contents);
+                        $existFile = public_path("flag/{$value['url']}");
+                        if (!file_exists($existFile)) {
+                            dd($existFile);
+                            $url = $value['url_flag'];
+                            $destination_folder = public_path('flag');
+                            $newfname = $destination_folder . "/" . $value['url']; //set your file ext
+                            $file = fopen($url, "rb");
+                            if ($file) {
+                                $newf = fopen($newfname, "a"); // to overwrite existing file
+                                if ($newf)
+                                    while (!feof($file)) {
+                                        fwrite($newf, fread($file, 1024 * 8), 1024 * 8);
+                                    }
+                            }
+                            if ($file) {
+                                fclose($file);
+                            }
+                            if ($newf) {
+                                fclose($newf);
+                            }
+                        }
+
+                        $record['flag_url'] = "flag/{$value['url']}";
+                        if ($currency = Currency::where('name', $value['name'])->first()) {
+                            $currency->update($record);
+                        } else {
+                            Currency::create($record);
+                        }
                     }
                 }
             } else {
             }
         } catch (\Throwable $th) {
-            //     throw $th;
+            // throw $th;
         }
     }
 }

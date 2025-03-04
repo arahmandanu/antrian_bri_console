@@ -145,7 +145,7 @@ class CurrencyController extends Controller
     {
         $code = 200;
         $request = $this->syncCurrencyFromServer();
-        dd($request);
+        flash()->success("Dalam Progress Sync");
         return response()->json([
             'status' => 'succes',
             'message' => 'Success sync currency'

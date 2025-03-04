@@ -26,8 +26,14 @@
                                 <a type="button" class="btn btn-success btn-l" href="{{ route('ConsoleCreateCurrency') }}">
                                     <i class="bx bx-list-plus"></i> Tambah Currency</a>
 
-                                <button type="button" class="btn btn-primary btn-l" onclick="syncCurrency()">
-                                    <i class='bx bx-sync'></i> Sync</button>
+                                <button type="button" class="btn btn-primary btn-l" onclick="syncCurrency(this)">
+                                    <i id="iconSync" class='bx bx-sync'></i>
+                                    <div id="loadingSync" style="display: none" class="spinner-border spinner-border-sm"
+                                        role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    Sync
+                                </button>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
@@ -99,10 +105,20 @@
             });
         });
 
-        function syncCurrency() {
+        function syncCurrency(obj) {
+            loading = obj.querySelector('#loadingSync');
+            iconSync = obj.querySelector('#iconSync');
+
+            obj.classList.add("disabled");
+            iconSync.style.setProperty("display", "none");
+            loading.style.setProperty("display", "");
+
             $.get("{{ route('ConsoleSyncCurrency') }}", {},
                 function(data, textStatus, jqXHR) {
-                    console.log(data);
+                    obj.classList.remove("disabled");
+                    iconSync.style.setProperty("display", "");
+                    loading.style.setProperty("display", "none");
+                    location.reload();
                 },
                 "json"
             );
