@@ -504,7 +504,7 @@
             }, 600000);
             setInterval(() => {
                 autoSyncCurrenciesOnDashboard();
-            }, 10000);
+            }, 6000000);
         });
 
         function sync_reporting() {
