@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\DashboardKiosController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TempCallWebController;
-use App\Models\Properties;
+use App\Http\Controllers\ConsoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +36,9 @@ Route::group(['prefix' => 'queue'], function () {
     Route::get('/next', [TempCallWebController::class, 'nextQueue'])->name('GetNextQueueTempCallWeb');
     Route::get('/report', [TempCallWebController::class, 'reportQueue'])->name('reportQueue');
 });
-
+Route::group(['prefix' => 'console'], function () {
+    Route::get('/currency/{currency}', [ConsoleController::class, 'listCurrency'])->name('GetDetailCurrency');
+});
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
 
 Route::prefix('/kios')->group(function () {

@@ -247,7 +247,7 @@
 
                                                     <tbody>
                                                         @forelse ($currencies as $currency)
-                                                            <tr>
+                                                            <tr data_id={{ $currency->id }}>
                                                                 <td>
                                                                     <div class="d-flex flex-row text-center">
                                                                         <div class="p-2"><img
@@ -271,7 +271,7 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="5">
+                                                                <td colspan="3">
                                                                     <h2>-</h2>
                                                                 </td>
                                                             </tr>
@@ -502,6 +502,9 @@
             setInterval(() => {
                 autoSyncCurrencies()
             }, 600000);
+            setInterval(() => {
+                autoSyncCurrenciesOnDashboard();
+            }, 10000);
         });
 
         function sync_reporting() {
@@ -849,6 +852,43 @@
                         st = undefined;
                         sb = undefined;
                     }
+                });
+            }
+        }
+
+        function autoSyncCurrenciesOnDashboard() {
+            var ids = $('.table-currency').find('tbody tr')
+            if (ids.length > 0) {
+                $.each(ids, function(indexInArray, valueOfElement) {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('GetDetailCurrency', '') }}" + '/' + valueOfElement.getAttribute(
+                            'data_id'),
+                        data: {},
+                        dataType: "JSON",
+                        success: function(data, textStatus, jqXHR) {
+                            if (jqXHR.status == 200) {
+                                if (data.hasOwnProperty("data")) {
+                                    if (data.data.hasOwnProperty('beli_a')) {
+                                        if (data.data.beli_a) {
+                                            var beli_a = valueOfElement.getElementsByTagName('td')[1];
+                                            a = beli_a.getElementsByTagName('h3')[0];
+                                            a.innerHTML = data.data.beli_a;
+                                        }
+                                    }
+
+                                    if (data.data.hasOwnProperty('jual_a')) {
+                                        if (data.data.jual_a) {
+                                            var jual_a = valueOfElement.getElementsByTagName('td')[2];
+                                            b = jual_a.getElementsByTagName('h3')[0];
+                                            b.innerHTML = data.data.jual_a;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    });
                 });
             }
         }
