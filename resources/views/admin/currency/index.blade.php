@@ -23,13 +23,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">Daftar <span>Currency</span></h5>
-                                <a type="button" class="btn btn-success btn-lg"
-                                    href="{{ route('ConsoleCreateCurrency') }}">
+                                <a type="button" class="btn btn-success btn-l" href="{{ route('ConsoleCreateCurrency') }}">
                                     <i class="bx bx-list-plus"></i> Tambah Currency</a>
 
-                                <a type="button" class="btn btn-primary btn-lg"
-                                    href="{{ route('ConsoleCreateCurrency') }}">
-                                    <i class='bx bx-sync'></i> Sync</a>
+                                <button type="button" class="btn btn-primary btn-l" onclick="syncCurrency()">
+                                    <i class='bx bx-sync'></i> Sync</button>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
@@ -100,6 +98,15 @@
                 window.location.href = "{{ route('ConsoleIndexListSukuBunga') }}" + '?id=' + this.value;
             });
         });
+
+        function syncCurrency() {
+            $.get("{{ route('ConsoleSyncCurrency') }}", {},
+                function(data, textStatus, jqXHR) {
+                    console.log(data);
+                },
+                "json"
+            );
+        }
 
         function deleteCurrency(id) {
             Swal.fire({

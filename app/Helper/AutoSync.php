@@ -6,6 +6,7 @@ use App\Models\OriginCustomer;
 use App\Models\Properties;
 use App\Models\TransactionCustomer;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 trait AutoSync
 {
@@ -111,5 +112,41 @@ trait AutoSync
         }
 
         return [$success, $message, $status];
+    }
+
+    public function syncCurrencyFromServer()
+    {
+        $onlineApp = config('site.onlineApp');
+        $url = config('site.urlOnlineApp');
+        $success = false;
+        if (empty($url) || !$onlineApp) {
+            return [$success, "Auto Sync is disabled!"];
+        }
+        $url2 = $url . "/api/currencies/list";
+        $response = Http::get($url2);
+        try {
+            $response = Http::connectTimeout(1)
+                ->timeout(3)
+                ->accept('application/json')
+                ->get($url2);
+
+            if ($response->successful()) {
+                if (!empty($response->collect('data'))) {
+                    foreach ($response->collect('data') as $key => $value) {
+                        $record = [];
+                        $record['name'] = $value['name'];
+                        $record['jual_a'] = $value['jual'];
+                        $record['beli_a'] = $value['beli'];
+                        $record['show'] = true;
+
+                        $contents = file_get_contents($value['url_flag']);
+                        Storage::disk('local')->put($value['url_flag'], $contents);
+                    }
+                }
+            } else {
+            }
+        } catch (\Throwable $th) {
+            //     throw $th;
+        }
     }
 }

@@ -86,6 +86,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainCo
         Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
         Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
         Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');
+        Route::get('/sync_now', [CurrencyController::class, 'syncNow'])->name('ConsoleSyncCurrency');
     });
 
     Route::prefix('properties')->group(function () {

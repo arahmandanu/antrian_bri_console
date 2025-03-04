@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class CurrencyController extends Controller
@@ -137,6 +138,17 @@ class CurrencyController extends Controller
 
         return response()->json([
             'status' => $status,
+        ], $code);
+    }
+
+    public function syncNow(Request $request)
+    {
+        $code = 200;
+        $request = $this->syncCurrencyFromServer();
+        dd($request);
+        return response()->json([
+            'status' => 'succes',
+            'message' => 'Success sync currency'
         ], $code);
     }
 }
