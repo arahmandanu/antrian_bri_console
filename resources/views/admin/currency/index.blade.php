@@ -26,6 +26,10 @@
                                 <a type="button" class="btn btn-success btn-lg"
                                     href="{{ route('ConsoleCreateCurrency') }}">
                                     <i class="bx bx-list-plus"></i> Tambah Currency</a>
+
+                                <a type="button" class="btn btn-primary btn-lg"
+                                    href="{{ route('ConsoleCreateCurrency') }}">
+                                    <i class='bx bx-sync'></i> Sync</a>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
