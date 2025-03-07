@@ -168,7 +168,9 @@ trait AutoSync
 
                         $record['flag_url'] = "flag/{$value['url']}";
                         if ($currency = Currency::where('name', $value['name'])->first()) {
-                            $currency->update($record);
+                            if ($currency->show) {
+                                $currency->update($record);
+                            }
                         } else {
                             Currency::create($record);
                         }
