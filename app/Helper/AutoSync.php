@@ -134,8 +134,6 @@ trait AutoSync
             if ($response->successful()) {
                 if (!empty($response->collect('data'))) {
                     foreach ($response->collect('data') as $key => $value) {
-
-
                         $record = [];
                         $record['name'] = $value['name'];
                         $record['jual_a'] = $value['jual'];
@@ -146,9 +144,11 @@ trait AutoSync
 
                         $existFile = public_path("flag/{$value['url']}");
                         if (!file_exists($existFile)) {
-                            dd($existFile);
                             $url = $value['url_flag'];
                             $destination_folder = public_path('flag');
+                            if (!file_exists($destination_folder)) {
+                                mkdir($destination_folder, 0777, true);
+                            }
                             $newfname = $destination_folder . "/" . $value['url']; //set your file ext
                             $file = fopen($url, "rb");
                             if ($file) {
