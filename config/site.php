@@ -10,7 +10,8 @@ return [
         'allowed' => true
     ],
     'onlineApp' => true,
-    'urlOnlineApp' => 'https://bri-antrian.online',
+    // 'urlOnlineApp' => 'https://bri-antrian.online',
+    'urlOnlineApp' => 'localhost/antrian_bri',
     // Yang bisa disetting di bawah ini
     'versionCaller' => 'v2',
     'printerEnabled' => false,

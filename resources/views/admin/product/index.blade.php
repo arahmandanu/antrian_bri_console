@@ -23,9 +23,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">Daftar <span>/Product</span></h5>
-                                <a type="button" class="btn btn-success btn-lg"
+                                <a type="button" class="btn btn-success btn-sm"
                                     href="{{ route('ConsoleCreateProduct') }}"><i class="bx bxs-save"></i> Tambah
                                     Product</a>
+                                <button type="button" class="btn btn-success btn-sm" onclick="syncProduct()"><i
+                                        class="bx bx-sync"></i> Sync</button>
                                 <hr>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-striped" id="myTable">
@@ -43,7 +45,9 @@
                                         @foreach ($listProducts as $listProduct)
                                             <tr>
                                                 <td>{{ $listProduct->display_number }}</td>
-                                                <td>{{ Str::upper($listProduct->name) }}</td>
+                                                <td><a
+                                                        href="{{ route('ConsoleIndexListSukuBunga', ['id' => $listProduct->id]) }}">{{ Str::upper($listProduct->name) }}</a>
+                                                </td>
                                                 <td style="text-align: center">
                                                     @if ($listProduct->show == '1')
                                                         <span class='badge bg-success'>yes</span>
@@ -85,6 +89,18 @@
                 searching: true
             });
         });
+
+        function syncProduct() {
+            $.ajax({
+                type: "get",
+                url: "{{ route('ConsoleSyncProduct') }}",
+                data: {},
+                dataType: "json",
+                success: function(data, textStatus, xhr) {
+                    console.log(data);
+                }
+            });
+        }
 
         function deleteProduct(id) {
             Swal.fire({

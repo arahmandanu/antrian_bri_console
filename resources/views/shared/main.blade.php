@@ -149,13 +149,18 @@
                                                                             <table class="table my-table-product">
                                                                                 <tbody>
                                                                                     @forelse ($item->productDetails as $proDet)
-                                                                                        <tr>
+                                                                                        <tr
+                                                                                            data_id={{ $proDet->id }}>
                                                                                             <td>
-                                                                                                <h2>{{ Str::upper($proDet->value) }}
+                                                                                                <h2>
+                                                                                                    tes
+                                                                                                    {{-- {{ Str::upper($proDet->value) }} --}}
                                                                                                 </h2>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <h2>{{ Str::upper($proDet->suku_bunga) }}
+                                                                                                <h2>
+                                                                                                    tes
+                                                                                                    {{-- {{ Str::upper($proDet->suku_bunga) }} --}}
                                                                                                 </h2>
                                                                                             </td>
                                                                                         </tr>
@@ -505,7 +510,41 @@
             setInterval(() => {
                 autoSyncCurrenciesOnDashboard();
             }, 6000000);
+            var productTable = $('table.my-table-product');
+            if (productTable.length > 0) {
+                setInterval(() => {
+                    syncProductTable(productTable);
+                }, 6000000);
+                // syncProductTable(productTable);
+            }
         });
+
+        function syncProductTable(tableProducts) {
+            $.each(tableProducts, function(indexInArray, tableProduct) {
+                $.each(tableProduct.rows, function(indexInArray, tr) {
+                    var id = tr.getAttribute('data_id');
+                    if (id !== null) {
+                        $.get("{{ route('product_detail.show', '') }}" + '/' + id, {},
+                            function(data, textStatus, jqXHR) {
+                                if (jqXHR.status == 200 && data.hasOwnProperty('data') && !$
+                                    .isEmptyObject(data.data)) {
+                                    var html1 = "";
+                                    var html2 = "";
+
+                                    if (tr.children[0]) {
+                                        tr.children[0].children[0].innerHTML = data.data.value;
+                                    }
+                                    if (tr.children[1]) {
+                                        tr.children[1].children[0].innerHTML = data.data.suku_bunga;
+                                    }
+                                }
+                            },
+                            "JSON"
+                        );
+                    }
+                });
+            });
+        }
 
         function sync_reporting() {
             $.ajax({

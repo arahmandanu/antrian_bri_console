@@ -3,9 +3,12 @@
 namespace App\Helper;
 
 use App\Models\Currency;
+use App\Models\MasterProduct;
 use App\Models\OriginCustomer;
+use App\Models\ProductDetail;
 use App\Models\Properties;
 use App\Models\TransactionCustomer;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -181,5 +184,77 @@ trait AutoSync
         } catch (\Throwable $th) {
             // throw $th;
         }
+    }
+
+    public function syncProductFromServer()
+    {
+        $onlineApp = config('site.onlineApp');
+        $url = config('site.urlOnlineApp');
+        $success = false;
+        if (empty($url) || !$onlineApp) {
+            return [$success, "Auto Sync is disabled!"];
+        }
+        $url2 = $url . "/api/product/detail";
+        $response = Http::get($url2);
+        try {
+            $response = Http::connectTimeout(1)
+                ->timeout(3)
+                ->accept('application/json')
+                ->get($url2);
+            $status = $response->status();
+
+            if ($response->successful()) {
+                $success = true;
+                $message = 'Success sync product';
+                if (!empty($response->collect('data'))) {
+                    $used = $response->collect('data')->pluck('name');
+
+                    // REMOVE OTHER
+                    MasterProduct::whereNotIn('name', $used)->delete();
+                    $tes = [];
+                    foreach ($response->collect('data') as $value) {
+                        if ($product = MasterProduct::where('name', $value['name'])->first()) {
+                            if ($product->display_number != $value['display_number']) {
+                                $product->update(
+                                    [
+                                        'display_number' => $value['display_number'],
+                                        'show' => true,
+                                    ]
+                                );
+                            }
+                        } else {
+                            $newProduct = Arr::except($value, ['data']);
+                            $product = MasterProduct::create($newProduct);
+                        }
+
+                        $productDetails = $value['data'];
+                        foreach ($productDetails as $productDetail) {
+                            $a = ProductDetail::firstOrCreate(
+                                [
+                                    'value' => $productDetail['value'],
+                                    'master_product_id' => $product->id
+                                ],
+                                [
+                                    'suku_bunga' => $productDetail['suku_bunga'],
+                                    'display_number' => $productDetail['display_number'],
+
+                                ]
+                            );
+
+                            array_push($tes, $a);
+                        }
+                    }
+                }
+            } else {
+                $success = false;
+                $message = 'Fail sync product';
+            }
+        } catch (\Throwable $th) {
+            $success = false;
+            $message = $th->getMessage();
+            $status = $th->getCode();
+        }
+
+        return [$success, $message, $status];
     }
 }
