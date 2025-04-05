@@ -153,14 +153,12 @@
                                                                                             data_id={{ $proDet->id }}>
                                                                                             <td>
                                                                                                 <h2>
-                                                                                                    tes
-                                                                                                    {{-- {{ Str::upper($proDet->value) }} --}}
+                                                                                                    {{ Str::upper($proDet->value) }}
                                                                                                 </h2>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <h2>
-                                                                                                    tes
-                                                                                                    {{-- {{ Str::upper($proDet->suku_bunga) }} --}}
+                                                                                                    {{ Str::upper($proDet->suku_bunga) }}
                                                                                                 </h2>
                                                                                             </td>
                                                                                         </tr>
