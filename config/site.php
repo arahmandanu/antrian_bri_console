@@ -19,5 +19,6 @@ return [
     'intervalAutoSyncReport' => 5000,
     'ajaxTimeOut' => 2000,
     'volumeIklan' => 0.2,
-    'delaySound' => 6
+    'delaySound' => 6,
+    'queueOfflineIsFirst' => false,
 ];
