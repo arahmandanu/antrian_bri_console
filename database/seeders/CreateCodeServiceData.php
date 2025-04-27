@@ -28,6 +28,12 @@ class CreateCodeServiceData extends Seeder
                 'CurrentQNo' => 0,
                 'last_queue' => 0,
             ],
+            [
+                'Name' => 'Pegadaian',
+                'Initial' => CodeServiceEnum::PEGADAIAN,
+                'CurrentQNo' => 0,
+                'last_queue' => 0,
+            ],
         ]);
     }
 }

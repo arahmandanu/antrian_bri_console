@@ -168,9 +168,10 @@ class DashboardKiosController extends Controller
 
     public function createAntrian(Request $request)
     {
+        $keys = implode(',', CodeServiceEnum::toArray());
         Validator::make($request->all(), [
             'trx_param' => 'required|exists:trxparam,TrxCode',
-            'unit_service' => 'required|in:A,B',
+            'unit_service' => "required|in:$keys",
         ])->validate();
 
         if (empty($properties = Properties::first())) {
@@ -292,22 +293,31 @@ class DashboardKiosController extends Controller
         return view('kios.index', [
             'tellerCode' => CodeServiceEnum::TELLER,
             'CsCode' => CodeServiceEnum::CS,
+            'PegadaianCode' => CodeServiceEnum::PEGADAIAN,
         ]);
     }
 
-    public function menuTeller()
+    public function LoadMenuKios(Request $request, Codeservice $codeService)
     {
-        return view('kios.teller', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::TELLER)->orderBy('TrxName', 'asc')->get(),
+        return view('kios.all_antrian', [
+            'buttons' => TransactionParam::show()->where('UnitService', '=', $codeService->Initial)->orderBy('TrxName', 'asc')->get(),
+            'codeService' => $codeService->Initial
         ]);
     }
 
-    public function menuCs()
-    {
-        return view('kios.cs', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
-        ]);
-    }
+    // public function menuTeller()
+    // {
+    //     return view('kios.teller', [
+    //         'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::TELLER)->orderBy('TrxName', 'asc')->get(),
+    //     ]);
+    // }
+
+    // public function menuCs()
+    // {
+    //     return view('kios.cs', [
+    //         'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
+    //     ]);
+    // }
 
     public function showDigitalTicket($baseDate, $ticketID)
     {

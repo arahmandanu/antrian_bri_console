@@ -45,6 +45,7 @@ Route::prefix('/kios')->group(function () {
     Route::get('', [DashboardKiosController::class, 'index'])->name('DashboardKios');
     Route::get('/menu_main_index', [DashboardKiosController::class, 'menuMainIndex'])->name('DashboardKiosMenuMainIndex');
     Route::get('/teller', [DashboardKiosController::class, 'menuTeller'])->name('DashboardKiosTeller');
+    Route::get('/teller/{codeService}', [DashboardKiosController::class, 'loadMenuKios'])->name('DashboardLoadMenuKios');
     Route::get('/cs', [DashboardKiosController::class, 'menucs'])->name('DashboardKiosCs');
     Route::post('/create_antrian', [DashboardKiosController::class, 'createAntrian'])->middleware('json.only')->name('DashboardKiosCreateAntrianTeller');
     Route::get('/print_online_queue', [DashboardKiosController::class, 'printOnlineQueue'])->middleware('json.only')->name('DashboardKiosPrintOnlineQueue');
