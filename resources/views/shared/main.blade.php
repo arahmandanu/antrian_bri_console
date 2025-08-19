@@ -632,6 +632,10 @@
                             onCallQueue = false;
                         }, 500)
                     }
+                } else {
+                    setTimeout(() => {
+                        onCallQueue = false;
+                    }, 500);
                 }
             } else {
                 setTimeout(() => {
