@@ -40,7 +40,7 @@ Route::group(['prefix' => 'console'], function () {
     Route::get('/currency/{currency}', [ConsoleController::class, 'listCurrency'])->name('GetDetailCurrency');
 });
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
-
+Route::get('/sync_now', [CurrencyController::class, 'syncNow'])->name('ConsoleSyncCurrency');
 Route::prefix('/kios')->group(function () {
     Route::get('', [DashboardKiosController::class, 'index'])->name('DashboardKios');
     Route::get('/menu_main_index', [DashboardKiosController::class, 'menuMainIndex'])->name('DashboardKiosMenuMainIndex');
@@ -89,7 +89,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainCo
         Route::get('/edit/{currency}', [CurrencyController::class, 'edit'])->name('ConsoleEditCurrency');
         Route::put('/update/{currency}', [CurrencyController::class, 'update'])->name('ConsoleUpdateCurrency');
         Route::delete('/delete/{currency}', [CurrencyController::class, 'destroy'])->name('ConsoleDestroyCurrency');
-        Route::get('/sync_now', [CurrencyController::class, 'syncNow'])->name('ConsoleSyncCurrency');
     });
 
     Route::prefix('properties')->group(function () {
