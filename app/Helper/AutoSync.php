@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Http\Controllers\MainController;
 use App\Models\Currency;
 use App\Models\MasterProduct;
 use App\Models\OriginCustomer;
@@ -298,6 +299,7 @@ trait AutoSync
     public function videoDownload($video, $destination_folder)
     {
         $canCreate = false;
+        $newFolder = true;
         if (!is_dir(public_path($destination_folder))) {
             if (mkdir(public_path($destination_folder), 0777, true)) {
                 $canCreate = true;
@@ -306,6 +308,7 @@ trait AutoSync
             }
         } else {
             $canCreate = true;
+            $newFolder = false;
         }
 
         if ($canCreate) {
@@ -385,6 +388,23 @@ trait AutoSync
                         }
                         $message = 'Error analyzing file: length or filesize not detected properly.';
                         $success = false;
+                    }
+
+                    if ($success) {
+                        if (!$newFolder) {
+                            try {
+                                // Hapus file lain di folder kecuali file yang baru diunduh
+                                $entries = scandir(public_path($destination_folder));
+                                $listFile = array_diff($entries, array('.', '..'));
+                                foreach ($listFile as $value) {
+                                    if ($value != $local_file_name) {
+                                        unlink(public_path($destination_folder . $value));
+                                    }
+                                }
+                            } catch (\Throwable $th) {
+                                //throw $th;
+                            }
+                        }
                     }
                 }
             }

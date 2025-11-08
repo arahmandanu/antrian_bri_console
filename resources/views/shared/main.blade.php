@@ -32,7 +32,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <video class="rounded" playsinline muted controls autoplay
                                                     id="myVideo" class="object-fit-none"
-                                                    src="{{ asset("video_online/$item") }}" type="video/mov">
+                                                    src="{{ asset($video_online ? "video_online/$item" : "video/$item") }}">
 
                                                     unsupported video! {{ $item }}
                                                 </video>
@@ -433,25 +433,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- END OF INCOMING ANTRIAN --}}
-
-                    {{-- INI KETIKA ADA ANTRIAN MASUK --}}
-                    {{-- <div class="col-md-12 container-fluid">
-                        <div class="row counter-parent right-bar-caller">
-                            <div class="col-12 caller-div position-relative">
-                                <div class="col-12" style="padding: 10px">
-                                    <p class="display-5">Antrian Nomor</p>
-                                    <span class="display-1 counter-color">A001</span>
-                                </div>
-
-                                <div class="col-12" style="padding: 10px">
-                                    <p class="display-5">Silahkan Menuju Ke</p>
-                                    <span class="display-1 counter-color">02</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    {{-- END ANTRIAN MASUK --}}
                 </div>
             </div>
         </div>
@@ -487,7 +468,10 @@
         var all = $('div#corousel-parent');
         var currencyTable = $('div.table-currency');
         var currencyTableST = currencyTable.scrollTop();
-        var appIsOnline = {{ config('site.onlineApp') }};
+        var appIsOnline = @json(config('site.onlineApp', false));
+        var enable_online_videos = true;
+        let pollingIntervalOnlineVideos = null;
+
         $(document).ready(function() {
             init_iklan_video(0);
             product_corousel(true);
@@ -497,25 +481,60 @@
             setInterval(() => {
                 get_next_queue();
             }, intervalNextQueue);
-            if (appIsOnline !== '') {
+            if (appIsOnline) {
                 setInterval(() => {
-                    sync_reporting()
+                    sync_reporting();
                 }, interva_auto_sync_report);
+
+                startPoolSyncVidoes();
             }
             setInterval(() => {
                 autoSyncCurrencies()
             }, 600000);
+
             setInterval(() => {
                 autoSyncCurrenciesOnDashboard();
             }, 6000000);
+
             var productTable = $('table.my-table-product');
             if (productTable.length > 0) {
                 setInterval(() => {
                     syncProductTable(productTable);
                 }, 6000000);
-                // syncProductTable(productTable);
             }
         });
+
+        function startPoolSyncVidoes() {
+            if (!pollingIntervalOnlineVideos) {
+                pollingIntervalOnlineVideos = setInterval(syc_online_videos,
+                    10000); // 5 menit sekali cek video iklan online
+            }
+        }
+
+        function stopPoolSyncVideos() {
+            if (pollingIntervalOnlineVideos) {
+                clearInterval(pollingIntervalOnlineVideos);
+                pollingIntervalOnlineVideos = null;
+            }
+        }
+
+        function syc_online_videos() {
+            if (enable_online_videos == false) return;
+
+            stopPoolSyncVideos();
+            enable_online_videos == false
+            $.ajax({
+                type: "GET",
+                url: "{{ route('ConsoleSyncVideos') }}",
+                data: {},
+                dataType: "json",
+                success: function(data, status, xhr) {},
+                error: function(xhr, status, error) {
+                    enable_online_videos = true;
+                    startPoolSyncVidoes();
+                }
+            });
+        }
 
         function syncProductTable(tableProducts) {
             $.each(tableProducts, function(indexInArray, tableProduct) {
@@ -585,6 +604,8 @@
 
         function get_next_queue() {
             if (onCallQueue != true) {
+                onCallQueue = true;
+
                 $.ajax({
                     type: "GET",
                     url: "{{ route('GetNextQueueTempCallWeb') }}",
@@ -597,12 +618,13 @@
                     dataType: "json",
                     success: function(data, status, xhr) {
                         if (xhr.status == 200) {
-                            if (data.queue === null) {} else {
-                                onCallQueue = true;
+                            if (data.queue === null) {
+                                onCallQueue = false;
+                            } else {
                                 show_next_queue(data.queue);
                             }
                         } else {
-                            console.log('error please contact your admin');
+                            onCallQueue = false;
                         }
                     }
                 });

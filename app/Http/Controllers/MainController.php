@@ -10,8 +10,6 @@ use App\Models\MasterProduct;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Js;
 
 class MainController extends Controller
 {
@@ -26,63 +24,128 @@ class MainController extends Controller
      */
     public function index()
     {
-        $listFile = scandir(public_path('/video_online'));
+        // --- 1. INISIALISASI & KONSTANTA ---
+        // Pastikan VIDEO_ONLINE_PATH, VIDEO_EXTENSION, dan IMAGE_EXTENSION adalah konstanta kelas yang benar.
+        $dirVideoOnline = public_path($this::VIDEO_ONLINE_PATH);
         $videos = [];
-        foreach ($listFile as $key => $value) {
-            $title = explode('.', $value);
-            if (in_array(end($title), $this::VIDEO_EXTENSION)) {
-                array_push($videos, $value);
+        $videoOnline = false; // Variabel diperbaiki dari $videOnline
+
+        // --- 2. LOGIKA VIDEO ONLINE (Prioritas Utama & Pembersihan) ---
+        if (is_dir($dirVideoOnline)) {
+            $localVideos = [];
+            // Menggunakan File::files() (lebih Laravel-ish) atau scandir()
+            // Menggunakan scandir() sesuai permintaan asli
+            $listFile = array_diff(scandir($dirVideoOnline), ['.', '..']); // Filter . dan ..
+
+            foreach ($listFile as $value) {
+                $extension = pathinfo($value, PATHINFO_EXTENSION);
+
+                if (in_array(strtolower($extension), $this::VIDEO_EXTENSION)) {
+                    $full_path = $dirVideoOnline . DIRECTORY_SEPARATOR . $value;
+
+                    // Perlu memastikan filemtime() tidak error (misalnya permission denied)
+                    $mtime = file_exists($full_path) ? filemtime($full_path) : 0;
+
+                    $localVideos[] = [
+                        'filename' => $value,
+                        'path' => $full_path,
+                        'mtime' => $mtime,
+                    ];
+                }
+            }
+
+            if (!empty($localVideos)) {
+                // Urutkan berdasarkan tanggal modifikasi (mtime) secara menurun (terbaru)
+                usort($localVideos, function ($a, $b) {
+                    return $b['mtime'] - $a['mtime'];
+                });
+
+                // Ambil video terbaru (index 0) dan hapus sisanya
+                foreach ($localVideos as $key => $video) {
+                    if ($key === 0) {
+                        $videos[] = $video['filename']; // Hanya satu video terbaru yang disimpan
+                    } else {
+                        try {
+                            unlink($video['path']);
+                        } catch (\Exception $e) {
+                            // Log kesalahan jika unlink gagal (PENTING untuk debugging permission)
+                            // \Log::warning("Gagal menghapus file lama: " . $video['path'] . " Error: " . $e->getMessage());
+                        }
+                    }
+                }
+
+                // Set flag hanya jika ada video yang disimpan
+                if (!empty($videos)) {
+                    $videoOnline = true;
+                }
             }
         }
-        // dd(fopen(public_path('/video_online/' . $videos[0]), 'rb'));
-        $listImages = scandir(public_path('/iklan_image'));
+
+        // --- 3. LOGIKA VIDEO DEFAULT (Jika Video Online Kosong) ---
+        if (empty($videos)) {
+            $defaultDir = public_path('video');
+            $listFile = is_dir($defaultDir) ? array_diff(scandir($defaultDir), ['.', '..']) : [];
+
+            foreach ($listFile as $value) {
+                $extension = pathinfo($value, PATHINFO_EXTENSION);
+                if (in_array(strtolower($extension), $this::VIDEO_EXTENSION)) {
+                    $videos[] = $value;
+                }
+            }
+        }
+
+        // --- 4. LOGIKA GAMBAR (Iklan) ---
+        $imageDir = public_path('iklan_image');
+        $listImages = is_dir($imageDir) ? array_diff(scandir($imageDir), ['.', '..']) : [];
         $images = [];
-        foreach ($listImages as $key => $value) {
-            $title = explode('.', $value);
-            if (in_array(end($title), $this::IMAGE_EXTENSION)) {
-                array_push($images, $value);
+
+        foreach ($listImages as $value) {
+            $extension = pathinfo($value, PATHINFO_EXTENSION);
+            if (in_array(strtolower($extension), $this::IMAGE_EXTENSION)) {
+                $images[] = $value;
             }
         }
 
-        $data = [];
+        // --- 5. LOGIKA DATA PROPERTI & PRODUK/MATA UANG ---
         $properties = Properties::first();
-        if ($properties) {
-            if ($properties->show_product) {
-                $data['products'] = MasterProduct::Show()->get();
-            } else {
-                $data['products'] = [];
-            }
+        $data = []; // Gunakan array $data untuk menampung semua data view
 
-            if ($properties->show_currency) {
-                $data['currencies'] = Currency::show()->get();
-            } else {
-                $data['currencies'] = [];
-            }
-        } else {
-            $data['products'] = MasterProduct::Show()->get();
-            $data['currencies'] = Currency::show()->get();
-        }
+        // Menghindari error jika $properties null (jika tidak ada data di database)
+        $showProduct = $properties->show_product ?? true;
+        $showCurrency = $properties->show_currency ?? true;
 
+        // Logika Produk
+        $data['products'] = ($showProduct || !$properties) ? MasterProduct::Show()->get() : collect();
+
+        // Logika Mata Uang
+        $data['currencies'] = ($showCurrency || !$properties) ? Currency::show()->get() : collect();
+
+        // --- 6. LOGIKA DATA ANTREAN ---
+        // Menggunakan listNewest() dari TempCallWeb
         $listQueues = TempCallWeb::doneCalled()->listNewest()->take(3)->get();
-        $datalistQueues = [];
-        foreach ($listQueues as $key => $queue) {
-            array_push($datalistQueues, $queue);
-        }
 
-        $data['show_product'] = $properties->show_product ?? true;
-        $data['show_currency'] = $properties->show_currency ?? true;
-        $data['show_both'] = $data['show_product'] && $data['show_currency'];
+        // Langsung menggunakan collection/array dari model
+        $data['historyQueues'] = $listQueues->toArray();
+
+        // --- 7. FINAL DATA ASIGNMENT ---
+        $data['show_product'] = $showProduct;
+        $data['show_currency'] = $showCurrency;
+        $data['show_both'] = $showProduct && $showCurrency;
         $data['list_footer_text'] = FooterText::show()->get();
+
+        // Menggunakan null coalescing untuk nilai default
         $data['footer_flow'] = $properties->footer_flow ?? 'right';
         $data['videos'] = $videos;
+        $data['video_online'] = $videoOnline;
         $data['images'] = $images;
         $data['company_name'] = $properties->company_name ?? null;
-        $data['historyQueues'] = $datalistQueues;
-        $colors = FontColor::where('value', '!=', null)->get();
-        foreach ($colors as $key => $value) {
-            $data[$value->name] = $value->value;
-        }
 
+        // Tambahkan data warna (lebih ringkas menggunakan collect)
+        FontColor::where('value', '!=', null)->get()->each(function ($value) use (&$data) {
+            $data[$value->name] = $value->value;
+        });
+
+        // --- 8. RETURN VIEW ---
         return view('shared.main', $data);
     }
 
@@ -148,26 +211,30 @@ class MainController extends Controller
 
     public function syncVideos(Request $request)
     {
-        // abort_if(!$request->wantsJson(), 403, 'Invalid request!');
-
+        $status = 200;
         [$success, $message, $status, $body] = $this->getListVideos();
         if ($success && $status == 200) {
             $data = json_decode($body, true);
             if (!empty($data)) {
                 $data = $data[0];
                 if (file_exists(public_path($this::VIDEO_ONLINE_PATH . $data['title']))) {
+                    $message = 'Video iklan online sudah ada sebelumnya!';
                 } else {
-                    $response = $this->videoDownload($data, $this::VIDEO_ONLINE_PATH);
-                    dd($response);
+                    [$success, $message] = $this->videoDownload($data, $this::VIDEO_ONLINE_PATH);
+                    if ($success) {
+                        $message = 'Sinkronisasi video iklan online berhasil!';
+                    } else {
+                        $status = 422;
+                    }
                 }
             }
         }
 
         return response()->json([
-            'success' => true,
+            'success' => $status == 200,
             'message' => $message,
-            'status' => 200,
-        ], 200);
+            'status' => $status,
+        ], $status);
     }
 
     public function closeConsole(Request $request)
