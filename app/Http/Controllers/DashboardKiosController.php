@@ -62,12 +62,61 @@ class DashboardKiosController extends Controller
                 'error' => true,
             ], 405);
         }
+        $currentTime = now();
+        $properties = Properties::first();
+        if (empty($properties)) {
+            return response()->json([
+                'message' => 'Cabang unit tidak sesuai, silahkan ambil antrian baru!',
+                'error' => true,
+            ], 422);
+        }
 
-        $date = substr($barcode, 0, 8);
-        $companyId = substr($barcode, 8, 5);
-        $unitService = substr($barcode, 13, 1);
-        $antrian = substr($barcode, 14, 3);
-        $barcodeUnit = substr($barcode, 17, 4);
+        switch (strlen($properties->company_code)) {
+            case 1:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 1);
+                $unitService = substr($barcode, 9, 1);
+                $antrian = substr($barcode, 10, 3);
+                $barcodeUnit = substr($barcode, 13, 4);
+            case 2:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 2);
+                $unitService = substr($barcode, 10, 1);
+                $antrian = substr($barcode, 11, 3);
+                $barcodeUnit = substr($barcode, 14, 4);
+                break;
+            case 3:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 3);
+                $unitService = substr($barcode, 11, 1);
+                $antrian = substr($barcode, 12, 3);
+                $barcodeUnit = substr($barcode, 15, 4);
+                break;
+            case 4:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 4);
+                $unitService = substr($barcode, 12, 1);
+                $antrian = substr($barcode, 13, 3);
+                $barcodeUnit = substr($barcode, 16, 4);
+                break;
+            case 5:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 5);
+                $unitService = substr($barcode, 13, 1);
+                $antrian = substr($barcode, 14, 3);
+                $barcodeUnit = substr($barcode, 17, 4);
+                break;
+            case 5:
+                $date = substr($barcode, 0, 8);
+                $companyId = substr($barcode, 8, 6);
+                $unitService = substr($barcode, 14, 1);
+                $antrian = substr($barcode, 15, 3);
+                $barcodeUnit = substr($barcode, 18, 4);
+                break;
+            default:
+                $antrian = 0;
+                break;
+        }
 
         if ((int) $antrian == 0) {
             return response()->json([
@@ -76,10 +125,7 @@ class DashboardKiosController extends Controller
             ], 422);
         }
 
-        $currentTime = now();
-        $properties = Properties::first();
-
-        if (empty($properties) || $properties->company_code != $companyId) {
+        if ($properties->company_code != $companyId) {
             return response()->json([
                 'message' => 'Cabang unit tidak sesuai, silahkan ambil antrian baru!',
                 'error' => true,
@@ -111,18 +157,15 @@ class DashboardKiosController extends Controller
             ], 422);
         }
 
-        if (empty($barcodeUnit)) {
-            $trxParam = TransactionParam::where('UnitService', '=', $unitService)->first() ?? TransactionParam::where('TrxCode', '=', $barcodeUnit)->first();
-            if (empty($trxParam)) {
-                $trxParamCode = $barcodeUnit;
-                $trxParamService = '00:00:00';
-            } else {
-                $trxParamCode = $trxParam->TrxCode;
-                $trxParamService = $trxParam->Tservice ?? '00:00:00';
-            }
+        $trxParam = TransactionParam::where('UnitService', '=', $unitService)->first() ?? TransactionParam::where('TrxCode', '=', $barcodeUnit)->first();
+        if (empty($trxParam)) {
+            $trxParamCode = $barcodeUnit;
+            $trxParamService = '00:00:00';
+        } else {
+            $trxParamCode = $trxParam->TrxCode;
+            $trxParamService = $trxParam->Tservice ?? '00:00:00';
         }
 
-        $currentTime = now();
         $descTransaction = 'Antrian ' . $codeService->Name;
         $params = [
             'BaseDt' => $currentTime->isoFormat('OYMMDD'),
@@ -168,9 +211,10 @@ class DashboardKiosController extends Controller
 
     public function createAntrian(Request $request)
     {
+        $keys = implode(',', CodeServiceEnum::toArray());
         Validator::make($request->all(), [
             'trx_param' => 'required|exists:trxparam,TrxCode',
-            'unit_service' => 'required|in:A,B',
+            'unit_service' => "required|in:$keys",
         ])->validate();
 
         if (empty($properties = Properties::first())) {
@@ -199,7 +243,7 @@ class DashboardKiosController extends Controller
         // Use Online First
         $queueOnlineIsFirst = config('site.queueOfflineIsFirst', false);
         $responseFromServer = $this->generateNumberQueueOnlineOffline($properties, $request->trx_param, $request->unit_service, $currentTime, $currentQue->last_queue);
-        if ($responseFromServer[0] == true && $currentQue->is_reset_counter && $queueOnlineIsFirst == false) {
+        if ($responseFromServer[0] == true && $queueOnlineIsFirst == false) {
             // Todo adjust to get pure queue number
             $nextNumber = $responseFromServer[1];
             $myQueue = $responseFromServer[1];
@@ -292,22 +336,31 @@ class DashboardKiosController extends Controller
         return view('kios.index', [
             'tellerCode' => CodeServiceEnum::TELLER,
             'CsCode' => CodeServiceEnum::CS,
+            'PegadaianCode' => CodeServiceEnum::PEGADAIAN,
         ]);
     }
 
-    public function menuTeller()
+    public function LoadMenuKios(Request $request, Codeservice $codeService)
     {
-        return view('kios.teller', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::TELLER)->orderBy('TrxName', 'asc')->get(),
+        return view('kios.all_antrian', [
+            'buttons' => TransactionParam::show()->where('UnitService', '=', $codeService->Initial)->orderBy('TrxName', 'asc')->get(),
+            'codeService' => $codeService->Initial
         ]);
     }
 
-    public function menuCs()
-    {
-        return view('kios.cs', [
-            'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
-        ]);
-    }
+    // public function menuTeller()
+    // {
+    //     return view('kios.teller', [
+    //         'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::TELLER)->orderBy('TrxName', 'asc')->get(),
+    //     ]);
+    // }
+
+    // public function menuCs()
+    // {
+    //     return view('kios.cs', [
+    //         'buttons' => TransactionParam::show()->where('UnitService', '=', CodeServiceEnum::CS)->orderBy('TrxName', 'asc')->get(),
+    //     ]);
+    // }
 
     public function showDigitalTicket($baseDate, $ticketID)
     {

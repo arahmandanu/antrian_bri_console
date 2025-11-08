@@ -210,11 +210,13 @@
         }
 
         function getMenu(type) {
-            if (type === 'A') {
-                $('#list_buttons').load("{{ route('DashboardKiosTeller') }}");
-            } else {
-                $('#list_buttons').load("{{ route('DashboardKiosCs') }}");
-            }
+            // DashboardLoadMenuKios
+            $('#list_buttons').load("{{ route('DashboardLoadMenuKios', '') }}" + "/" + type);
+            // if (type === 'A') {
+            //     $('#list_buttons').load("{{ route('DashboardKiosTeller') }}");
+            // } else {
+            //     $('#list_buttons').load("{{ route('DashboardKiosCs') }}");
+            // }
         }
 
         function alertDevice(message) {
