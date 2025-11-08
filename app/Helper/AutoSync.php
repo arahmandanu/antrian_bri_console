@@ -8,6 +8,8 @@ use App\Models\OriginCustomer;
 use App\Models\ProductDetail;
 use App\Models\Properties;
 use App\Models\TransactionCustomer;
+use getID3;
+use getid3_aa;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -350,6 +352,40 @@ trait AutoSync
                 } else {
                     $message = "✅ Berhasil! File video telah diunduh dan disimpan di: " . $local_file_name;
                     $success = true;
+
+                    $getID3 = new getID3();
+                    $file_info = $getID3->analyze($local_path);
+                    // 1. Cek apakah ada error dari getID3
+                    if (isset($file_info['error'])) {
+                        if (file_exists($local_path)) {
+                            unlink($local_path); // Hapus file yang rusak
+                        }
+                        $message = 'Error analyzing file: ' . implode(', ', $file_info['error']);
+                        $success = false;
+                    }
+
+                    // 2. Cek apakah format file video dikenali
+                    if (!isset($file_info['video'])) {
+                        if (file_exists($local_path)) {
+                            unlink($local_path); // Hapus file yang rusak
+                        }
+                        $message = 'Error analyzing file: type not recognized as video.';
+                        $success = false;
+                    }
+
+                    // 3. Cek apakah durasi dan ukuran file terdeteksi
+                    // File yang rusak seringkali gagal mendeteksi durasi atau ukuran
+                    if (
+                        !isset($file_info['filesize']) ||
+                        !isset($file_info['playtime_seconds']) ||
+                        $file_info['playtime_seconds'] < 1 // Durasi minimal 1 detik
+                    ) {
+                        if (file_exists($local_path)) {
+                            unlink($local_path); // Hapus file yang rusak
+                        }
+                        $message = 'Error analyzing file: length or filesize not detected properly.';
+                        $success = false;
+                    }
                 }
             }
 

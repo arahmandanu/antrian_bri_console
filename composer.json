@@ -13,6 +13,7 @@
         "calcinai/php-imagick": "^0.1.2",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
+        "james-heinrich/getid3": "^1.9",
         "laracasts/flash": "^3.2",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
