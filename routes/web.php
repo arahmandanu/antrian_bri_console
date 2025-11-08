@@ -40,6 +40,8 @@ Route::group(['prefix' => 'console'], function () {
     Route::get('/currency/{currency}', [ConsoleController::class, 'listCurrency'])->name('GetDetailCurrency');
 });
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
+Route::get('/sync_videos', [MainController::class, 'syncVideos'])->name('ConsoleSyncVideos');
+
 Route::get('/sync_now', [CurrencyController::class, 'syncNow'])->name('ConsoleSyncCurrency');
 Route::prefix('/kios')->group(function () {
     Route::get('', [DashboardKiosController::class, 'index'])->name('DashboardKios');

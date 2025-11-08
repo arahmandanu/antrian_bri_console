@@ -32,7 +32,7 @@
                                                 class="video-container-{{ $show_product || $show_currency ? 'minimize' : 'full' }} rounded">
                                                 <video class="rounded" playsinline muted controls autoplay
                                                     id="myVideo" class="object-fit-none"
-                                                    src="{{ asset("video/$item") }}" type="video/mov">
+                                                    src="{{ asset("video_online/$item") }}" type="video/mov">
 
                                                     unsupported video! {{ $item }}
                                                 </video>

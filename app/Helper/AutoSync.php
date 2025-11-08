@@ -257,4 +257,106 @@ trait AutoSync
 
         return [$success, $message, $status];
     }
+
+    public function getListVideos()
+    {
+        $onlineApp = config('site.onlineApp');
+        $url = config('site.urlOnlineApp');
+        $success = false;
+        if (empty($url) || !$onlineApp) {
+            return [$success, "Auto Sync is disabled!"];
+        }
+
+        $url2 = $url . "/api/video_adds";
+        $response = Http::get($url2);
+        try {
+            $response = Http::connectTimeout(1)
+                ->timeout(3)
+                ->accept('application/json')
+                ->get($url2);
+
+            $status = $response->status();
+            if ($response->successful()) {
+                $success = true;
+                $message = 'Success sync product';
+                $body = $response->collect('data');
+            } else {
+                $success = false;
+                $message = 'Fail sync product';
+            }
+        } catch (\Throwable $th) {
+            $success = false;
+            $message = $th->getMessage();
+            $status = $th->getCode();
+        }
+
+        return [$success, $message, $status, $body ?? null];
+    }
+
+    public function videoDownload($video, $destination_folder)
+    {
+        $canCreate = false;
+        if (!is_dir(public_path($destination_folder))) {
+            if (mkdir(public_path($destination_folder), 0777, true)) {
+                $canCreate = true;
+            } else {
+                $message = "❌ Gagal membuat direktori '{public_path($destination_folder)}'. Periksa izin folder induk.";
+            }
+        } else {
+            $canCreate = true;
+        }
+
+        if ($canCreate) {
+            // 1. Opsi Penanganan untuk File Besar
+            // Tingkatkan batas waktu eksekusi skrip (misal: 5 menit)
+            set_time_limit(300);
+            // Tingkatkan batas memori jika diperlukan (walaupun cURL efisien, ini adalah fallback)
+            ini_set('memory_limit', '512M');
+
+            // 2. Definisi Path
+            $remote_url = $video['path_url'];
+            $local_file_name = $video['title']; // Nama file lokal yang Anda inginkan
+            $local_path = public_path($destination_folder) . $local_file_name; // Simpan di folder yang sama dengan script ini
+
+            // 3. Persiapan: Buka File Lokal untuk Penulisan
+            // File handle akan menjadi target output cURL
+            $file_handle = fopen($local_path, 'w');
+            $success = false;
+            if ($file_handle === false) {
+                $message = "❌ Gagal membuka file lokal untuk penulisan: " . $local_path;
+            }
+
+            // 4. Inisialisasi dan Konfigurasi cURL
+            $ch = curl_init($remote_url);
+
+            // cURL Options
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Pastikan response dikirimkan ke stream, bukan dikembalikan
+            curl_setopt($ch, CURLOPT_HEADER, 0); // Jangan sertakan header dalam output file
+            curl_setopt($ch, CURLOPT_FILE, $file_handle); // *** KUNCI: Arahkan output cURL ke file handle yang sudah dibuka ***
+
+            // Tambahkan User-Agent untuk mengatasi blokir (terutama jika file_get_contents gagal)
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+
+            // 5. Eksekusi dan Cek Error
+            $success = curl_exec($ch);
+
+            if ($success === false) {
+                $message = "❌ Error cURL saat mengunduh: " . curl_error($ch);
+            } else {
+                // Cek kode status HTTP (untuk memastikan file benar-benar ada)
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                if ($http_code != 200) {
+                    $message = "❌ Gagal: URL mengembalikan kode status HTTP " . $http_code . " (bukan 200 OK).";
+                } else {
+                    $message = "✅ Berhasil! File video telah diunduh dan disimpan di: " . $local_file_name;
+                    $success = true;
+                }
+            }
+
+            // 6. Penutupan
+            curl_close($ch);
+            fclose($file_handle);
+        }
+        return [$success ?? false, $message];
+    }
 }

@@ -10,13 +10,15 @@ use App\Models\MasterProduct;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Js;
 
 class MainController extends Controller
 {
     public const VIDEO_EXTENSION = ['mov', 'mp4', 'flv', 'mpg', 'mpeg', 'mpv'];
 
     public const IMAGE_EXTENSION = ['jpg', 'jpeg', 'giv', 'png', 'svg', 'webp'];
-
+    public const VIDEO_ONLINE_PATH = 'video_online/';
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +26,7 @@ class MainController extends Controller
      */
     public function index()
     {
-        $listFile = scandir(public_path('/video'));
+        $listFile = scandir(public_path('/video_online'));
         $videos = [];
         foreach ($listFile as $key => $value) {
             $title = explode('.', $value);
@@ -32,7 +34,7 @@ class MainController extends Controller
                 array_push($videos, $value);
             }
         }
-
+        // dd(fopen(public_path('/video_online/' . $videos[0]), 'rb'));
         $listImages = scandir(public_path('/iklan_image'));
         $images = [];
         foreach ($listImages as $key => $value) {
@@ -141,6 +143,30 @@ class MainController extends Controller
         return response()->json([
             'success' => true,
             'message' => $message,
+        ], 200);
+    }
+
+    public function syncVideos(Request $request)
+    {
+        // abort_if(!$request->wantsJson(), 403, 'Invalid request!');
+
+        [$success, $message, $status, $body] = $this->getListVideos();
+        if ($success && $status == 200) {
+            $data = json_decode($body, true);
+            if (!empty($data)) {
+                $data = $data[0];
+                if (file_exists(public_path($this::VIDEO_ONLINE_PATH . $data['title']))) {
+                } else {
+                    $response = $this->videoDownload($data, $this::VIDEO_ONLINE_PATH);
+                    dd($response);
+                }
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'status' => 200,
         ], 200);
     }
 
