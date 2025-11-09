@@ -21,4 +21,6 @@ return [
     'volumeIklan' => 0.2,
     'delaySound' => 6,
     'queueOfflineIsFirst' => false,
+    // TAMPILKAN TOMBOL PEGADAIAN
+    'withPegadaian' => false
 ];

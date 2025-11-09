@@ -333,11 +333,16 @@ class DashboardKiosController extends Controller
 
     public function menuMainIndex()
     {
-        return view('kios.index', [
+        $default = [
             'tellerCode' => CodeServiceEnum::TELLER,
-            'CsCode' => CodeServiceEnum::CS,
-            'PegadaianCode' => CodeServiceEnum::PEGADAIAN,
-        ]);
+            'CsCode' => CodeServiceEnum::CS
+        ];
+
+        if (config('site.withPegadaian', false)) {
+            $default['PegadaianCode'] = CodeServiceEnum::PEGADAIAN;
+        }
+
+        return view('kios.index', $default);
     }
 
     public function LoadMenuKios(Request $request, Codeservice $codeService)

@@ -23,15 +23,18 @@
         <h2 class="display-2 text-white" style="font-family: 'boxicons';">Customer Service</h2>
     </button>
 
-    <button onclick="getMenu('{{ $PegadaianCode }}')"
-        style="background: #053a6c;
+    @if (config('site.withPegadaian'))
+        <button onclick="getMenu('{{ $PegadaianCode }}')"
+            style="background: #053a6c;
         border: 0;
         background: none;
         box-shadow: none;
         border-radius: 0px;
         margin: 0">
-        <h2 class="display-2 text-white" style="font-family: 'boxicons';">Pegadaian</h2>
-    </button>
+            <h2 class="display-2 text-white" style="font-family: 'boxicons';">Pegadaian</h2>
+        </button>
+    @endif
+
 
     <style>
         .disabled-btn:focus {
