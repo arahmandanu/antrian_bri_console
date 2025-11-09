@@ -123,9 +123,12 @@ class MainController extends Controller
         // --- 6. LOGIKA DATA ANTREAN ---
         // Menggunakan listNewest() dari TempCallWeb
         $listQueues = TempCallWeb::doneCalled()->listNewest()->take(3)->get();
-
+        $datalistQueues = [];
+        foreach ($listQueues as $key => $queue) {
+            array_push($datalistQueues, $queue);
+        }
         // Langsung menggunakan collection/array dari model
-        $data['historyQueues'] = $listQueues->toArray();
+        $data['historyQueues'] = $datalistQueues;
 
         // --- 7. FINAL DATA ASIGNMENT ---
         $data['show_product'] = $showProduct;
