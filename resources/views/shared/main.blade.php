@@ -120,7 +120,7 @@
                                         <div class="col-md-12">
                                             <div id="carouselExampleControlsProduct"
                                                 class="carousel slide carousel-fade">
-                                                <div class="carousel-inner" id="container-parent-corousel">
+                                                <div class="carousel-inner" id="container-parent-corousel-iklan">
                                                     @forelse ($products as $item)
                                                         <div class="carousel-item" id="corousel-parent"
                                                             data_id="{{ $loop->iteration }}">
@@ -176,6 +176,7 @@
                                                                             </table>
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -502,6 +503,11 @@
                     syncProductTable(productTable);
                 }, 6000000);
             }
+
+            setInterval(() => {
+                let activeIndex = $('#container-parent-corousel-iklan .carousel-item.active').index();
+                console.log(activeIndex);
+            }, 5000)
         });
 
         function startPoolSyncVidoes() {

@@ -115,8 +115,13 @@ class MainController extends Controller
         $showCurrency = $properties->show_currency ?? true;
 
         // Logika Produk
-        $data['products'] = ($showProduct || !$properties) ? MasterProduct::Show()->get() : collect();
-
+        $products = ($showProduct || !$properties) ? MasterProduct::Show()->get() : collect();
+        if ($products){
+            $data['products'] =  $products
+            ->groupBy(fn($item) => $item->created_at->format('Y-m-d'))
+            ->sortKeysDesc()
+            ->first();
+        }
         // Logika Mata Uang
         $data['currencies'] = ($showCurrency || !$properties) ? Currency::show()->get() : collect();
 

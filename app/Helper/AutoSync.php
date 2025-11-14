@@ -194,6 +194,7 @@ trait AutoSync
         $onlineApp = config('site.onlineApp');
         $url = config('site.urlOnlineApp');
         $success = false;
+        $status = 201;
         if (empty($url) || !$onlineApp) {
             return [$success, "Auto Sync is disabled!"];
         }
@@ -231,20 +232,23 @@ trait AutoSync
                         }
 
                         $productDetails = $value['data'];
-                        foreach ($productDetails as $productDetail) {
-                            $a = ProductDetail::firstOrCreate(
-                                [
+                        
+                        foreach ($productDetails as $key => $productDetail) {
+                            $local = ProductDetail::where('master_product_id', $product->id)->where('display_number', $key+1)->first();
+                            if($local){
+                                $local->update([
                                     'value' => $productDetail['value'],
-                                    'master_product_id' => $product->id
-                                ],
-                                [
                                     'suku_bunga' => $productDetail['suku_bunga'],
+                                    
+                                ]);
+                            } else {
+                                ProductDetail::create([
+                                    'value' => $productDetail['value'],
+                                    'suku_bunga' => $productDetail['suku_bunga'],
+                                    'master_product_id' => $product->id,
                                     'display_number' => $productDetail['display_number'],
-
-                                ]
-                            );
-
-                            array_push($tes, $a);
+                                ]);
+                            }
                         }
                     }
                 }
@@ -255,7 +259,8 @@ trait AutoSync
         } catch (\Throwable $th) {
             $success = false;
             $message = $th->getMessage();
-            $status = $th->getCode();
+            
+            dd($th);
         }
 
         return [$success, $message, $status];

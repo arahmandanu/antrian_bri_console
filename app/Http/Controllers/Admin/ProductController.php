@@ -126,10 +126,11 @@ class ProductController extends Controller
 
     public function syncProduct(Request $request)
     {
+        
         $response = $this->syncProductFromServer();
-        // return response()->json([
-        //     'status' => $response[0],
-        //     'message' => $response[1],
-        // ], $response[2]);
+        return response()->json([
+            'status' => $response[0],
+            'message' => $response[1],
+        ], $response[2]);
     }
 }
