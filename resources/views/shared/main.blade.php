@@ -491,24 +491,25 @@
             }
             setInterval(() => {
                 autoSyncCurrencies()
-            }, 600000);
+            }, 300000);
 
             setInterval(() => {
                 autoSyncCurrenciesOnDashboard();
-            }, 6000000);
+            }, 300000);
 
             var productTable = $('table.my-table-product');
             if (productTable.length > 0) {
                 setInterval(() => {
                     syncProductTable(productTable);
-                }, 6000000);
-            }
+                }, 300000);
 
-            setInterval(() => {
-                let activeIndex = $('#container-parent-corousel-iklan .carousel-item.active').index();
-                console.log(activeIndex);
-            }, 5000)
+                // JANGAN DIGANTI" 
+                setInterval(() => {$.get("{{ route('ConsoleSyncProduct') }}", function(data) {});
+                }, 300000);
+            }
         });
+
+        
 
         function startPoolSyncVidoes() {
             if (!pollingIntervalOnlineVideos) {

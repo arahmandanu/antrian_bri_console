@@ -39,8 +39,10 @@ Route::group(['prefix' => 'queue'], function () {
 Route::group(['prefix' => 'console'], function () {
     Route::get('/currency/{currency}', [ConsoleController::class, 'listCurrency'])->name('GetDetailCurrency');
 });
+
 Route::get('/run_console', [MainController::class, 'consoleApp'])->name('callConsoleApp');
 Route::get('/sync_videos', [MainController::class, 'syncVideos'])->name('ConsoleSyncVideos');
+Route::get('/sync_product', [ProductController::class, 'syncProduct'])->name('ConsoleSyncProduct');
 
 Route::get('/sync_now', [CurrencyController::class, 'syncNow'])->name('ConsoleSyncCurrency');
 Route::prefix('/kios')->group(function () {
@@ -72,7 +74,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:web', 'DashboardMainCo
         Route::delete('/delete/{master_product}', [ProductController::class, 'destroy'])->name('ConsoleDeleteProduct');
         Route::get('/show/{master_product}', [ProductController::class, 'show'])->name('ConsoleShowProduct');
         Route::get('/update/{master_product}', [ProductController::class, 'update'])->name('ConsoleUpdateProduct');
-        Route::get('/sync_product', [ProductController::class, 'syncProduct'])->name('ConsoleSyncProduct');
         Route::prefix('tarif_suku_bunga')->group(function () {
             Route::get('/list', [SukuBungaController::class, 'index'])->name('ConsoleIndexListSukuBunga');
             Route::get('/create', [SukuBungaController::class, 'create'])->name('ConsoleCreateListSukuBunga');
