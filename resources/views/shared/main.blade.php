@@ -491,21 +491,21 @@
             }
             setInterval(() => {
                 autoSyncCurrencies()
-            }, 300000);
+            }, 300_000);
 
             setInterval(() => {
                 autoSyncCurrenciesOnDashboard();
-            }, 300000);
+            }, 300_000);
 
             var productTable = $('table.my-table-product');
             if (productTable.length > 0) {
                 setInterval(() => {
                     syncProductTable(productTable);
-                }, 300000);
+                }, 120_000);
 
                 // JANGAN DIGANTI" 
                 setInterval(() => {$.get("{{ route('ConsoleSyncProduct') }}", function(data) {});
-                }, 300000);
+                }, 120_000);
             }
         });
 

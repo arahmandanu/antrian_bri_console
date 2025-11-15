@@ -19,8 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/console/get_antrian', [Queue::class, 'getNextQueue']);
 Route::get('/button_actor/sync', [ButtonActorController::class, 'syncButtonActor']);
 
-Route::middleware(['throttle:240,1'])->group(function () {
-  Route::apiResources([
-    'product_detail' => ProductDetailController::class,
-  ]);
-});
+
+Route::apiResources([
+  'product_detail' => ProductDetailController::class,
+]);
