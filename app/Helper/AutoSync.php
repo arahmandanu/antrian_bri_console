@@ -259,8 +259,6 @@ trait AutoSync
         } catch (\Throwable $th) {
             $success = false;
             $message = $th->getMessage();
-            
-            dd($th);
         }
 
         return [$success, $message, $status];
@@ -286,11 +284,11 @@ trait AutoSync
             $status = $response->status();
             if ($response->successful()) {
                 $success = true;
-                $message = 'Success sync product';
+                $message = 'Success sync videos';
                 $body = $response->collect('data');
             } else {
                 $success = false;
-                $message = 'Fail sync product';
+                $message = 'Fail sync videos';
             }
         } catch (\Throwable $th) {
             $success = false;
