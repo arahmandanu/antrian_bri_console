@@ -176,7 +176,7 @@
                                                                             </table>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -503,13 +503,11 @@
                     syncProductTable(productTable);
                 }, 120_000);
 
-                // JANGAN DIGANTI" 
+                // JANGAN DIGANTI"
                 setInterval(() => {$.get("{{ route('ConsoleSyncProduct') }}", function(data) {});
                 }, 120_000);
             }
         });
-
-        
 
         function startPoolSyncVidoes() {
             if (!pollingIntervalOnlineVideos) {
@@ -633,7 +631,10 @@
                         } else {
                             onCallQueue = false;
                         }
-                    }
+                    },
+                    error: function() {
+                        onCallQueue = false;
+                    },
                 });
             }
         }
