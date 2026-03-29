@@ -22,12 +22,12 @@
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
-<body
+<body {{-- background: url({{ asset('bri/bri-background.jpg') }}); --}}
     style="
-    background: url({{ asset('bri/bri-background.jpg') }});
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;">
+    background-size: cover;"
+    class="bg-primary-app">
     <div style="overflow: hidden !important">
         <div class="row vh-100 vw-80 p-2">
             <div class="col-8">

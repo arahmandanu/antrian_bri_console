@@ -297,6 +297,7 @@
                     <div class="col-md-12 p-2">
                         <div class="row">
                             <div class="col-5" style="align-self: center;">
+                                {{-- <img src="{{ asset('images/bri_logo_blue.png') }}" class="object-fit-contain" --}}
                                 <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
                                     alt="Logo BRI"
                                     style="max-width: 100%;
@@ -363,8 +364,7 @@
 
                     {{-- INCOMING ANTRIAN --}}
                     <div class="col-md-12 rounded">
-                        <div class="row right-bar-counter" style="background-color: #011e40;">
-
+                        <div class="row right-bar-counter counter-background-color">
                             <div class="col-5 text-center">
                                 <h1 class="text-white counter-number" id="history_2_left"
                                     @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
@@ -377,7 +377,7 @@
                             </div>
 
                             <div class="col-7 text-center">
-                                <h1 class="text-white right-bar-counter-left counter-number " id="history_2_right"
+                                <h1 class="text-white right-bar-counter-left counter-number" id="history_2_right"
                                     @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
                                     @if (array_key_exists(1, $historyQueues))
                                         {{ $historyQueues[1]->SeqNumber }}
@@ -390,7 +390,7 @@
 
                         <hr class="invisible" style="margin: 1px">
 
-                        <div class="row right-bar-counter" style="background-color: #011e40;">
+                        <div class="row right-bar-counter counter-background-color">
                             <div class="col-5 text-center right-bar-counter-left">
                                 <h1 class="text-white counter-number" id="history_3_left"
                                     @if (isset($second_log)) style="color: {{ $second_log }} !important" @endif>
@@ -427,7 +427,6 @@
                                     >20:19:33</h1>
                                 <hr class="timer border border-success border-3 opacity-100"
                                     @if (isset($watch)) style="border-color: {{ $watch }} !important" @endif>
-                                >
                                 <h1 class="timer" id="display-date"
                                     @if (isset($watch)) style="color: {{ $watch }} !important" @endif>
                                     >Minggu, 28 April 2024</h1>
@@ -504,7 +503,8 @@
                 }, 120_000);
 
                 // JANGAN DIGANTI"
-                setInterval(() => {$.get("{{ route('ConsoleSyncProduct') }}", function(data) {});
+                setInterval(() => {
+                    $.get("{{ route('ConsoleSyncProduct') }}", function(data) {});
                 }, 120_000);
             }
         });

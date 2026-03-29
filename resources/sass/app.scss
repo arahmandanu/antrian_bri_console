@@ -21,7 +21,11 @@ html {
 }
 
 .bg-primary-app {
-    background-color: #023e85;
+    background-color: rgb(69, 133, 207);
+}
+
+.counter-background-color {
+    background-color: #3329ae;
 }
 
 div#corousel_iklan_parent {
@@ -58,14 +62,14 @@ div#corousel_iklan_parent {
 
 div.title-info {
     margin: 3px;
-    background-color: #012362;
+    background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
     margin-left: 0.5%;
 }
 
 div.table-info {
     width: 100%;
     min-height: 15vh;
-    background-color: #012362;
+    background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 }
 
 div.table-currency {
@@ -73,9 +77,13 @@ div.table-currency {
     margin: 3px;
     width: 100%;
     min-height: 15vh;
-    background-color: #012362;
+    background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
     max-height: 33vh !important;
     overflow-y: hidden;
+
+    tr>th {
+        background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+    }
 }
 
 div.counter {
@@ -90,11 +98,11 @@ div.right-bar {
 
     div.counter-div-left {
         border-right: #faa901 solid 0.5px;
-        background-color: #011e40;
+        background-color: #3329ae;
     }
 
     div.counter-div-right {
-        background-color: #011e40;
+        background-color: #3329ae;
     }
 
     div.right-bar-caller {
@@ -198,7 +206,7 @@ table.table-currency {
         tr:nth-child(even) {
             td {
                 color: white !important;
-                background: #013472 !important;
+                background: #3329ae !important;
             }
 
         }
@@ -230,7 +238,7 @@ table.my-table-product {
         tr:nth-child(even) {
             td {
                 color: white;
-                background: #013472 !important;
+                background: #3329ae !important;
             }
 
             td:first-child {
