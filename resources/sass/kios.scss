@@ -1,5 +1,10 @@
 @import 'scrollbar';
+@import 'my_font';
 
 .bg-primary-app {
-    background-color: rgb(69, 133, 207);
+    background-color: $bg-color !important;
+}
+
+div.right-bar-queue {
+    background-color: $header_table;
 }

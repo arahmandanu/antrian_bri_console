@@ -63,21 +63,21 @@
             <div class="col-4">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 card" style="background: #053a6c; height: 85vh">
+                        <div class="col-12 card right-bar-queue" style="height: 85vh">
                             <div class="row">
                                 <div class="card-body">
                                     <div class="col-12 text-center pt-4">
-                                        <img onclick="reloadPage()" src="{{ asset('images/logo_white.png') }}"
+                                        <img onclick="reloadPage()" src="{{ asset('images/bri_logo_blue.png') }}"
                                             class="object-fit-contain" alt="Logo BRI"
                                             style="max-width: 100%;
                                                 max-height: 100%;">
-                                        <h2 class="text-white" onclick="exitButton()"> {{ $companyName }} </h2>
-                                        <h2 class="text-white" style="font-family: kapakana;">
+                                        <h2 class="base-font-color" onclick="exitButton()"> {{ $companyName }} </h2>
+                                        <h2 class="base-font-color" style="font-family: kapakana;">
                                             Melayani
                                             Dengan
                                             Sepenuh Hati</h2>
                                         <hr style="color: #faa901; opacity: 100 !important">
-                                        <h3 class="text-white">Silahkan Ambil Antrian</h3>
+                                        <h3 class="base-font-color">Silahkan Ambil Antrian</h3>
                                     </div>
                                 </div>
                             </div>
@@ -97,13 +97,12 @@
             style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
             <div class="vw-20" style="border-top: solid #e08b16 7px">
                 @if ($footerTexts->count() == 0)
-                    <h1 class="text-white walking-text invisible display-1"
-                        style="white-space: nowrap; float: left;  @if (isset($fotrColor)) color: {{ $fotrColor }} !important @endif">
+                    <h1 class="base-font-color walking-text invisible display-1"
+                        style="white-space: nowrap; float: left;">
                         -</h1>
                 @else
-                    <h1 id="animate_footer" class="text-white walking-text- display-1"
-                        style="white-space: nowrap; float: left;  @if (isset($fotrColor)) color: {{ $fotrColor }} !important @endif"
-                        flow='{{ $footer_flow }}'></h1>
+                    <h1 id="animate_footer" class="base-font-color walking-text- display-1"
+                        style="white-space: nowrap; float: left;" flow='{{ $footer_flow }}'></h1>
                 @endif
             </div>
         </footer>

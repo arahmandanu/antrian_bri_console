@@ -95,6 +95,14 @@
   background-color: #2c3e50;
 }
 
+.base-font-color {
+  color: black !important;
+}
+
 .bg-primary-app {
-  background-color: rgb(69, 133, 207);
+  background-color: #E3F2FD !important;
+}
+
+div.right-bar-queue {
+  background-color: #5CACE2;
 }

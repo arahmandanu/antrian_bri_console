@@ -12585,6 +12585,10 @@ body {
   margin: 0;
 }
 
+.base-font-color {
+  color: black !important;
+}
+
 :root {
   --dt-row-selected: 13, 110, 253;
   --dt-row-selected-text: 255, 255, 255;
@@ -13640,11 +13644,11 @@ html {
 }
 
 .bg-primary-app {
-  background-color: rgb(69, 133, 207);
+  background-color: #E3F2FD !important;
 }
 
 .counter-background-color {
-  background-color: #3329ae;
+  background-color: #5CACE2 !important;
 }
 
 div#corousel_iklan_parent div#parent-container-video video#myVideo {
@@ -13674,27 +13678,25 @@ div#corousel_iklan_parent div#parent-container-video div.video-container-full {
 
 div.title-info {
   margin: 3px;
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
-  margin-left: 0.5%;
+  background-color: #5CACE2;
+}
+
+.table-info-color {
+  color: #05213a;
 }
 
 div.table-info {
   width: 100%;
   min-height: 15vh;
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 }
 
 div.table-currency {
   margin-left: 0.5%;
   margin: 3px;
   width: 100%;
-  min-height: 15vh;
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
-  max-height: 33vh !important;
+  min-height: 20vh;
+  max-height: 40vh !important;
   overflow-y: hidden;
-}
-div.table-currency tr > th {
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
 }
 
 div.counter {
@@ -13708,10 +13710,10 @@ div.right-bar {
 }
 div.right-bar div.counter-div-left {
   border-right: #faa901 solid 0.5px;
-  background-color: #3329ae;
+  background-color: #5CACE2;
 }
 div.right-bar div.counter-div-right {
-  background-color: #3329ae;
+  background-color: #5CACE2;
 }
 div.right-bar div.right-bar-caller {
   font-weight: bolder;
@@ -13727,32 +13729,32 @@ div.right-bar div.right-bar-title {
 }
 div.right-bar div.right-bar-title div.title-div-left {
   border-right: #faa901 solid 0.5px;
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+  background-color: #5CACE2;
 }
 div.right-bar div.right-bar-title div.title-div-left span {
-  color: white;
+  color: black;
 }
 div.right-bar div.right-bar-title div.title-div-right {
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+  background-color: #5CACE2;
 }
 div.right-bar div.right-bar-title div.title-div-right span {
-  color: white;
+  color: black;
 }
 div.right-bar div.right-bar-counter div.parent-right-bar-counter-left {
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+  background-color: #5CACE2;
 }
 div.right-bar div.right-bar-counter div.parent-right-bar-counter-left span {
   color: white;
 }
 div.right-bar div.right-bar-counter div.parent-right-bar-counter-right {
-  background-image: linear-gradient(180deg, rgb(42, 79, 182), #011e40);
+  background-color: #5CACE2;
 }
 div.right-bar div.right-bar-counter div.parent-right-bar-counter-right span {
   color: white;
 }
 
 .counter-color {
-  color: #faa901;
+  color: #d68800 !important;
   font-weight: bolder;
 }
 
@@ -13765,12 +13767,15 @@ div.parent-table-product {
   overflow-y: hidden;
 }
 
+table.table-currency {
+  color: #05213a;
+}
 table.table-currency thead {
   position: sticky;
   top: 0;
 }
 table.table-currency thead tr th {
-  background-color: #012362 !important;
+  background-color: #5CACE2 !important;
   text-align: center;
   align-content: center;
 }
@@ -13782,20 +13787,20 @@ table.table-currency tbody tr td {
   align-content: center;
 }
 table.table-currency tbody tr:nth-child(odd) td {
-  color: white !important;
-  background: #034798 !important;
+  background: #D1EAF9 !important;
 }
 table.table-currency tbody tr:nth-child(even) td {
-  color: white !important;
-  background: #3329ae !important;
+  background: #A9DDF7 !important;
 }
 
+table.my-table-product {
+  color: #05213a;
+}
 table.my-table-product tbody td {
   border-bottom: 1px solid rgb(146, 99, 11);
 }
 table.my-table-product tbody tr:nth-child(odd) td {
-  color: white;
-  background: #034798 !important;
+  background: #D1EAF9 !important;
 }
 table.my-table-product tbody tr:nth-child(odd) td:first-child {
   text-align: left;
@@ -13804,8 +13809,7 @@ table.my-table-product tbody tr:nth-child(odd) td:nth-child(2) {
   text-align: right;
 }
 table.my-table-product tbody tr:nth-child(even) td {
-  color: white;
-  background: #3329ae !important;
+  background: #A9DDF7 !important;
 }
 table.my-table-product tbody tr:nth-child(even) td:first-child {
   text-align: left;

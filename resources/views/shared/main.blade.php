@@ -111,7 +111,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-center">
                                             <div class="title-info rounded border-top border-opacity-10">
-                                                <h1 class="fw-bolder text-white"> INFO PRODUK </h1>
+                                                <h1 class="fw-bolder table-info-color"> INFO PRODUK </h1>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +130,8 @@
 
                                                                     <div class="col-6">
                                                                         <div>
-                                                                            <h1 class="fw-bolder text-white title-info">
+                                                                            <h1
+                                                                                class="fw-bolder table-info-color title-info">
                                                                                 {{ Str::upper($item->name) }}
                                                                             </h1>
                                                                         </div>
@@ -138,7 +139,7 @@
 
                                                                     <div class="col-6" style="align-content: end">
                                                                         <h1 class="fw-bolder "
-                                                                            style="color: #faa901!important; font-size: 25px; float: right">
+                                                                            style="font-size: 25px; float: right">
                                                                             TARIF SUKU
                                                                             BUNGA (% PA) </h1>
                                                                     </div>
@@ -228,7 +229,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-center">
                                             <div class="title-info rounded border-top border-opacity-10">
-                                                <h1 class="fw-bolder text-white"> BANK NOTE DD/TT </h1>
+                                                <h1 class="fw-bolder table-info-color"> BANK NOTE DD/TT </h1>
                                             </div>
                                         </div>
 
@@ -238,13 +239,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th width="20%">
-                                                                <h2 class="fw-bolder text-white">KURS</h2>
+                                                                <h2 class="fw-bolder table-info-color">KURS</h2>
                                                             </th>
                                                             <th width="40%">
-                                                                <h2 class="fw-bolder text-white">JUAL</h2>
+                                                                <h2 class="fw-bolder table-info-color">JUAL</h2>
                                                             </th>
                                                             <th width="40%">
-                                                                <h2 class="fw-bolder text-white">BELI</h2>
+                                                                <h2 class="fw-bolder table-info-color">BELI</h2>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -260,7 +261,7 @@
                                                                                 alt="flag" class="rounded-circle">
                                                                         </div>
                                                                         <div class="p-2">
-                                                                            <h3 class="text-white">
+                                                                            <h3 class="table-info-color">
                                                                                 {{ Str::upper($currency->name) }}</h3>
                                                                         </div>
                                                                     </div>
@@ -297,24 +298,21 @@
                     <div class="col-md-12 p-2">
                         <div class="row">
                             <div class="col-5" style="align-self: center;">
-                                {{-- <img src="{{ asset('images/bri_logo_blue.png') }}" class="object-fit-contain" --}}
-                                <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain"
+                                {{-- <img src="{{ asset('images/logo_white.png') }}" class="object-fit-contain" --}}
+                                <img src="{{ asset('images/bri_logo_blue.png') }}" class="object-fit-contain"
                                     alt="Logo BRI"
                                     style="max-width: 100%;
                                     max-height: 100%;">
                             </div>
                             <div class="col-7 text-center align-content-center">
                                 <div>
-                                    <h1 class="text-white fw-bolder display-6"
-                                        @if (isset($unit_name)) style="color: {{ $unit_name }} !important" @endif>
+                                    <h1 class="text-white fw-bolder display-6 base-font-color"
+                                        style="font-weight: 600">
                                         {{ $company_name ?? 'Nama Cabang Kosong' }}
                                     </h1>
                                 </div>
-                                <h1 class="text-white"
-                                    style="font-family: kapakana;  @if (isset($unit_name)) color: {{ $unit_name }} !important" @endif">
-                                    Melayani
-                                    Dengan
-                                    Sepenuh Hati</h1>
+                                <h1 class="text-white base-font-color" style="font-family: kapakana;">
+                                    Satu Bank Untuk Semua</h1>
                             </div>
                         </div>
                     </div>
@@ -324,8 +322,7 @@
                     <div class="col-md-12 container-fluid">
                         <div class="row counter-parent">
                             <div class="col-5 text-center counter-div-left">
-                                <span class="counter-left counter-color counter-number" id="history_1_left"
-                                    @if (isset($current_queue)) style="color: {{ $current_queue }} !important" @endif>
+                                <span class="counter-left counter-color counter-number" id="history_1_left">
                                     @if (array_key_exists(0, $historyQueues))
                                         {{ $historyQueues[0]->Counter }}
                                     @else
@@ -334,8 +331,7 @@
                                 </span>
                             </div>
                             <div class="col-7 text-center counter-div-right">
-                                <span class="counter-right counter-color counter-number" id="history_1_right"
-                                    @if (isset($current_queue)) style="color: {{ $current_queue }} !important" @endif>
+                                <span class="counter-right counter-color counter-number" id="history_1_right">
                                     @if (array_key_exists(0, $historyQueues))
                                         {{ $historyQueues[0]->SeqNumber }}
                                     @else
@@ -366,8 +362,7 @@
                     <div class="col-md-12 rounded">
                         <div class="row right-bar-counter counter-background-color">
                             <div class="col-5 text-center">
-                                <h1 class="text-white counter-number" id="history_2_left"
-                                    @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
+                                <h1 class="base-font-color counter-number" id="history_2_left">
                                     @if (array_key_exists(1, $historyQueues))
                                         {{ $historyQueues[1]->Counter }}
                                     @else
@@ -377,8 +372,8 @@
                             </div>
 
                             <div class="col-7 text-center">
-                                <h1 class="text-white right-bar-counter-left counter-number" id="history_2_right"
-                                    @if (isset($first_log)) style="color: {{ $first_log }} !important" @endif>
+                                <h1 class="base-font-color right-bar-counter-left counter-number"
+                                    id="history_2_right">
                                     @if (array_key_exists(1, $historyQueues))
                                         {{ $historyQueues[1]->SeqNumber }}
                                     @else
@@ -392,8 +387,7 @@
 
                         <div class="row right-bar-counter counter-background-color">
                             <div class="col-5 text-center right-bar-counter-left">
-                                <h1 class="text-white counter-number" id="history_3_left"
-                                    @if (isset($second_log)) style="color: {{ $second_log }} !important" @endif>
+                                <h1 class="base-font-color counter-number" id="history_3_left">
                                     @if (array_key_exists(2, $historyQueues))
                                         {{ $historyQueues[2]->Counter }}
                                     @else
@@ -403,8 +397,8 @@
                             </div>
 
                             <div class="col-7 text-center">
-                                <h1 class="text-white right-bar-counter-left counter-number" id="history_3_right"
-                                    @if (isset($second_log)) style="color: {{ $second_log }} !important" @endif>
+                                <h1 class="base-font-color right-bar-counter-left counter-number"
+                                    id="history_3_right">
                                     @if (array_key_exists(2, $historyQueues))
                                         {{ $historyQueues[2]->SeqNumber }}
                                     @else
