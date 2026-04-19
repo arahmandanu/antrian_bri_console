@@ -73,9 +73,7 @@
                                                 max-height: 100%;">
                                         <h2 class="base-font-color" onclick="exitButton()"> {{ $companyName }} </h2>
                                         <h2 class="base-font-color" style="font-family: kapakana;">
-                                            Melayani
-                                            Dengan
-                                            Sepenuh Hati</h2>
+                                            Satu Bank Untuk Semua</h2>
                                         <hr style="color: #faa901; opacity: 100 !important">
                                         <h3 class="base-font-color">Silahkan Ambil Antrian</h3>
                                     </div>
