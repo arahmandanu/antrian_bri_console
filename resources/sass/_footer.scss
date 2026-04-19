@@ -1,77 +1,83 @@
 @include media-breakpoint-only(xs) {
     .walking-text {
+        color: #003366 !important;
         font-size: 1rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }
 
 @include media-breakpoint-only(sm) {
     .walking-text {
+        color: #003366 !important;
         font-size: 1.5rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }
 
 @include media-breakpoint-only(md) {
     .walking-text {
+        color: #003366 !important;
         font-size: 2rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }
 
 @include media-breakpoint-only(lg) {
     .walking-text {
+        color: #003366 !important;
         font-size: 2.5rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }
 
 @include media-breakpoint-only(xl) {
     .walking-text {
+        color: #003366 !important;
         font-size: 3rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }
 
 @include media-breakpoint-only(xxl) {
     .walking-text {
+        color: #003366 !important;
         font-size: 4rem;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 
-
     .for-footer {
         border-top: 1px solid #ffcd12;
+        background-color: #72B1E1;
     }
 }

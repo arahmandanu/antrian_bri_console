@@ -93,8 +93,7 @@
             </div>
         </div>
 
-        <footer class="bg-black for-footer mt-auto"
-            style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
+        <footer class="for-footer mt-auto" style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
             <div class="vw-20" style="border-top: solid #e08b16 7px">
                 @if ($footerTexts->count() == 0)
                     <h1 class="base-font-color walking-text invisible display-1"

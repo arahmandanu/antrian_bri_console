@@ -1,13 +1,11 @@
-<footer class="bg-black for-footer mt-auto" style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
+<footer class="for-footer mt-auto" style="position: absolute; width: 100%; overflow: hidden; bottom: 0">
 
     @if ($list_footer_text->count() == 0)
-        <p class="text-white walking-text invisible"
-            style="white-space: nowrap; float: left; @if (isset($footer_text)) color: {{ $footer_text }} !important @endif">
+        <p class="walking-text invisible" style="white-space: nowrap; float: left;">
             -</p>
     @else
-        <p id="animate_footer" class="text-white walking-text"
-            style="white-space: nowrap; float: left;  @if (isset($footer_text)) color: {{ $footer_text }} !important @endif"
-            flow='{{ $footer_flow }}'></p>
+        <p id="animate_footer" class="walking-text" style="white-space: nowrap; float: left; " flow='{{ $footer_flow }}'>
+        </p>
     @endif
 </footer>
 

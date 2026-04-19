@@ -1,5 +1,8 @@
 @import 'scrollbar';
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
 @import 'my_font';
+@import 'footer';
 
 .bg-primary-app {
     background-color: $bg-color !important;

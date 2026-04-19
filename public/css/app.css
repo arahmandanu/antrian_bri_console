@@ -12379,62 +12379,74 @@ textarea.form-control-lg {
 }
 @media (max-width: 575.98px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 1rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 576px) and (max-width: 767.98px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 1.5rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 768px) and (max-width: 991.98px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 2rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 2.5rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 3rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 1400px) {
   .walking-text {
+    color: #003366 !important;
     font-size: 4rem;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
   .for-footer {
     border-top: 1px solid #ffcd12;
+    background-color: #72B1E1;
   }
 }
 @media (min-width: 3000px) and (max-width: 6000px) {
