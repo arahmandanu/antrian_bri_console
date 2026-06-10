@@ -11,6 +11,7 @@
         "php": "^8.0",
         "barryvdh/laravel-debugbar": "^3.13",
         "calcinai/php-imagick": "^0.1.2",
+        "doctrine/dbal": "^4.4",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
         "james-heinrich/getid3": "^1.9",
