@@ -232,14 +232,14 @@ trait AutoSync
                         }
 
                         $productDetails = $value['data'];
-                        
+
                         foreach ($productDetails as $key => $productDetail) {
-                            $local = ProductDetail::where('master_product_id', $product->id)->where('display_number', $key+1)->first();
-                            if($local){
+                            $local = ProductDetail::where('master_product_id', $product->id)->where('display_number', $key + 1)->first();
+                            if ($local) {
                                 $local->update([
                                     'value' => $productDetail['value'],
                                     'suku_bunga' => $productDetail['suku_bunga'],
-                                    
+
                                 ]);
                             } else {
                                 ProductDetail::create([
@@ -268,18 +268,20 @@ trait AutoSync
     {
         $onlineApp = config('site.onlineApp');
         $url = config('site.urlOnlineApp');
+        $company_type = config('site.company_type') ?? 'all';
         $success = false;
+
         if (empty($url) || !$onlineApp) {
             return [$success, "Auto Sync is disabled!"];
         }
 
         $url2 = $url . "/api/video_adds";
-        $response = Http::get($url2);
         try {
             $response = Http::connectTimeout(1)
                 ->timeout(3)
                 ->accept('application/json')
-                ->get($url2);
+                ->withUrlParameters(['company_type' => $company_type])
+                ->get($url2 . "?type={$company_type}");
 
             $status = $response->status();
             if ($response->successful()) {

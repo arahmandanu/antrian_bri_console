@@ -11,7 +11,7 @@ return [
     ],
     'onlineApp' => true,
     'urlOnlineApp' => 'https://bri-antrian.online',
-    // 'urlOnlineApp' => 'localhost/antrian_bri',
+    // 'urlOnlineApp' => 'http://localhost/antrian_bri',
     // Yang bisa disetting di bawah ini
     'versionCaller' => 'v2',
     'printerEnabled' => false,
@@ -22,5 +22,6 @@ return [
     'delaySound' => 6,
     'queueOfflineIsFirst' => false,
     // TAMPILKAN TOMBOL PEGADAIAN
-    'withPegadaian' => false
+    'withPegadaian' => false,
+    'company_type' => 'kcp',
 ];
