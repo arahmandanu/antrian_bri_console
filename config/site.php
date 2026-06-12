@@ -23,5 +23,6 @@ return [
     'queueOfflineIsFirst' => false,
     // TAMPILKAN TOMBOL PEGADAIAN
     'withPegadaian' => false,
+    // SETTINGS VIDEOS
     'company_type' => 'kcp', //kcp, unit, all (kalo dikosong default nya all)
 ];
