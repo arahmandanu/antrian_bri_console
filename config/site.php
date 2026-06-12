@@ -23,5 +23,5 @@ return [
     'queueOfflineIsFirst' => false,
     // TAMPILKAN TOMBOL PEGADAIAN
     'withPegadaian' => false,
-    'company_type' => 'kcp',
+    'company_type' => 'kcp', //kcp, unit, all (kalo dikosong default nya all)
 ];

@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use App\Http\Controllers\MainController;
 use App\Models\Currency;
 use App\Models\MasterProduct;
 use App\Models\OriginCustomer;
@@ -10,10 +9,8 @@ use App\Models\ProductDetail;
 use App\Models\Properties;
 use App\Models\TransactionCustomer;
 use getID3;
-use getid3_aa;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 trait AutoSync
 {
@@ -157,6 +154,7 @@ trait AutoSync
                             }
                             $newfname = $destination_folder . "/" . $value['url']; //set your file ext
                             $file = fopen($url, "rb");
+                            $newf = null;
                             if ($file) {
                                 $newf = fopen($newfname, "a"); // to overwrite existing file
                                 if ($newf)
