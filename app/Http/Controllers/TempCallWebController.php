@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Enum\CodeServiceEnum;
 use App\Models\ButtonActor;
 use App\Models\Codeservice;
 use App\Models\OriginCustomer;
 use App\Models\Properties;
 use App\Models\TempCallWeb;
 use App\Services\SoundCallService;
+use Illuminate\Http\Response;
 
 class TempCallWebController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -27,7 +27,7 @@ class TempCallWebController extends Controller
         $data = null;
         $queue = null;
         $marginTime = 0;
-        $delay = (int)(config('site.delaySound'));
+        $delay = (int) (config('site.delaySound'));
         $haveMargin = false;
         $before = null;
         if ($needToCall = TempCallWeb::notCalled()->listOldest()->first()) {
@@ -47,7 +47,7 @@ class TempCallWebController extends Controller
                     if ($haveMargin === true) {
                         if (($queue->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp()) >= $delay) {
                             $before = $lastCalled;
-                            $marginTime =  $queue->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp();
+                            $marginTime = $queue->updated_at->getTimestamp() - $lastCalled->updated_at->getTimestamp();
                             $data = $queue;
                             $queue->Tampil = 'y';
                             $queue->save();
@@ -59,7 +59,7 @@ class TempCallWebController extends Controller
 
                             $buttonActor = ButtonActor::find($queue->button_actor_id);
                             $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
-                            (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                            app(SoundCallService::class)->play($callQeueue->origin_queue_number, $buttonActor->unit_service, $buttonActor->counter_number);
                         }
                     } else {
                         $data = $queue;
@@ -73,7 +73,7 @@ class TempCallWebController extends Controller
 
                         $buttonActor = ButtonActor::find($queue->button_actor_id);
                         $callQeueue = OriginCustomer::where('SeqNumber', '=', $queue->SeqNumber)->first();
-                        (new SoundCallService($callQeueue, $buttonActor))->playSound();
+                        app(SoundCallService::class)->play($callQeueue->origin_queue_number, $buttonActor->unit_service, $buttonActor->counter_number);
                     }
                 }
             }
@@ -83,7 +83,7 @@ class TempCallWebController extends Controller
             'queue' => $data,
             'before' => $before,
             'margin_time' => $marginTime,
-            'settings' => $delay
+            'settings' => $delay,
         ], 200);
     }
 

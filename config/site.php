@@ -24,5 +24,5 @@ return [
     // TAMPILKAN TOMBOL PEGADAIAN
     'withPegadaian' => false,
     // SETTINGS VIDEOS
-    'company_type' => 'kcp', //kcp, unit, all (kalo dikosong default nya all)
+    'company_type' => 'all', //kcp, unit, all (kalo dikosong default nya all)
 ];
